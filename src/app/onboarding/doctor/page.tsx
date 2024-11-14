@@ -6,6 +6,7 @@ import Web3 from 'web3'
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import DOCTORABI from '@/../contracts/doctor.abi.json'
 import { toast } from "sonner";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 export default function Onboarding() {
     const [reg,setReg] = useState(false);
@@ -47,9 +48,15 @@ export default function Onboarding() {
             .send({
                 from: account,
             })
-            .on("receipt", function (receipt: any) {
+            .on("receipt", async function (receipt: any) {
                 toast.success("Doctor registered successfully");
                 setReg(false);
+
+                const address = account;
+                const type = "doctor";
+                const payload = {address,type};
+                const token = await generateToken(JSON.stringify(payload));
+                localStorage.setItem('token',token)
                 router.push("/doctor");
             })
             .on("error", function (error: any) {

@@ -7,6 +7,7 @@ import PatientContractABI from "@/../contracts/patient.abi.json";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import Web3 from "web3";
 import { toast } from "sonner";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 // Placeholder Ethereum logo URL
 const ethereumLogoUrl =
@@ -47,17 +48,24 @@ export default function Login() {
         contract.methods
             .doesPatientExist(account)
             .call()
-            .then((res) => {
+            .then(async (res) => {
                 console.log(res);
                 if (res) {
                     toast.success("Patient logged in successfully !!");
+
+                    // creating a session of 4hrs
+                    const address = account;
+                    const type = "patient";
+                    const payload = { address, type };
+                    const token = await generateToken(payload);
+                    localStorage.setItem("token", JSON.stringify(token));
                     router.push("/patient");
                 } else {
                     toast.error("Patient not registered!!");
                     router.push("/onboarding/patient");
                 }
                 setLog(false);
-        });
+            });
     };
 
     return (

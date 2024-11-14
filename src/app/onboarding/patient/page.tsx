@@ -6,6 +6,7 @@ import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import PATIENT_ABI from "@/../contracts/patient.abi.json";
 import Web3 from "web3";
 import { toast } from "sonner";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 export default function Onboarding() {
     const [reg, setReg] = useState(true);
@@ -66,9 +67,17 @@ export default function Onboarding() {
             .send({
                 from: account,
             })
-            .on("receipt", function (receipt: any) {
+            .on("receipt", async function (receipt: any) {
                 toast.success("Patient registered successfully");
                 setReg(false);
+
+                const address = account;
+                const type = "patient";
+                const payload = {address,type};
+                const token = await generateToken(payload);
+                
+                localStorage.setItem('token',JSON.stringify(token));
+
                 router.push("/patient");
             })
             .on("error", function (error: any) {
