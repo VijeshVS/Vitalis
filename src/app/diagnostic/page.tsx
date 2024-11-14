@@ -217,8 +217,10 @@ function DiagnosticReport() {
     const fileName = `${sanitizeFileName(formData.patientName)}_${formData.date}.pdf`;
 
     // Open the PDF in a new window or save with dynamic filename
-    pdf.output('dataurlnewwindow');
+    pdf.output('dataurlnewwindow', { filename: fileName });
     pdf.save(fileName);
+
+    let blob = pdf.output("blob")
   };
 
   return (
