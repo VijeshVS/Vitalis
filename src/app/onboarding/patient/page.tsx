@@ -6,6 +6,7 @@ import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import PATIENT_ABI from "@/../contracts/patient.abi.json";
 import Web3 from "web3";
 import { toast } from "sonner";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 export default function Onboarding() {
     const [reg, setReg] = useState(true);
@@ -66,9 +67,17 @@ export default function Onboarding() {
             .send({
                 from: account,
             })
-            .on("receipt", function (receipt: any) {
+            .on("receipt", async function (receipt: any) {
                 toast.success("Patient registered successfully");
                 setReg(false);
+
+                const address = account;
+                const type = "patient";
+                const payload = {address,type};
+                const token = await generateToken(payload);
+                
+                localStorage.setItem('token',JSON.stringify(token));
+
                 router.push("/patient");
             })
             .on("error", function (error: any) {
@@ -83,10 +92,8 @@ export default function Onboarding() {
                 <title>Onboarding</title>
             </Head>
 
-            <div className="flex items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
-                <h1 className="text-3xl font-bold text-white">
-                    Patient Registration
-                </h1>
+            <div style={{ backgroundImage: "url('/onbpat.png')" }}
+             className="flex items-center bg-center bg-cover flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-100 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">

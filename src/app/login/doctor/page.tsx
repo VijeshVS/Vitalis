@@ -5,6 +5,7 @@ import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import doctorABI from "@/../contracts/doctor.abi.json";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 const DoctorLogin = () => {
     const router = useRouter();
@@ -38,10 +39,18 @@ const DoctorLogin = () => {
         contract.methods
             .doesDoctorExist(account)
             .call()
-            .then((res) => {
+            .then(async (res) => {
                 console.log(res);
                 if (res) {
                     toast.success("Doctor logged in successfully !!");
+
+                    // creating a session of 4hrs
+                    const address = account;
+                    const type = "doctor";
+                    const payload = { address, type };
+                    const token = await generateToken(payload);
+                    localStorage.setItem("token", token);
+
                     router.push("/doctor");
                 } else {
                     toast.error("Doctor not registered!!");
@@ -52,7 +61,7 @@ const DoctorLogin = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <div style={{ backgroundImage: "url('/doctorLoginbg.png')" }} className="flex bg-cover bg-center justify-center items-center min-h-screen bg-gray-50">
             <div className="text-center p-6 rounded-lg shadow-lg bg-white w-80">
                 <h3 className="text-xl font-semibold mb-6">Doctor Login</h3>
                 <div className="space-y-4">

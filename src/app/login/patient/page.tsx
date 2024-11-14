@@ -7,6 +7,7 @@ import PatientContractABI from "@/../contracts/patient.abi.json";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import Web3 from "web3";
 import { toast } from "sonner";
+import { generateToken } from "@/lib/actions/jwtLogics";
 
 // Placeholder Ethereum logo URL
 const ethereumLogoUrl =
@@ -47,21 +48,29 @@ export default function Login() {
         contract.methods
             .doesPatientExist(account)
             .call()
-            .then((res) => {
+            .then(async (res) => {
                 console.log(res);
                 if (res) {
                     toast.success("Patient logged in successfully !!");
+
+                    // creating a session of 4hrs
+                    const address = account;
+                    const type = "patient";
+                    const payload = { address, type };
+                    const token = await generateToken(payload);
+                    localStorage.setItem("token", JSON.stringify(token));
                     router.push("/patient");
                 } else {
                     toast.error("Patient not registered!!");
                     router.push("/onboarding/patient");
                 }
                 setLog(false);
-        });
+            });
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div style={{ backgroundImage: "url('/patientloginbg.png')" }} 
+         className="flex items-center bg-cover bg-center justify-center h-screen bg-gray-100">
             <div className="w-80 p-6 bg-white rounded-lg shadow-lg text-center">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                     Patient Login
