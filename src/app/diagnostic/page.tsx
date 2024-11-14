@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -11,7 +11,7 @@ function DiagnosticReport() {
     wbc: "",
     platelets: "",
     sgpt: "",
-    date: "",
+    date: "", // This will be set in useEffect
     doctorName: "",
     patientName: "",
     summary: "",
@@ -28,6 +28,16 @@ function DiagnosticReport() {
       }
     ]
   });
+
+  // Set the current date in the format YYYY-MM-DD
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+    setFormData(prevData => ({
+      ...prevData,
+      date: formattedDate
+    }));
+  }, []); // Empty dependency array to run only once on mount
 
   const handleChange = (e) => {
     const { name, value, checked, type } = e.target;
@@ -77,12 +87,10 @@ function DiagnosticReport() {
   };
 
   const deleteMedicine = (indexToRemove) => {
-    if (true) {
-      setFormData({
-        ...formData,
-        medicines: formData.medicines.filter((_, index) => index !== indexToRemove)
-      });
-    }
+    setFormData({
+      ...formData,
+      medicines: formData.medicines.filter((_, index) => index !== indexToRemove)
+    });
   };
 
   const generatePDF = () => {
@@ -92,12 +100,12 @@ function DiagnosticReport() {
     const pageWidth = pdf.internal.pageSize.width;
 
     // White background
-    pdf.setFillColor(255, 255, 255); // Pure white
+    pdf.setFillColor(255, 255, 255);
     pdf.rect(0, 0, pageWidth, pdf.internal.pageSize.height, 'F');
 
     // Add VITALIS header in deep blue
     pdf.setFontSize(36);
-    pdf.setTextColor(0, 73, 158); // Deep, rich blue
+    pdf.setTextColor(0, 73, 158);
     pdf.setFont('helvetica', 'bold');
     
     // Calculate width of the text to center it
@@ -108,10 +116,9 @@ function DiagnosticReport() {
 
     // Prepare data for the table
     const tableData = Object.entries(formData)
-      .filter(([key]) => key !== 'summary' && key !== 'medicines') // Exclude summary and medicines from main table
+      .filter(([key]) => key !== 'summary' && key !== 'medicines')
       .map(([key, value]) => [
-        key.replace(/([A-Z])/g, ' $1')
-          .replace(/^./, str => str.toUpperCase()), // Capitalize first letter
+        key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
         value
       ]);
 
@@ -124,12 +131,12 @@ function DiagnosticReport() {
       styles: {
         fontSize: 12,
         cellPadding: 5,
-        textColor: [0, 0, 0], // Black text
-        lineColor: [200, 200, 200], // Light gray lines
+        textColor: [0, 0, 0],
+        lineColor: [200, 200, 200],
         lineWidth: 0.5
       },
- headStyles: {
-        fillColor: [255, 255, 255], // Match background color
+      headStyles: {
+        fillColor: [255, 255, 255],
         textColor: [0, 0, 0],
         fontSize: 14,
         fontStyle: 'bold'
@@ -143,7 +150,7 @@ function DiagnosticReport() {
       },
       tableWidth: 'auto',
       margin: { 
-        left: (pageWidth - 160) / 2, // Center the table
+        left: (pageWidth - 160) / 2,
         right: (pageWidth - 160) / 2 
       }
     };
@@ -154,7 +161,7 @@ function DiagnosticReport() {
     pdf.setFontSize(14);
     pdf.setTextColor(0, 0, 0);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('Diagnostic Summary', (pageWidth / 2) -  30, pdf.previousAutoTable.finalY + 20);
+    pdf.text('Diagnostic Summary', (pageWidth / 2) - 30, pdf.previousAutoTable.finalY + 20);
 
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(12);
@@ -186,12 +193,12 @@ function DiagnosticReport() {
       pdf.text(medicineLines, (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 50 + (index * 10));
     });
 
-    if (formData.medicines.length == 0) {
+    if (formData.medicines.length === 0) {
       pdf.text(pdf.splitTextToSize("No medicines prescribed", 160), (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 50 + (0 * 10));
     }
 
     // Add a subtle border around the table
-    pdf.setDrawColor(200, 200, 200); // Light gray border
+    pdf.setDrawColor(200, 200, 200);
     pdf.rect(
       tableOptions.margin.left, 
       tableOptions.startY, 
@@ -203,7 +210,7 @@ function DiagnosticReport() {
     // Generate filename based on patient name and date
     const sanitizeFileName = (name) => {
       return name
-        .replace(/[^a-z0-9]/gi, '_') // Replace non-alphanumeric characters with underscore
+        .replace(/[^a-z0-9]/gi, '_')
         .toLowerCase();
     };
     
@@ -236,7 +243,7 @@ function DiagnosticReport() {
                   .map((key) => (
                   <tr key={key} className="border-b border-gray-300">
                     <td className="py-3 text-gray-800 font-medium">
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str .toUpperCase())}
                     </td>
                     <td className="py-3">
                       <input
@@ -289,7 +296,7 @@ function DiagnosticReport() {
                         />
                       </div>
                     </td>
-                    <td className=" text-black p-4">
+                    <td className="text-black p-4">
                       <div className="grid grid-cols-3 gap-4">
                         <div>
                           <p className="font-semibold text-gray-700 mb-2">Breakfast</p>
@@ -362,17 +369,16 @@ function DiagnosticReport() {
                             After
                           </label>
                         </div>
-                      
                       </div>
                       <div className="w-full flex flex-row justify-center">
                         <button
-                type="button"
-                onClick={() => deleteMedicine(index)}
-                className=" mt-2 bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-              >
-                Delete Medicine
-              </button>
-                        </div>
+                          type="button"
+                          onClick={() => deleteMedicine(index)}
+                          className="mt-2 bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                        >
+                          Delete Medicine
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
