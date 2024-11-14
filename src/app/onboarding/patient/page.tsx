@@ -92,10 +92,8 @@ export default function Onboarding() {
                 <title>Onboarding</title>
             </Head>
 
-            <div className="flex items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
-                <h1 className="text-3xl font-bold text-white">
-                    Patient Registration
-                </h1>
+            <div style={{ backgroundImage: "url('/onbpat.png')" }}
+             className="flex items-center bg-center bg-cover flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-100 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">

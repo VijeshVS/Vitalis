@@ -22,7 +22,8 @@ const OnboardingPage = () => {
     },[])
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
+        <div style={{ backgroundImage: "url('/onboardgen.png')" }} 
+         className="flex flex-col bg-cover bg-center items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
             <div className="bg-white shadow-lg rounded-lg p-8 md:p-12 lg:p-16 w-11/12 max-w-md">
                 <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Welcome to Onboarding</h1>
                 <p className="text-center text-gray-600 mb-8">Select your profile to get started</p>

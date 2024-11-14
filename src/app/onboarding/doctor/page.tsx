@@ -85,12 +85,9 @@ export default function Onboarding() {
 
     return (
         <>
-            <Head>
-                <title>Onboarding</title>
-            </Head>
-
-            <div className="flex items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white">
-                <h1 className="text-3xl font-bold">Doctor Registration</h1>
+            <div  style={{ backgroundImage: "url('/onbdoc.png')" }} 
+             className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white">
+                
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-900 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">
@@ -112,7 +109,7 @@ export default function Onboarding() {
                     </div>
 
                     <h1 className="text-3xl font-semibold mb-6">
-                        Welcome! Let's get you set up
+                        Welcome Doctor ! Let's get you set up
                     </h1>
 
                     {/* Form Fields */}
