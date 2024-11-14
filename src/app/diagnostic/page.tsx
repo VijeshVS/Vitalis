@@ -5,23 +5,84 @@ import 'jspdf-autotable';
 
 function DiagnosticReport() {
   const [formData, setFormData] = useState({
-    bloodPressure: "120/80 mmHg",
-    sao2: "98%",
-    hemoglobin: "12 g/dL",
-    wbc: "8000/µL",
-    platelets: "250,000/µL",
-    sgpt: "20 U/L",
-    date: "2023-11-13",
-    doctorName: "Dr. John Doe",
-    patientName: "Jane Smith"
+    bloodPressure: "",
+    sao2: "",
+    hemoglobin: "",
+    wbc: "",
+    platelets: "",
+    sgpt: "",
+    date: "",
+    doctorName: "",
+    patientName: "",
+    summary: "",
+    medicines: [
+      { 
+        name: "", 
+        dosage: "", 
+        beforeBreakfast: false,
+        afterBreakfast: false, 
+        beforeLunch: false,
+        afterLunch: false, 
+        beforeDinner: false,
+        afterDinner: false 
+      }
+    ]
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
+
+    if (name.startsWith('medicine')) {
+      const [_, index, field] = name.split('_');
+
+      const updatedMedicines = formData.medicines.map((med, i) => {
+        if (i === parseInt(index, 10)) {
+          return { 
+            ...med, 
+            [field]: type === 'checkbox' ? checked : value 
+          };
+        }
+        return med;
+      });
+
+      setFormData({
+        ...formData,
+        medicines: updatedMedicines
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+  };
+
+  const addMedicine = () => {
     setFormData({
       ...formData,
-      [name]: value
+      medicines: [
+        ...formData.medicines,
+        { 
+          name: "", 
+          dosage: "", 
+          beforeBreakfast: false,
+          afterBreakfast: false, 
+          beforeLunch: false,
+          afterLunch: false, 
+          beforeDinner: false,
+          afterDinner: false 
+        }
+      ]
     });
+  };
+
+  const deleteMedicine = (indexToRemove) => {
+    if (true) {
+      setFormData({
+        ...formData,
+        medicines: formData.medicines.filter((_, index) => index !== indexToRemove)
+      });
+    }
   };
 
   const generatePDF = () => {
@@ -29,11 +90,10 @@ function DiagnosticReport() {
 
     // Page dimensions
     const pageWidth = pdf.internal.pageSize.width;
-    const pageHeight = pdf.internal.pageSize.height;
 
     // White background
     pdf.setFillColor(255, 255, 255); // Pure white
-    pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+    pdf.rect(0, 0, pageWidth, pdf.internal.pageSize.height, 'F');
 
     // Add VITALIS header in deep blue
     pdf.setFontSize(36);
@@ -47,11 +107,13 @@ function DiagnosticReport() {
     pdf.text('VITALIS', x, 30);
 
     // Prepare data for the table
-    const tableData = Object.entries(formData).map(([key, value]) => [
-      key.replace(/([A-Z])/g, ' $1')
-        .replace(/^./, str => str.toUpperCase()), // Capitalize first letter
-      value
-    ]);
+    const tableData = Object.entries(formData)
+      .filter(([key]) => key !== 'summary' && key !== 'medicines') // Exclude summary and medicines from main table
+      .map(([key, value]) => [
+        key.replace(/([A-Z])/g, ' $1')
+          .replace(/^./, str => str.toUpperCase()), // Capitalize first letter
+        value
+      ]);
 
     // Table options
     const tableOptions = {
@@ -66,7 +128,7 @@ function DiagnosticReport() {
         lineColor: [200, 200, 200], // Light gray lines
         lineWidth: 0.5
       },
-      headStyles: {
+ headStyles: {
         fillColor: [255, 255, 255], // Match background color
         textColor: [0, 0, 0],
         fontSize: 14,
@@ -88,6 +150,46 @@ function DiagnosticReport() {
 
     pdf.autoTable(tableOptions);
 
+    // Add Summary section
+    pdf.setFontSize(14);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Diagnostic Summary', (pageWidth / 2) -  30, pdf.previousAutoTable.finalY + 20);
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(12);
+    
+    // Wrap summary text
+    const summaryLines = pdf.splitTextToSize(formData.summary, 160);
+    pdf.text(summaryLines, (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 30);
+
+    // Add Medicines section
+    pdf.setFontSize(14);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Medicines', (pageWidth / 2) - 20, pdf.previousAutoTable.finalY + 40);
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(12);
+    
+    formData.medicines.forEach((med, index) => {
+      const checkedMedicines = [];
+      if (med.beforeBreakfast) checkedMedicines.push('Before Breakfast');
+      if (med.afterBreakfast) checkedMedicines.push('After Breakfast');
+      if (med.beforeLunch) checkedMedicines.push('Before Lunch');
+      if (med.afterLunch) checkedMedicines.push('After Lunch');
+      if (med.beforeDinner) checkedMedicines.push('Before Dinner');
+      if (med.afterDinner) checkedMedicines.push('After Dinner');
+      
+      const medicineText = `${med.name} (${med.dosage}): ${checkedMedicines.join(', ')}`;
+      const medicineLines = pdf.splitTextToSize(medicineText, 160);
+      pdf.text(medicineLines, (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 50 + (index * 10));
+    });
+
+    if (formData.medicines.length == 0) {
+      pdf.text(pdf.splitTextToSize("No medicines prescribed", 160), (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 50 + (0 * 10));
+    }
+
     // Add a subtle border around the table
     pdf.setDrawColor(200, 200, 200); // Light gray border
     pdf.rect(
@@ -104,7 +206,7 @@ function DiagnosticReport() {
         .replace(/[^a-z0-9]/gi, '_') // Replace non-alphanumeric characters with underscore
         .toLowerCase();
     };
-
+    
     const fileName = `${sanitizeFileName(formData.patientName)}_${formData.date}.pdf`;
 
     // Open the PDF in a new window or save with dynamic filename
@@ -113,40 +215,192 @@ function DiagnosticReport() {
   };
 
   return (
-    <div className="bg-neutral-800 p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-white">Diagnostic Report</h2>
-      <div className="mb-4">
-        <table className="w-full border-collapse border border-gray-600">
-          <thead>
-            <tr>
-              <th className="border border-gray-600 p-2 text-left text-white">Parameter</th>
-              <th className="border border-gray-600 p-2 text-left text-white">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(formData).map((key) => (
-              <tr key={key}>
-                <td className="border border-gray-600 p-2 text-white">{key.replace(/([A-Z])/g, ' $1')}</td>
-                <td className="border border-gray-600 p-2 text-white">
-                  <input
-                    type="text"
-                    name={key}
-                    value={formData[key]}
-                    onChange={handleChange}
-                    className="bg-neutral-700 text-white p-1 rounded"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl bg-neutral-100 rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-blue-600 text-white p-6">
+          <h2 className="text-3xl font-bold text-center">Patient Diagnostic Report</h2>
+        </div>
+        
+        <div className="p-8">
+          <div className="mb-6">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className="text-left text-gray-700 pb-2">Parameter</th>
+                  <th className="text-left text-gray-700 pb-2">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(formData)
+                  .filter(key => key !== 'summary' && key !== 'medicines')
+                  .map((key) => (
+                  <tr key={key} className="border-b border-gray-300">
+                    <td className="py-3 text-gray-800 font-medium">
+                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                    </td>
+                    <td className="py-3">
+                      <input
+                        type="text"
+                        name={key}
+                        value={formData[key]}
+                        onChange={handleChange}
+                        placeholder={`Enter ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
+                        className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </td>
+                  </tr>
+                ))}
+                
+                {/* Summary Section */}
+                <tr className="border-b border-gray-300">
+                  <td className="py-3 text-gray-800 font-medium">Summary</td>
+                  <td className="py-3">
+                    <textarea
+                      name="summary"
+                      value={formData.summary}
+                      onChange={handleChange}
+                      rows={4}
+                      placeholder="Enter diagnostic summary..."
+                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+                    />
+                  </td>
+                </tr>
+
+                {/* Medicines Section */}
+                {formData.medicines.map((med, index) => (
+                  <tr key={`medicine_${index}`} className="border-b border-gray-300">
+                    <td className="py-3">
+                      <div className="flex flex-col space-y-2">
+                        <input
+                          type="text"
+                          name={`medicine_${index}_name`}
+                          value={med.name}
+                          onChange={handleChange}
+                          placeholder="Medicine Name"
+                          className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <input
+                          type="text"
+                          name={`medicine_${index}_dosage`}
+                          value={med.dosage}
+                          onChange={handleChange}
+                          placeholder="Dosage"
+                          className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </td>
+                    <td className=" text-black p-4">
+                      <div className="grid grid-cols-3 gap-4">
+                        <div>
+                          <p className="font-semibold text-gray-700 mb-2">Breakfast</p>
+                          <label className="flex items-center mb-2">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_beforeBreakfast`}
+                              checked={med.beforeBreakfast}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            Before
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_afterBreakfast`}
+                              checked={med.afterBreakfast}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            After
+                          </label>
+                        </div>
+                        
+                        <div>
+                          <p className="font-semibold text-gray-700 mb-2">Lunch</p>
+                          <label className="flex items-center mb-2">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_beforeLunch`}
+                              checked={med.beforeLunch}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            Before
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_afterLunch`}
+                              checked={med.afterLunch}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            After
+                          </label>
+                        </div>
+                        
+                        <div>
+                          <p className="font-semibold text-gray-700 mb-2">Dinner</p>
+                          <label className="flex items-center mb-2">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_beforeDinner`}
+                              checked={med.beforeDinner}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            Before
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_afterDinner`}
+                              checked={med.afterDinner}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            After
+                          </label>
+                        </div>
+                      
+                      </div>
+                      <div className="w-full flex flex-row justify-center">
+                        <button
+                type="button"
+                onClick={() => deleteMedicine(index)}
+                className=" mt-2 bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+              >
+                Delete Medicine
+              </button>
+                        </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Button Container */}
+            <div className="flex justify-center space-x-4 mt-6">
+              <button
+                type="button"
+                onClick={addMedicine}
+                className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out"
+              >
+                Add Medicine
+              </button> 
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={generatePDF}
+              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out"
+            >
+              Generate PDF
+            </button>
+          </div>
+        </div>
       </div>
-      <button
-        onClick={generatePDF}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Generate PDF
-      </button>
     </div>
   );
 }
