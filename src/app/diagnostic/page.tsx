@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { useWallet } from '@/hooks/useWallet';
+import router from 'next/router';
 
 function DiagnosticReport() {
+  const [web3, account, loading] = useWallet();
   const [formData, setFormData] = useState({
     bloodPressure: "",
     sao2: "",
@@ -220,8 +223,33 @@ function DiagnosticReport() {
     pdf.output('dataurlnewwindow', { filename: fileName });
     pdf.save(fileName);
 
-    let blob = pdf.output("blob")
+    let blob = pdf.output("blob"); 
+    const formData1 = new FormData();
+    formData1.append("file", blob, fileName);
+
+  // Send the FormData using fetch
+  fetch("http://192.168.137.17:4567/add", {
+    method: "POST",
+    body: formData1,
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("CID:", data.cid); // Log the IPFS CID returned by the server
+    })
+    .catch(error => {
+      console.error("Error uploading to IPFS:", error);
+    });
   };
+
+  if (loading) {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
+
+  if (!loading && !account) {
+    router.push('/onboarding');
+  }
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
