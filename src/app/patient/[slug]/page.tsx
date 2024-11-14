@@ -111,40 +111,40 @@ const page = ({
                 <div className="ml-6 text-black font-semibold">
                     DOB - {data.dob}
                 </div>
-                <div className="ml-6 pl-6 mt-4 bg-gradient-to-br from-green-200 to bg-green-300 w-3/4 p-1 rounded-md text-black font-semibold">
-                    Phone No. - {data.phone}
+                <div className="ml-6 pl-3 mt-4 bg-gradient-to-br from-green-200 to bg-green-300 w-3/4 p-1 rounded-md text-black font-semibold">
+                    {data.phone}
                 </div>
-                <div className="ml-6 pl-6 mt-2 text-black bg-gradient-to-tr from-green-200 to bg-green-300 p-1 w-3/4 rounded-md font-semibold">
-                    Email - {data.email}
+                <div className="ml-6 pl-3 mt-2 text-black bg-gradient-to-tr from-teal-500 w-3/4 overflow-hidden to-teal-500 p-1 rounded-md font-semibold">
+                    {data.email}
                 </div>
-                <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-black text-center">
-                    <div className="p-4 bg-gradient-to-br from-blue-200 to bg-blue-300">
+                <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
+                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.age} years
                         </span>{" "}
                         <br />
-                        <span className="text-neutral-800">Age</span>
+                        <span className="text-neutral-200">Age</span>
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-green-200 to bg-green-300">
+                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.bloodGroup}
                         </span>{" "}
                         <br />
-                        <span className="text-neutral-800">Blood Group</span>
+                        <span className="text-neutral-200">Blood Group</span>
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-green-200 to bg-green-300">
+                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.weight} kg
                         </span>{" "}
                         <br />
-                        <span className="text-neutral-800">Weight</span>
+                        <span className="text-neutral-200">Weight</span>
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-blue-200 to bg-blue-300">
+                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.height} cm
                         </span>{" "}
                         <br />
-                        <span className="text-neutral-800">Height</span>
+                        <span className="text-neutral-200">Height</span>
                     </div>
                 </div>
             </div>
@@ -158,19 +158,19 @@ const page = ({
                     security at all times. Your trust is our utmost priority.
                 </div>
                 <div className="flex md:flex-row flex-col md:space-x-4 justify-center">
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
+                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaSuitcaseMedical />
                         <div className="pt-3">Access Medical Records</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
+                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
+                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaStethoscope />
                         <div className="pt-3">Consult a doctor</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105 duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
+                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <RiMoneyRupeeCircleFill />
                         <div className="pt-3">Sell your data</div>
                     </button>
