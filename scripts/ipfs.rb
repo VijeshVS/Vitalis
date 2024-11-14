@@ -6,38 +6,31 @@ require 'net/http/post/multipart'
 IPFS_API_URL = 'http://127.0.0.1:5001/api/v0'
 IPFS_GATEWAY_URL = 'http://127.0.0.1:8080/ipfs'
 
-# Enable CORS for all routes
 before do
   response.headers['Access-Control-Allow-Origin'] = '*'
   response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
   response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
 end
 
-# Handle preflight (OPTIONS) requests
 options '*' do
   200
 end
 
-# Endpoint to add a file to IPFS
 post '/add' do
   if params[:file]
-    # File upload details from params
     file = params[:file][:tempfile]
     filename = params[:file][:filename]
     file_type = params[:file][:type] || 'application/octet-stream'
 
-    # Set up the request to IPFS
     uri = URI("#{IPFS_API_URL}/add")
     request = Net::HTTP::Post::Multipart.new(
       uri.path,
       "file" => UploadIO.new(file, file_type, filename)
     )
 
-    # Send request to IPFS
     response = Net::HTTP.start(uri.hostname, uri.port) { |http| http.request(request) }
     result = JSON.parse(response.body)
 
-    # Return the CID of the uploaded file
     content_type :json
     { cid: result['Hash'] }.to_json
   else
@@ -46,16 +39,13 @@ post '/add' do
   end
 end
 
-# Endpoint to fetch a file from IPFS by CID
 get '/get/:cid' do
   cid = params[:cid]
   uri = URI("#{IPFS_GATEWAY_URL}/#{cid}")
 
-  # Fetch content from IPFS
   response = Net::HTTP.get_response(uri)
 
   if response.is_a?(Net::HTTPSuccess)
-    # Return the file contents directly
     content_type response['content-type']
     response.body
   else
@@ -64,6 +54,5 @@ get '/get/:cid' do
   end
 end
 
-# Start the server on port 4567 and bind to all network interfaces
 set :port, 4567
 set :bind, '0.0.0.0'
