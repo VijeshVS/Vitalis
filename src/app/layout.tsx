@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -33,8 +34,13 @@ export default function RootLayout({
                 <Navbar />
                 {/* <div className="flex flex-col flex-1 overflow-scroll"> */}
                   {children}
+<<<<<<< HEAD
                   {/* </div> */}
 
+=======
+                  </div>
+                <Toaster/>
+>>>>>>> 30a31e2 (login and onboarding for patients)
                 <Footer />
             </body>
         </html>
