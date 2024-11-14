@@ -110,25 +110,32 @@ const page = ({
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
                 <div className="text-3xl font-semibold">Hello {data.name},</div>
                 <div className="flex flex-row">
-                    <div className="w-2/3"></div>
+                    <div className="w-2/3">
+                    </div>
                     <div className="w-1/3">
-                        <h2 className="text-2xl font-semibold mb-2 text-center">My Patients</h2>
+                        <h2 className="text-2xl font-semibold mb-2 text-center">
+                            My Patients
+                        </h2>
                         <div className="flex flex-col space-y-2">
                             {Object.values(users).map((user, index) => (
                                 <div
                                     key={index}
                                     className="p-2 bg-neutral-100 rounded-md flex flex-row items-center space-x-4"
                                 >
-									<div>
-										<UserProfile email={user.email} width={50} height={50} />
-									</div>
+                                    <div>
+                                        <UserProfile
+                                            email={user.email}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
                                     <div className="flex flex-col">
-									<h2 className="font-bold">
-                                        {user.name}
-                                    </h2>
-                                    <p>Email: {user.email}</p>
-                                    <p>Age: {user.age}</p>
-									</div>
+                                        <h2 className="font-bold">
+                                            {user.name}
+                                        </h2>
+                                        <p>Email: {user.email}</p>
+                                        <p>Age: {user.age}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
