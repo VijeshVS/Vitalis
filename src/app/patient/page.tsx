@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import md5 from "md5";
 import Image from "next/image";
 import { FaSuitcaseMedical } from "react-icons/fa6";
@@ -8,25 +8,20 @@ import { MdOutlineSecurity } from "react-icons/md";
 import { FaStethoscope } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useState } from "react";
+import { checkToken } from "@/lib/actions/jwtLogics";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import Loading from "@/components/Loading";
+import Web3 from "web3";
+import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import PATIENTABI from "@/../contracts/patient.abi.json";
 
-const data = {
-    name: "Samkit Samsukha",
-    gender: "Male",
-    dob: "14/10/2005",
-    phone: "9239089089",
-    email: "samkitsamsukha.is23@rvce.edu.in",
-    age: "19",
-    bloodGroup: "A+",
-    weight: "77",
-    height: "181",
-};
-
-const getGravatarUrl = (email, size = 200) => {
+const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
 
-const UserProfile = ({ email }) => {
+const UserProfile = ({ email }: { email: any }) => {
     const avatarUrl = getGravatarUrl(email);
 
     return (
@@ -40,14 +35,71 @@ const UserProfile = ({ email }) => {
     );
 };
 
-const page = ({
-    params,
-}: {
-    params: {
-        id: string;
+const page = () => {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState({
+        name: "Samkit Samsukha",
+        gender: "Male",
+        dob: "14/10/2005",
+        phone: "9239089089",
+        email: "samkitsamsukha.is23@rvce.edu.in",
+        age: "19",
+        bloodGroup: "A+",
+        weight: "77",
+        height: "181",
+    });
+
+    const router = useRouter();
+
+    const connectAndGetDetails = async () => {
+        const provider = (window as any).ethereum;
+        if (provider) {
+            const new_web3 = new Web3(provider);
+            await new_web3.eth.requestAccounts();
+            const res = await new_web3.eth.getAccounts();
+
+            const contract = new new_web3.eth.Contract(
+                PATIENTABI,
+                PATIENT_CONTRACT_ADDRESS
+            );
+
+            const ans: any = await contract.methods.getPatient().call({
+                from: res[0] as string,
+            });
+
+            const new_data = {
+                name: ans.name,
+                gender: "Male",
+                dob: ans.DOB,
+                phone: ans.phoneNumber,
+                email: ans.email,
+                age: ans.age,
+                bloodGroup: ans.bloodGroup,
+                weight: ans.weight,
+                height: ans.height,
+            };
+
+            setData(new_data);
+            setLoading(false);
+        } else {
+            console.log("Wallet not connected");
+        }
     };
-}) => {
-    console.log(params);
+
+    async function verifyPatient() {
+        const verify = await checkToken(localStorage.getItem("token") || "");
+        if (!verify) {
+            toast.success("Please login to continue");
+            router.push("/login/patient");
+            return;
+        }
+
+        connectAndGetDetails();
+    }
+
+    useEffect(() => {
+        verifyPatient();
+    }, []);
 
     const [appointments, setAppointments] = useState([
         {
@@ -67,7 +119,7 @@ const page = ({
     const [isLoading, setIsLoading] = useState(false);
     const [results, setResults] = useState(null);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         setIsLoading(true);
         try {
@@ -95,12 +147,13 @@ const page = ({
         }
     };
 
+    if (loading) return <Loading />;
+
     return (
         <div className="bg-neutral-200 flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
-                <UserProfile email={data.email} />
-
+                    <UserProfile email={data.email} />
                 </div>
                 <div className="ml-6 mt-4 text-2xl text-blue-950 font-semibold ">
                     {data.name}
@@ -208,11 +261,13 @@ const page = ({
                                     : "Get Recommendation"}
                             </button>
                         </form>
+                        {/* @ts-ignore */}
                         {results?.specialty && (
                             <div className="mt-4">
                                 <h3 className="text-lg font-semibold">
                                     Recommended Specialty:
                                 </h3>
+                                {/* @ts-ignore */}
                                 <p>{results.specialty}</p>
                             </div>
                         )}
@@ -234,15 +289,12 @@ const page = ({
                                         <span className="ml-2 text-gray-600">
                                             {new Date(
                                                 appointment.dateTime
-                                            ).toLocaleDateString(
-                                                "en-US",
-                                                {
-                                                    weekday: "long",
-                                                    year: "numeric",
-                                                    month: "long",
-                                                    day: "numeric",
-                                                }
-                                            )}{" "}
+                                            ).toLocaleDateString("en-US", {
+                                                weekday: "long",
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            })}{" "}
                                             at{" "}
                                             {new Date(
                                                 appointment.dateTime

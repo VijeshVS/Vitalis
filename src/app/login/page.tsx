@@ -1,26 +1,36 @@
 "use client";
+import Loading from "@/components/Loading";
 import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const LoginPage = () => {
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
     async function checkIfLogged() {
-        const verify = await checkToken(localStorage.getItem('token') || "");
-        if(verify){
-            const decoded = (await getDecoded(localStorage.getItem('token') || "")) || {type: ""};
+        const verify = await checkToken(localStorage.getItem("token") || "");
+        if (verify) {
+            const decoded = (await getDecoded(
+                localStorage.getItem("token") || ""
+            )) || { type: "" };
             // @ts-ignore
-            router.push(`${decoded.type}`)
+            router.push(`${decoded.type}`);
             // @ts-ignore
             toast.success(`${decoded.type} already logged in`);
         }
+        else {
+            setLoading(false);
+        }
+        
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checkIfLogged();
-    },[])
+    }, []);
+
+    if (loading) <Loading />;
 
     return (
         <div

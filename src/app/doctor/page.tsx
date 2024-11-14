@@ -1,20 +1,27 @@
 "use client";
 
-import React from "react";
-import md5 from "md5"; // Install using npm install md5
+import React, { useEffect, useState } from "react";
+import md5 from "md5";
 import Image from "next/image";
-import { FaSuitcaseMedical } from "react-icons/fa6";
-import { MdOutlineSecurity } from "react-icons/md";
-import { FaStethoscope } from "react-icons/fa";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import { useState } from "react";
+import { checkToken } from "@/lib/actions/jwtLogics";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import Loading from "@/components/Loading";
 
-const getGravatarUrl = (email, size = 200) => {
+const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
 
-const UserProfile = ({ email, width, height }) => {
+const UserProfile = ({
+    email,
+    width,
+    height,
+}: {
+    email: any;
+    width: any;
+    height: any;
+}) => {
     const avatarUrl = getGravatarUrl(email);
 
     return (
@@ -69,16 +76,30 @@ const data = {
     education: "idk",
     specialization: "idk",
 };
-const page = ({
-    params,
-}: {
-    params: {
-        id: string;
-    };
-}) => {
-    console.log(params);
 
-    return (
+const page = () => {
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+
+    const verifyDoctor = async () => {
+        const verify = await checkToken(localStorage.getItem("token") || "");
+
+        if (!verify) {
+            router.push("/login/doctor");
+            toast.error("Please log in to continue !!");
+            return;
+        }
+
+        // get doctors details
+
+        // setLoading(false);
+    };
+
+    useEffect(() => {}, []);
+
+    return loading ? (
+        <Loading />
+    ) : (
         <div className="bg-neutral-200 flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">

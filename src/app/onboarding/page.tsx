@@ -2,6 +2,7 @@
 import { checkToken, getDecoded } from '@/lib/actions/jwtLogics';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+import { toast } from 'sonner';
 
 const OnboardingPage = () => {
     const router = useRouter();

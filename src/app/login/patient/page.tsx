@@ -58,7 +58,7 @@ export default function Login() {
                     const type = "patient";
                     const payload = { address, type };
                     const token = await generateToken(payload);
-                    localStorage.setItem("token", JSON.stringify(token));
+                    localStorage.setItem("token", token);
                     router.push("/patient");
                 } else {
                     toast.error("Patient not registered!!");
