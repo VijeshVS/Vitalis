@@ -6,6 +6,18 @@ require 'net/http/post/multipart'
 IPFS_API_URL = 'http://127.0.0.1:5001/api/v0'
 IPFS_GATEWAY_URL = 'http://127.0.0.1:8080/ipfs'
 
+# Enable CORS for all routes
+before do
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+end
+
+# Handle preflight (OPTIONS) requests
+options '*' do
+  200
+end
+
 # Endpoint to add a file to IPFS
 post '/add' do
   if params[:file]
@@ -52,6 +64,6 @@ get '/get/:cid' do
   end
 end
 
-# Start the server on port 4567
+# Start the server on port 4567 and bind to all network interfaces
 set :port, 4567
 set :bind, '0.0.0.0'
