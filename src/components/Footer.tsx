@@ -13,7 +13,7 @@ const Footer = () => {
                 ></Image>
                 <div className="text-white font-bold">VITALIS</div>
             </div>
-            <div className="flex flex-row justify-center items-center  space-x-2">
+            <div className="flex flex-row justify-center items-center text-white space-x-2">
                 <p>Copyright</p> <FaRegCopyright />{" "}
                 <p>2024, Cogito Ergo Sum. All rights reserved.</p>
             </div>

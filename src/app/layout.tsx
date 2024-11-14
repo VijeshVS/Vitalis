@@ -28,12 +28,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
             >
                 <Navbar />
-                <div className="flex flex-col flex-1 overflow-scroll">
+                {/* <div className="flex flex-col flex-1 overflow-scroll"> */}
                   {children}
-                  </div>
+                  {/* </div> */}
 
                 <Footer />
             </body>
