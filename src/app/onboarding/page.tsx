@@ -40,15 +40,15 @@ export default function Onboarding() {
                 <title>Onboarding</title>
             </Head>
 
-            <div className="flex items-center justify-center h-screen bg-neutral-800 text-white">
-                <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-900 rounded-lg shadow-lg transform transition-all duration-300">
+            <div className="flex items-center justify-center h-screen bg-white text-black">
+                <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-100 rounded-lg shadow-lg transform transition-all duration-300">
 
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">
                         {[1, 2, 3, 4, 5, 6].map((index) => (
                             <div
                                 key={index}
-                                className="h-1 w-1/6 bg-neutral-700 rounded transition-all duration-500"
+                                className="h-1 w-1/6 bg-neutral-300 rounded transition-all duration-500"
                                 style={{
                                     backgroundImage: step >= index ? 'linear-gradient(to right, #3b82f6, #2563eb)' : 'none',
                                     backgroundSize: '200% 100%',
@@ -71,7 +71,7 @@ export default function Onboarding() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -85,7 +85,7 @@ export default function Onboarding() {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         placeholder="Enter your phone number"
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     />
                                 </div>
                                 <div className="flex flex-col space-y-2">
@@ -96,7 +96,7 @@ export default function Onboarding() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         placeholder="Enter your email address"
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     />
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ export default function Onboarding() {
                                     value={formData.age}
                                     onChange={handleChange}
                                     placeholder="Enter your age"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -123,7 +123,7 @@ export default function Onboarding() {
                                     value={formData.weight}
                                     onChange={handleChange}
                                     placeholder="Enter your weight in kg"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -136,7 +136,7 @@ export default function Onboarding() {
                                     value={formData.height}
                                     onChange={handleChange}
                                     placeholder="Enter your height in cm"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -147,7 +147,7 @@ export default function Onboarding() {
                                     name="bloodGroup"
                                     value={formData.bloodGroup}
                                     onChange={handleChange}
-                                    className="p-3 rounded bg-neutral-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 >
                                     <option value="" disabled>Select your blood group</option>
                                     <option value="A+">A+</option>
@@ -169,7 +169,7 @@ export default function Onboarding() {
                             onClick={prevStep}
                             disabled={step === 1}
                             className={`px-5 py-3 rounded-lg shadow-lg text-lg ${step === 1
-                                    ? 'bg-neutral-600 cursor-not-allowed'
+                                    ? 'bg-neutral-400 cursor-not-allowed'
                                     : 'bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1'
                                 }`}
                         >
