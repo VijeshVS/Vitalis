@@ -10,3 +10,12 @@ export async function generateToken(payload: any){
     return token;
 }
 
+export async function checkToken(token: string){
+    try {
+        jwt.verify(token,JWT_SECRET_KEY);
+        return true;
+    }
+    catch(e) {
+        return false;
+    }
+}
