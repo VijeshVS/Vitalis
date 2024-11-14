@@ -57,7 +57,7 @@ export default function Login() {
                     router.push("/onboarding/patient");
                 }
                 setLog(false);
-            });
+        });
     };
 
     return (
