@@ -33,14 +33,9 @@ export default function RootLayout({
             >
                 <Navbar />
                 {/* <div className="flex flex-col flex-1 overflow-scroll"> */}
-                  {children}
-<<<<<<< HEAD
-                  {/* </div> */}
-
-=======
-                  </div>
-                <Toaster/>
->>>>>>> 30a31e2 (login and onboarding for patients)
+                {children}
+                {/* </div> */}
+                <Toaster />
                 <Footer />
             </body>
         </html>
