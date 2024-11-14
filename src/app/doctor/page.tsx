@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const page = () => {
 	return (
-		<div className="bg-neutral-800 flex flex-row text-white h-screen">
+		<div className="bg-white-800 flex flex-row text-white h-screen">
 			<div className="w-1/4 bg-gradient-to-br from-green-200 to-green-300 ">
 				<div className="ml-4 mt-4 ">
 					<Image

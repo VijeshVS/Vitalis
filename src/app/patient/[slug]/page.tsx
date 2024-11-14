@@ -75,8 +75,8 @@ const page = ({
     };
 
     return (
-        <div className="bg-neutral-800 flex flex-row text-white h-screen">
-            <div className="w-1/4 bg-gradient-to-br from-blue-200 to-blue-300 ">
+        <div className="bg-neutral-200 flex flex-row text-black">
+            <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
                     <Image
                         src="/samplehero.png"
@@ -95,35 +95,35 @@ const page = ({
                 <div className="ml-6 text-black font-semibold">
                     DOB - {data.dob}
                 </div>
-                <div className="ml-6 mt-4 bg-green-100 w-3/4 p-1 rounded-md text-black font-semibold">
+                <div className="ml-6 pl-6 mt-4 bg-gradient-to-br from-green-200 to bg-green-300 w-3/4 p-1 rounded-md text-black font-semibold">
                     Phone No. - {data.phone}
                 </div>
-                <div className="ml-6 mt-2 text-black bg-green-100 p-1 w-3/4 rounded-md font-semibold">
+                <div className="ml-6 pl-6 mt-2 text-black bg-gradient-to-tr from-green-200 to bg-green-300 p-1 w-3/4 rounded-md font-semibold">
                     Email - {data.email}
                 </div>
                 <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-black text-center">
-                    <div className="p-4 bg-blue-100">
+                    <div className="p-4 bg-gradient-to-br from-blue-200 to bg-blue-300">
                         <span className="font-semibold text-xl">
                             {data.age} years
                         </span>{" "}
                         <br />
                         <span className="text-neutral-800">Age</span>
                     </div>
-                    <div className="p-4 bg-green-100">
+                    <div className="p-4 bg-gradient-to-br from-green-200 to bg-green-300">
                         <span className="font-semibold text-xl">
                             {data.bloodGroup}
                         </span>{" "}
                         <br />
                         <span className="text-neutral-800">Blood Group</span>
                     </div>
-                    <div className="p-4 bg-green-100">
+                    <div className="p-4 bg-gradient-to-br from-green-200 to bg-green-300">
                         <span className="font-semibold text-xl">
                             {data.weight} kg
                         </span>{" "}
                         <br />
                         <span className="text-neutral-800">Weight</span>
                     </div>
-                    <div className="p-4 bg-blue-100">
+                    <div className="p-4 bg-gradient-to-br from-blue-200 to bg-blue-300">
                         <span className="font-semibold text-xl">
                             {data.height} cm
                         </span>{" "}
@@ -142,26 +142,26 @@ const page = ({
                     security at all times. Your trust is our utmost priority.
                 </div>
                 <div className="flex md:flex-row flex-col md:space-x-4 justify-center">
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:from-blue-300 hover:to-blue-400 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
+                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
                         <FaSuitcaseMedical />
                         <div className="pt-3">Access Medical Records</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:from-green-300 hover:to-green-400 duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
+                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:from-blue-300 hover:to-blue-400 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
+                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105 duration-300 transition-all border-blue-900 border-[1px] rounded-md bg-gradient-to-br from-blue-200 to bg-blue-300">
                         <FaStethoscope />
                         <div className="pt-3">Consult a doctor</div>
                     </button>
-                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:from-green-300 hover:to-green-400 duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
+                    <button className="text-black p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105 duration-300 transition-all border-green-900 border-[1px] rounded-md bg-gradient-to-br from-green-200 to bg-green-300">
                         <RiMoneyRupeeCircleFill />
                         <div className="pt-3">Sell your data</div>
                     </button>
                 </div>
                 <div className="flex flex-row">
                     <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-bold mb-4 border-b-2 w-fit">
+                        <h2 className="text-2xl font-bold mb-4 w-fit">
                             Symptom Checker
                         </h2>
                         <form onSubmit={handleSubmit}>
@@ -185,7 +185,7 @@ const page = ({
                             </div>
                             <button
                                 type="submit"
-                                className="bg-blue-500 hover:bg-blue-700 duration-300 transition-all text-white font-bold py-2 px-4 rounded"
+                                className="bg-blue-300 hover:bg-blue-400 duration-300 transition-all text-black font-bold py-2 px-4 rounded"
                             >
                                 {isLoading
                                     ? "Loading..."
@@ -194,7 +194,7 @@ const page = ({
                         </form>
                         {results?.specialty && (
                             <div className="mt-4">
-                                <h3 className="text-lg text-white font-semibold">
+                                <h3 className="text-lg font-semibold">
                                     Recommended Specialty:
                                 </h3>
                                 <p>{results.specialty}</p>
@@ -202,7 +202,7 @@ const page = ({
                         )}
                     </div>
                     <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-bold mb-4 border-b-2 w-fit">
+                        <h2 className="text-2xl font-bold mb-4 w-fit">
                             Future Appointments
                         </h2>
                         <ul>
@@ -215,7 +215,7 @@ const page = ({
                                         <span className="font-medium">
                                             {appointment.doctorName}
                                         </span>
-                                        <span className="ml-2 text-gray-400">
+                                        <span className="ml-2 text-gray-600">
                                             {new Date(
                                                 appointment.dateTime
                                             ).toLocaleDateString(
