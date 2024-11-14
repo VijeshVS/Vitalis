@@ -1,7 +1,7 @@
 'use server'
 
 import jwt from 'jsonwebtoken'
-const JWT_SECRET_KEY = process.env.SECRET_KEY || "testKey";
+const JWT_SECRET_KEY = "testKey";
 
 export async function generateToken(payload: any){
     const expiryTime = '4h';
@@ -18,4 +18,10 @@ export async function checkToken(token: string){
     catch(e) {
         return false;
     }
+}
+
+export async function getDecoded(token: string){
+    const ans = jwt.decode(token);
+
+    return ans;
 }

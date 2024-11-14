@@ -1,9 +1,26 @@
 "use client";
+import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
+import { toast } from "sonner";
 
 const LoginPage = () => {
     const router = useRouter();
+
+    async function checkIfLogged() {
+        const verify = await checkToken(localStorage.getItem('token') || "");
+        if(verify){
+            const decoded = (await getDecoded(localStorage.getItem('token') || "")) || {type: ""};
+            // @ts-ignore
+            router.push(`${decoded.type}`)
+            // @ts-ignore
+            toast.success(`${decoded.type} already logged in`);
+        }
+    }
+
+    useEffect(()=>{
+        checkIfLogged();
+    },[])
 
     return (
         <div
