@@ -69,7 +69,8 @@ export default function Login() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div style={{ backgroundImage: "url('/patientloginbg.png')" }} 
+         className="flex items-center bg-cover bg-center justify-center h-screen bg-gray-100">
             <div className="w-80 p-6 bg-white rounded-lg shadow-lg text-center">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                     Patient Login

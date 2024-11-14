@@ -1,9 +1,25 @@
 "use client"
+import { checkToken, getDecoded } from '@/lib/actions/jwtLogics';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const OnboardingPage = () => {
     const router = useRouter();
+
+    async function checkIfLogged() {
+        const verify = await checkToken(localStorage.getItem('token') || "");
+        if(verify){
+            const decoded = (await getDecoded(localStorage.getItem('token') || "")) || {type: ""};
+            // @ts-ignore
+            router.push(`${decoded.type}`)
+            // @ts-ignore
+            toast.success(`${decoded.type} already logged in`);
+        }
+    }
+
+    useEffect(()=>{
+        checkIfLogged();
+    },[])
 
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
