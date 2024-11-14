@@ -96,7 +96,7 @@ const page = ({
     };
 
     return (
-        <div className="bg-neutral-200 flex flex-row text-black">
+        <div className="bg-neutral-200 flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
                 <UserProfile email={data.email} />
