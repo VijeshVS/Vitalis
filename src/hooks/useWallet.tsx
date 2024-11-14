@@ -23,7 +23,7 @@ export function useWallet(){
         connectWallet().then(()=>{
             setLoading(false);
         })
-    },[window.ethereum])
+    },[])
 
     return [web3,accounts,loading];
 }

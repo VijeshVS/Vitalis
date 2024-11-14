@@ -30,7 +30,7 @@ export default function Onboarding() {
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e:any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -40,7 +40,8 @@ export default function Onboarding() {
                 <title>Onboarding</title>
             </Head>
 
-            <div className="flex items-center justify-center h-screen bg-white text-black">
+            <div className="flex items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
+            <h1 className='text-3xl font-bold text-white'>Patient Registration</h1>
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-100 rounded-lg shadow-lg transform transition-all duration-300">
 
                     {/* Progress Bar */}
