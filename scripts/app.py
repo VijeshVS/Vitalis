@@ -16,7 +16,7 @@ def recommend_doctor():
     symptoms = request.json['symptoms']
     age = request.json['age']
     doctors = request.json['doctors']
-    prompt = f"Given the symptoms: {symptoms}, age: {age}, suggest the best applicable type of doctor I should see among {doctors}. Please provide a single, concise answer."
+    prompt = f"Given the symptoms: {symptoms}, for the given patient's age of {age}, suggest the best applicable type of doctor I should see among {doctors}. Please provide a single, concise answer."
     response = model.generate_content(prompt)
     specialty = response.candidates[0].content.parts[0].text
     return jsonify({'specialty': specialty})
