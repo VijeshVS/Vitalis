@@ -10,7 +10,7 @@ function DiagnosticReport() {
   const [formData, setFormData] = useState({
     bloodPressure: "",
     sao2: "",
-    hemoglobin: "",
+    haemoglobin: "",
     wbc: "",
     platelets: "",
     sgpt: "",
@@ -254,7 +254,7 @@ function DiagnosticReport() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-neutral-100 rounded-2xl shadow-lg overflow-hidden">
-        <div className="bg-blue-600 text-white p-6">
+        <div className="bg-gradient-to-r from-teal-800 to-teal-500 text-white p-6">
           <h2 className="text-3xl font-bold text-center">Patient Diagnostic Report</h2>
         </div>
         

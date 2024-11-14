@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import md5 from "md5";
 import Image from "next/image";
 import { FaSuitcaseMedical } from "react-icons/fa6";
 import { MdOutlineSecurity } from "react-icons/md";
@@ -13,12 +14,32 @@ const data = {
     gender: "Male",
     dob: "14/10/2005",
     phone: "9239089089",
-    email: "samkit@gmail.com",
+    email: "samkitsamsukha.is23@rvce.edu.in",
     age: "19",
     bloodGroup: "A+",
     weight: "77",
     height: "181",
 };
+
+const getGravatarUrl = (email, size = 200) => {
+    const hash = md5(email.trim().toLowerCase());
+    return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
+};
+
+const UserProfile = ({ email }) => {
+    const avatarUrl = getGravatarUrl(email);
+
+    return (
+        <Image
+            src={avatarUrl}
+            alt="User Profile Picture"
+            width={200}
+            height={200}
+            className="rounded-full"
+        />
+    );
+};
+
 const page = ({
     params,
 }: {
@@ -78,13 +99,8 @@ const page = ({
         <div className="bg-neutral-200 flex flex-row text-black">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
-                    <Image
-                        src="/samplehero.png"
-                        height={200}
-                        width={200}
-                        alt="User  Profile Picture"
-                        className="rounded-full border-[1px] border-blue-900"
-                    ></Image>
+                <UserProfile email={data.email} />
+
                 </div>
                 <div className="ml-6 mt-4 text-2xl text-blue-950 font-semibold ">
                     {data.name}

@@ -3,7 +3,7 @@ import { FaRegCopyright } from "react-icons/fa";
 import Image from "next/image";
 const Footer = () => {
     return (
-        <div className="fixed bottom-0 w-full bg-gradient-to-r from-teal-950 via-teal-800 to-teal-400 p-2">
+        <div className="bottom-0 w-full bg-gradient-to-r from-teal-950 via-teal-800 to-teal-400 p-2">
             <div className="flex flex-row space-x-1 justify-center items-center">
                 <Image
                     src={"/whitelogo.png"}
