@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import md5 from "md5";
@@ -21,7 +21,7 @@ import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {
-        return "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+        return "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
     }
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
@@ -74,8 +74,6 @@ const page = () => {
             email: "",
         },
     ]);
-
-
 
     const connectAndGetDetails = async () => {
         const provider = (window as any).ethereum;
@@ -132,7 +130,7 @@ const page = () => {
 
         //@ts-ignore
         if (decoded?.type == "doctor") {
-            router.push('/doctor')
+            router.push("/doctor");
             toast.info("You are a doctor !!");
         }
 
@@ -191,150 +189,196 @@ const page = () => {
 
     return (
         <div className="bg-neutral-200 flex flex-row text-black flex-1">
-            <div className="w-1/4 bg-neutral-100 p-5">
+            <div className="w-1/4 flex flex-col items-center bg-neutral-50 p-6 rounded-lg shadow-lg">
                 <motion.div
-                    whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="ml-4 mt-4 "
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="ml-4 mt-4"
                 >
-                    <UserProfile email={data.email} width={200} height={200} />
+                    <UserProfile
+                        email={data.email}
+                        width={200}
+                        height={200}
+                        className="rounded-full shadow-md"
+                    />
                 </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }} className="ml-6 mt-4 text-2xl text-black font-semibold ">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="mt-4 text-2xl text-gray-800 font-bold tracking-wide"
+                >
                     {data.name}
                 </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }} className="ml-6 mt-4 text-black font-semibold">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="mt-4 text-gray-700 font-medium"
+                >
                     Gender: {data.gender}
                 </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }} className="ml-6 text-black font-semibold">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-gray-700 font-medium"
+                >
                     DOB: {data.dob}
                 </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-sm pl-4 mt-4 bg-gradient-to-r from-teal-500 via-teal-600 to-teal-700 w-3/4 p-2 rounded-md text-white shadow-lg font-semibold"
+                >
                     {data.phone}
                 </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-sm pl-4 mt-2 bg-gradient-to-r from-cyan-500 to-cyan-700 w-3/4 p-2 rounded-md text-white shadow-lg font-semibold"
+                >
                     {data.email}
                 </motion.div>
-                <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
-                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
 
-                        className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
-                        <span className="font-semibold text-xl">
-                            {data.age} years
-                        </span>{" "}
-                        <br />
-                        <span className="text-neutral-200">Age</span>
-                    </motion.div>
-                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-
-                        className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
-                        <span className="font-semibold text-xl">
-                            {data.bloodGroup}
-                        </span>{" "}
-                        <br />
-                        <span className="text-neutral-200">Blood Group</span>
-                    </motion.div>
-                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-
-                        className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
-                        <span className="font-semibold text-xl">
-                            {data.weight} kg
-                        </span>{" "}
-                        <br />
-                        <span className="text-neutral-200">Weight</span>
-                    </motion.div>
-                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-
-                        className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
-                        <span className="font-semibold text-xl">
-                            {data.height} cm
-                        </span>{" "}
-                        <br />
-                        <span className="text-neutral-200">Height</span>
-                    </motion.div>
+                <div className="mt-6 grid grid-cols-2 gap-3 w-3/4 text-white text-center">
+                    {[
+                        {
+                            label: "Age",
+                            value: `${data.age} years`,
+                            colors: "from-cyan-500 to-cyan-700",
+                        },
+                        {
+                            label: "Blood Group",
+                            value: data.bloodGroup,
+                            colors: "from-teal-500 to-teal-700",
+                        },
+                        {
+                            label: "Weight",
+                            value: `${data.weight} kg`,
+                            colors: "from-teal-500 to-teal-700",
+                        },
+                        {
+                            label: "Height",
+                            value: `${data.height} cm`,
+                            colors: "from-cyan-500 to-cyan-700",
+                        },
+                    ].map((item, index) => (
+                        <motion.div
+                            key={index}
+                            whileInView={{ scale: 1, opacity: 1 }}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 70,
+                                damping: 15,
+                                delay: 0.2 * index,
+                            }}
+                            className={`p-4 bg-gradient-to-br ${item.colors} rounded-lg shadow-md`}
+                        >
+                            <span className="font-bold text-lg">
+                                {item.value}
+                            </span>
+                            <br />
+                            <span className="text-neutral-300 text-sm">
+                                {item.label}
+                            </span>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
-            <motion.div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
 
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: 100, opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-3xl font-semibold w-fit">Hello {data.name}, </motion.div>
-                <motion.div whileInView={{ x: 0, opacity: 1 }}
-                    initial={{ x: 100, opacity: 0 }}
-                    transition={{ duration: 0.5 }}
+            <motion.div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-3xl font-semibold w-fit"
+                >
+                    Hello {data.name},{" "}
+                </motion.div>
+                <motion.div
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                 >
                     At Vitalis, we prioritize providing top-notch facilities for
                     our patients. We are committed to ensuring their comfort and
                     well-being. Additionally, we implement robust measures to
                     safeguard patient data, maintaining confidentiality and
                     security at all times. Your trust is our utmost priority.
-                </motion.div >
+                </motion.div>
+
                 <motion.div className="flex md:flex-row flex-col md:space-x-4 justify-center">
-                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+                    <motion.button
+                        whileInView={{ scale: 1, opacity: 1 }}
                         initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800"
+                    >
                         <FaSuitcaseMedical />
-                        <div className="pt-3">Access Medical Records</div>
+                        <div
+                            className="pt-3"
+                            onClick={() => router.push("/medicalrecords")}
+                        >
+                            Access Medical Records
+                        </div>
                     </motion.button>
-                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+                    <motion.button
+                        whileInView={{ scale: 1, opacity: 1 }}
                         initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800"
+                    >
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
                     </motion.button>
-                    <motion.button onClick={() => router.push('/book')} whileInView={{ scale: 1, opacity: 1 }}
+                    <motion.button
+                        onClick={() => router.push("/book")}
+                        whileInView={{ scale: 1, opacity: 1 }}
                         initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800"
+                    >
                         <FaStethoscope />
                         <div className="pt-3">Consult a doctor</div>
                     </motion.button>
-                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+                    <motion.button
+                        whileInView={{ scale: 1, opacity: 1 }}
                         initial={{ scale: 0.5, opacity: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800"
+                    >
                         <RiMoneyRupeeCircleFill />
                         <div className="pt-3">Sell your data</div>
                     </motion.button>
                 </motion.div>
-                <motion.div whileInView={{ y: 0, opacity: 1 }}
+                <motion.div
+                    whileInView={{ y: 0, opacity: 1 }}
                     initial={{ y: 100, opacity: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="flex flex-row">
-                    <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-bold mb-4 w-fit">
+                    className="flex flex-row"
+                >
+                    <div className="py-8 w-1/2 mx-auto flex flex-col space-y-6">
+                        <h2 className="text-3xl font-bold mb-4 text-gray-800">
                             Symptom Checker
                         </h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="flex flex-col space-y-2">
                                 <label
                                     htmlFor="symptoms"
-                                    className="block text-sm font-medium mb-1"
+                                    className="block text-lg font-semibold text-gray-700"
                                 >
-                                    Symptoms:
+                                    Enter Your Symptoms:
                                 </label>
                                 <textarea
                                     id="symptoms"
-                                    placeholder="Enter the symptoms here"
-                                    rows={2}
-                                    className="shadow resize-none appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    placeholder="Describe your symptoms in detail..."
+                                    rows={4}
+                                    className="shadow-sm resize-none appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                                     value={symptoms}
                                     onChange={(e) =>
                                         setSymptoms(e.target.value)
@@ -343,28 +387,44 @@ const page = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="bg-gradient-to-br from-cyan-600 to-cyan-800 duration-300 transition-all text-white font-bold py-2 px-4 rounded"
+                                className={`bg-gradient-to-r from-teal-500 via-cyan-600 to-cyan-800 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-600 ${
+                                    isLoading && "cursor-wait"
+                                }`}
                             >
-                                {isLoading
-                                    ? "Loading..."
-                                    : "Get Recommendation"}
+                                {isLoading ? (
+                                    <span className="flex items-center justify-center space-x-2">
+                                        <span className="loader border-t-2 border-white rounded-full w-5 h-5 animate-spin"></span>
+                                        <span>Analyzing...</span>
+                                    </span>
+                                ) : (
+                                    "Get Recommendation"
+                                )}
                             </button>
                         </form>
-                        {/* @ts-ignore */}
                         {results?.specialty && (
-                            <div className="mt-4">
-                                <h3 className="text-lg font-semibold mt-4">
+                            <div className="mt-6 bg-gray-100 p-6 rounded-lg shadow-inner">
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">
                                     Recommended Specialty:
                                 </h3>
-                                {/* @ts-ignore */}
-                                <p>{results.specialty}</p>
-                                {/* @ts-ignore */}
-                                <button className = "px-2 mt-2 py-1 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white font-semibold " onClick={()=>router.push(`/book?sp=${results.specialty}`)} href={`/book?sp=${results.specialty}`}>Book an Appointment</button>
+                                <p className="text-lg text-teal-700 font-medium">
+                                    {results.specialty}
+                                </p>
+                                <button
+                                    className="mt-4 bg-gradient-to-r from-teal-600 to-teal-800 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                                    onClick={() =>
+                                        router.push(
+                                            `/book?sp=${results.specialty}`
+                                        )
+                                    }
+                                >
+                                    Book an Appointment
+                                </button>
                             </div>
                         )}
                     </div>
+
                     <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-bold mb-4 w-fit">
+                        <h2 className="text-3xl font-bold mb-4 w-fit">
                             Future Appointments
                         </h2>
                         <ul>
@@ -374,11 +434,16 @@ const page = () => {
                                     className="flex items-center justify-between p-2"
                                 >
                                     <div className=" flex flex-row items-center bg-white space-x-4 p-2 w-3/4 rounded-md">
-                                        <UserProfile email={appointment.email} width={50} height={50} />
+                                        <UserProfile
+                                            email={appointment.email}
+                                            width={50}
+                                            height={50}
+                                        />
                                         <div className="flex flex-col">
                                             <span className="font-medium">
                                                 {/* @ts-ignore */}
-                                                {appointment.name} |{" "} {appointment.specialization}
+                                                {appointment.name} |{" "}
+                                                {appointment.specialization}
                                             </span>
                                             <span className="text-gray-600">
                                                 {appointment.dateTime}

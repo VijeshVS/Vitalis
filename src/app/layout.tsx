@@ -33,7 +33,9 @@ export default function RootLayout({
             >
                 <Navbar />
                 {/* <div className="flex flex-col flex-1 overflow-scroll"> */}
-                {children}
+                <div className="mt-[65px]">
+                    {children}
+                </div>
                 {/* </div> */}
                 <Toaster />
                 <Footer />
