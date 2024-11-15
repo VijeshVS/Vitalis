@@ -88,7 +88,7 @@ export default function Onboarding() {
     return (
         <>
             <div style={{ backgroundImage: "url('/onbdoc.png')" }}
-             className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white">
+                className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white">
 
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-900 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
@@ -183,7 +183,49 @@ export default function Onboarding() {
                                 </div>
                             </div>
                         )}
-                        {/* Other steps remain unchanged */}
+                        {step === 4 && (
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-lg">
+                                    License Number
+                                </label>
+                                <input
+                                    type="string"
+                                    name="licensenum"
+                                    value={formData.licensenum}
+                                    onChange={handleChange}
+                                    placeholder="Enter your License Number"
+                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                />
+                            </div>
+                        )}
+                        {step === 5 && (
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-lg">Education </label>
+                                <input
+                                    type="text"
+                                    name="education"
+                                    value={formData.education}
+                                    onChange={handleChange}
+                                    placeholder="Enter your College Name"
+                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                />
+                            </div>
+                        )}
+                        {step === 6 && (
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-lg">
+                                    Specialization{" "}
+                                </label>
+                                <input
+                                    type="text"
+                                    name="spec"
+                                    value={formData.spec}
+                                    onChange={handleChange}
+                                    placeholder="Enter your Specialization"
+                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                />
+                            </div>
+                        )}
                     </div>
 
                     {/* Navigation Buttons */}
@@ -191,11 +233,10 @@ export default function Onboarding() {
                         <button
                             onClick={prevStep}
                             disabled={step === 1}
-                            className={`px-5 py-3 rounded-lg shadow-lg text-lg ${
-                                step === 1
-                                    ? "bg-neutral-600 cursor-not-allowed"
-                                    : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
-                            }`}
+                            className={`px-5 py-3 rounded-lg shadow-lg text-lg ${step === 1
+                                ? "bg-neutral-600 cursor-not-allowed"
+                                : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                                }`}
                         >
                             Previous
                         </button>
