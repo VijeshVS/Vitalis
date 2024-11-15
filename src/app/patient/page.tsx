@@ -20,6 +20,9 @@ import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress"
 import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
+    if (!email) {
+        return "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+    }
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
@@ -34,11 +37,11 @@ const UserProfile = ({
     height: any;
 }) => {
     const avatarUrl = getGravatarUrl(email);
-
+    
     return (
         <Image
-            src={avatarUrl}
-            alt="User  Profile Picture"
+        src={avatarUrl}
+        alt="User  Profile Picture"
             width={width}
             height={height}
             className="rounded-full"
@@ -72,31 +75,31 @@ const page = () => {
         },
     ]);
 
-    const router = useRouter();
-
+    
+    
     const connectAndGetDetails = async () => {
         const provider = (window as any).ethereum;
         if (provider) {
             const new_web3 = new Web3(provider);
             await new_web3.eth.requestAccounts();
             const res = await new_web3.eth.getAccounts();
-
+            
             const contract = new new_web3.eth.Contract(
                 PATIENTABI,
                 PATIENT_CONTRACT_ADDRESS
             );
-
+            
             const appoint_contract = new new_web3.eth.Contract(
                 APPOINT_ABI,
                 APPOINTMENT_CONTRACT_ADDRESS
             );
-
+            
             const ans: any = await contract.methods.getPatient().call({
                 from: res[0] as string,
             });
 
             const appoints: any = await appoint_contract.methods
-                .getPatientAppointments(res[0])
+            .getPatientAppointments(res[0])
                 .call({
                     from: res[0] as string,
                 });
@@ -112,10 +115,10 @@ const page = () => {
                 weight: ans.weight,
                 height: ans.height,
             };
-
+            
             console.log(appoints);
             setAppointments(appoints);
-
+            
             setData(new_data);
             setLoading(false);
         } else {
@@ -132,20 +135,22 @@ const page = () => {
             router.push('/doctor')
             toast.info("You are a doctor !!");
         }
-
+        
         if (!verify) {
             toast.success("Please login to continue");
             router.push("/login/patient");
             return;
         }
-
+        
         connectAndGetDetails();
     }
-
+    
     useEffect(() => {
         verifyPatient();
     }, []);
 
+    const router = useRouter();
+    
     const [symptoms, setSymptoms] = useState("");
     const [age, setAge] = useState("19");
     const [doctors, setDoctors] = useState(
@@ -296,7 +301,7 @@ transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
                     </motion.button>
-                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+                    <motion.button onClick={()=>router.push('/book')} whileInView={{ scale: 1, opacity: 1 }}
 initial={{ scale: 0.5, opacity: 0 }}
 transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaStethoscope />
@@ -345,13 +350,6 @@ transition={{ duration: 0.5 }}
                                     : "Get Recommendation"}
                             </button>
                         </form>
-                        <button type="submit" className="bg-blue-300 hover:bg-blue-400 mt-8 duration-300 transition-all text-black font-bold py-2 px-4 rounded"
-                        >
-                            {isLoading
-                                    ? "Loading..."
-                                    : "Submit Data"}
-                            
-                        </button>
                         {/* @ts-ignore */}
                         {results?.specialty && (
                             <div className="mt-4">
@@ -378,8 +376,7 @@ transition={{ duration: 0.5 }}
                                         <div className="flex flex-col">
                                             <span className="font-medium">
                                                 {/* @ts-ignore */}
-                                                {appointment.name} |{" "}
-                                                {/* {appointment.specialization} */}
+                                                {appointment.name} |{" "} {appointment.specialization}
                                             </span>
                                             <span className="text-gray-600">
                                                 {appointment.dateTime}
