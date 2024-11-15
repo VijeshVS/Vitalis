@@ -21,11 +21,8 @@ import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
 import PATIENT_ABI from "@/../contracts/patient.abi.json";
-<<<<<<< HEAD
 import { useSearchParams } from "next/navigation";
-=======
 import { toast } from "sonner";
->>>>>>> a0db672 (commit)
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -61,7 +58,6 @@ const Page = () => {
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
     const [doctors, setDoctors] = useState([]);
 
-<<<<<<< HEAD
     const specializations = {
         "": "All Specializations",
         "General Physician": "General Physician",
@@ -82,7 +78,6 @@ const Page = () => {
         Rheumatology: "Rheumatology",
         Anesthesiology: "Anesthesiology",
     };
-=======
     const [bookLoading,setBookLoading] = useState(false);
 
     useEffect(() => {
@@ -101,7 +96,6 @@ const Page = () => {
             if (toastId) toast.dismiss(toastId);
         };
     }, [bookLoading]);
->>>>>>> a0db672 (commit)
 
     const handleSpecializationChange = (event: any) => {
         setSelectedSpecialization(event.target.value);
@@ -171,18 +165,12 @@ const Page = () => {
                     from: res[0],
                 });
 
-<<<<<<< HEAD
-            const doctorDetails = await docContract.methods.getDoctor().call({
-                from: res[0],
-            });
-=======
             const doctorDetails: any = await docContract.methods
                 // @ts-ignore
                 .getDoctor(filteredDoctors[index].docAddress)
                 .call({
                     from: res[0],
                 });
->>>>>>> a0db672 (commit)
 
             const details = await contract.methods
                 .createAppointment(
