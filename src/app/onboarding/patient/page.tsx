@@ -62,7 +62,8 @@ export default function Onboarding() {
                 formData.email,
                 formData.weight,
                 formData.height,
-                formData.bloodGroup
+                formData.bloodGroup,
+                "Male"
             )
             .send({
                 from: account,

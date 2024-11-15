@@ -92,14 +92,14 @@ const page = () => {
 
             const new_data = {
                 name: ans.name,
-                gender: "Male",
+                gender: ans.gender,
                 dob: ans.DOB,
                 phone: ans.phoneNumber,
                 email: ans.email,
                 age: ans.age,
                 bloodGroup: ans.bloodGroup,
                 weight: ans.weight,
-                height: ans.height,
+                height: ans.height
             };
 
             console.log(appoints);
