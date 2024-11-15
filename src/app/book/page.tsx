@@ -53,7 +53,9 @@ const UserProfile = ({
 
 const Page = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [selectedSpecialization, setSelectedSpecialization] = useState(searchParams?.[1] || "");
+    const [selectedSpecialization, setSelectedSpecialization] = useState(
+        searchParams?.[1] || ""
+    );
     const [loading, setLoading] = useState(true);
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
     const [doctors, setDoctors] = useState([]);
@@ -78,7 +80,7 @@ const Page = () => {
         Rheumatology: "Rheumatology",
         Anesthesiology: "Anesthesiology",
     };
-    const [bookLoading,setBookLoading] = useState(false);
+    const [bookLoading, setBookLoading] = useState(false);
 
     useEffect(() => {
         let toastId: any;
@@ -138,7 +140,7 @@ const Page = () => {
     });
 
     async function handleAddingAppointment(index: any) {
-        setBookLoading(true)
+        setBookLoading(true);
         const provider = (window as any).ethereum;
         if (provider) {
             const new_web3 = new Web3(provider);
@@ -187,8 +189,10 @@ const Page = () => {
                 .send({
                     from: res[0],
                 });
-            toast.success(`Appointment with ${doctorDetails.name} booked successfully`)
-            setTimeout(()=>setBookLoading(false),5000)
+            toast.success(
+                `Appointment with ${doctorDetails.name} booked successfully`
+            );
+            setTimeout(() => setBookLoading(false), 5000);
         }
     }
 
@@ -197,9 +201,11 @@ const Page = () => {
     return (
         <div className="flex flex-row flex-1">
             <div className="w-1/4 bg-neutral-100 p-4">
-                <h3 className="font-semibold text-xl">Select Specialization</h3>
+                <h3 className="font-semibold text-2xl text-center">
+                    Select Specialization
+                </h3>
 
-                <div className="mt-2 p-2 rounded flex flex-col overflow-scroll">
+                <div className="mt-2 p-2 rounded flex flex-col items-center">
                     {Object.entries(specializations).map(([key, value]) => (
                         <label
                             key={key}

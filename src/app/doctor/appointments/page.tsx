@@ -12,6 +12,9 @@ import Web3 from "web3";
 import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
+import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
+import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
+
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
@@ -63,7 +66,18 @@ const page = () => {
                 APPOINT_ABI,
                 APPOINTMENT_CONTRACT_ADDRESS
             );
+            const docContract = new new_web3.eth.Contract(
+                DOCTOR_ABI,
+                DOCTOR_CONTRACT_ADDRESS
+            );
 
+            const docDetails: any = await docContract.methods
+                .getDoctor(res[0])
+                .call({
+                    from: res[0],
+                });
+            console.log(docDetails);
+            setData(docDetails);
             const details: any = await contract.methods
                 .getDoctorAppointments(res[0])
                 .call({
@@ -103,29 +117,41 @@ const page = () => {
         <Loading />
     ) : (
         <div className="bg-neutral-200 flex flex-row text-black flex-1 min-h-screen">
-            <div className="w-1/4 bg-neutral-100 p-5">
-                <div className="ml-4 mt-4 ">
-                    <UserProfile email={data.email} width={200} height={300} />
+            <div className="w-1/4 bg-neutral-100 p-6 rounded-lg shadow-md">
+                <div className="flex flex-col items-center">
+                    <UserProfile
+                        email={data.contact.emailId}
+                        width={200}
+                        height={300}
+                        className="rounded-md shadow-lg"
+                    />
                 </div>
-                <div className="ml-6 mt-4 text-2xl text-black font-semibold ">
-                    Dr. {data.name}
-                    <br />
-                    <span className="text-xl font-normal text-neutral-800">
-                        License No. - {data.license}
-                    </span>
+                <div className="mt-6 text-center">
+                    <h2 className="text-2xl font-bold text-gray-800">
+                        Dr. {data.name}
+                    </h2>
+                    <p className="text-lg text-gray-600 font-medium">
+                        License No. - {data.licenceNumber}
+                    </p>
                 </div>
-                <div className="ml-6 pl-3 p-1 mt-4 w-3/4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md">
-                    <span className="font-semibold">Qualification:</span>
-                    <br />
-                    Education: {data.education}
-                    <br />
-                    Specialization: {data.specialization}
+                <div className="mt-6 w-full p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-lg shadow-md">
+                    <h3 className="font-semibold text-lg">Qualification</h3>
+                    <p className="mt-1 text-sm">
+                        <span className="font-semibold">Education:</span>{" "}
+                        {data.education}
+                    </p>
+                    <p className="mt-1 text-sm">
+                        <span className="font-semibold">Specialization:</span>{" "}
+                        {data.specialization}
+                    </p>
                 </div>
-                <div className="ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white text-sm">
-                    {data.phone}
+                <div className="mt-4 w-full p-3 bg-gradient-to-br from-teal-600 to-teal-800 text-white rounded-lg shadow-md flex items-center">
+                    <span className="material-icons text-xl mr-2">phone</span>
+                    <p className="text-sm">{data.contact.phoneNumber}</p>
                 </div>
-                <div className="ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-teal-600 w-3/4 overflow-hidden to-teal-800 p-1 rounded-md text-sm">
-                    {data.email}
+                <div className="mt-3 w-full p-3 bg-gradient-to-br from-teal-600 to-teal-800 text-white rounded-lg shadow-md flex items-center">
+                    <span className="material-icons text-xl mr-2">email</span>
+                    <p className="text-sm truncate">{data.contact.emailId}</p>
                 </div>
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
@@ -133,30 +159,36 @@ const page = () => {
                 <div className="grid grid-cols-2 gap-8">
                     {/* @ts-ignore */}
                     {appointments.map((appointment, index) => (
-                        <div key={index} className="flex items-center justify-between bg-white p-2 rounded-md">
-                            <div className="flex flex-row space-x-4  justify-between items-center">
+                        <div
+                            key={index}
+                            className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                        >
+                            <div className="flex flex-row space-x-4 items-center">
                                 <UserProfile
                                     email={appointment.patientEmail}
-                                    width={50}
-                                    height={50}
+                                    width={60}
+                                    height={60}
+                                    className="rounded-full shadow-sm"
                                 />
                                 <div className="flex flex-col">
-                                    <p className="text-xl font-semibold">
+                                    <p className="text-lg font-bold text-gray-800">
                                         {appointment.patientName ||
                                             "Unknown User"}
                                     </p>
-                                    <p>
+                                    <p className="text-sm text-gray-500">
                                         {appointment.patientEmail ||
-                                            "Unknown User"}
+                                            "Unknown Email"}
                                     </p>
-                                    <p>
-                                        {appointment.dateTime}
+                                    <p className="text-sm text-gray-400">
+                                        {new Date(
+                                            appointment.dateTime
+                                        ).toLocaleString()}
                                     </p>
                                 </div>
                             </div>
                             <Link
-                                className="flex flex-row justify-center items-center rounded-md px-2 h-fit py-1 bg-gradient-to-br hover:scale-105 duration-300 transition-all from-cyan-600 to-cyan-800 text-white"
                                 href={`/diagnostic/${appointment.patient}`}
+                                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-md shadow hover:from-cyan-600 hover:to-cyan-800 focus:outline-none focus:ring focus:ring-cyan-300 hover:scale-105 transform transition-all duration-300"
                             >
                                 Generate Diagnosis
                             </Link>

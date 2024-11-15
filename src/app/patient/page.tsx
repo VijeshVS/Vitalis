@@ -188,7 +188,7 @@ const page = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className="bg-neutral-200 flex flex-row text-black flex-1">
+        <div className="bg-neutral-200 min-h-screen flex flex-row text-black flex-1">
             <div className="w-1/4 flex flex-col items-center bg-neutral-50 p-6 rounded-lg shadow-lg">
                 <motion.div
                     whileInView={{ opacity: 1, y: 0 }}
@@ -322,7 +322,7 @@ const page = () => {
                         <FaSuitcaseMedical />
                         <div
                             className="pt-3"
-                            onClick={() => router.push("/medicalrecords")}
+                            onClick={() => router.push("/patient/medicalrecords")}
                         >
                             Access Medical Records
                         </div>

@@ -282,222 +282,175 @@ function DiagnosticReport() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-neutral-100 rounded-2xl shadow-lg overflow-hidden">
-        <div className="bg-gradient-to-r from-teal-800 to-teal-500 text-white p-6">
-          <h2 className="text-3xl font-bold text-center">Patient Diagnostic Report</h2>
-        </div>
-        
-        <div className="p-8">
-          <div className="mb-6">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="text-left text-gray-700 pb-2">Parameter</th>
-                  <th className="text-left text-gray-700 pb-2">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(formData)
-                  .filter(key => key !== 'summary' && key !== 'medicines' && key !== 'confirmPassword' && key !== 'password') // Exclude confirm password
-                  .map((key) => (
-                  <tr key={key} className="border-b border-gray-300">
-                    <td className="py-3 text-gray-800 font-medium">
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                    </td>
-                    <td className="py-3">
-                      <input
-                        type="text"
-                        name={key}
-                        value={formData[key]}
-                        onChange={handleChange}
-                        placeholder={`Enter ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
-                        className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </td>
-                  </tr>
-                ))}
-                
-                {/* Password Section */}
-                <tr className="border-b border-gray-300">
-                  <td className="py-3 text-gray-800 font-medium">Password</td>
-                  <td className="py-3">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+  <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg overflow-hidden">
+    {/* Header */}
+    <div className="bg-gradient-to-r from-teal-800 to-teal-500 text-white p-8 text-center">
+      <h2 className="text-3xl font-extrabold">Patient Diagnostic Report</h2>
+    </div>
+
+    {/* Body */}
+    <div className="p-10">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-200 text-left text-sm uppercase tracking-wider text-gray-600">
+              <th className="py-4 px-6">Parameter</th>
+              <th className="py-4 px-6">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Dynamic Form Data */}
+            {Object.keys(formData)
+              .filter(
+                (key) =>
+                  key !== "summary" &&
+                  key !== "medicines" &&
+                  key !== "confirmPassword" &&
+                  key !== "password"
+              )
+              .map((key) => (
+                <tr key={key} className="border-b border-gray-300">
+                  <td className="py-4 px-6 text-gray-800 font-medium">
+                    {key
+                      .replace(/([A-Z])/g, " $1")
+                      .replace(/^./, (str) => str.toUpperCase())}
+                  </td>
+                  <td className="py-4 px-6">
                     <input
-                      type="password"
-                      name="password"
-                      value={formData.password}
+                      type="text"
+                      name={key}
+                      value={formData[key]}
                       onChange={handleChange}
-                      placeholder="Enter password"
-                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder={`Enter ${key
+                        .replace(/([A-Z])/g, " $1")
+                        .toLowerCase()}`}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                   </td>
                 </tr>
+              ))}
 
-                {/* Confirm Password Section */}
-                <tr className="border-b border-gray-300">
-                  <td className="py-3 text-gray-800 font-medium">Confirm Password</td>
-                  <td className="py-3">
+            {/* Password Inputs */}
+            {["Password", "Confirm Password"].map((field, idx) => (
+              <tr key={field} className="border-b border-gray-300">
+                <td className="py-4 px-6 text-gray-800 font-medium">
+                  {field}
+                </td>
+                <td className="py-4 px-6">
+                  <input
+                    type="password"
+                    name={field.toLowerCase().replace(" ", "")}
+                    value={formData[field.toLowerCase().replace(" ", "")]}
+                    onChange={handleChange}
+                    placeholder={`Enter ${field.toLowerCase()}`}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                </td>
+              </tr>
+            ))}
+
+            {/* Summary */}
+            <tr className="border-b border-gray-300">
+              <td className="py-4 px-6 text-gray-800 font-medium">Summary</td>
+              <td className="py-4 px-6">
+                <textarea
+                  name="summary"
+                  value={formData.summary}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Enter diagnostic summary..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-y"
+                />
+              </td>
+            </tr>
+
+            {/* Medicines */}
+            {formData.medicines.map((med, index) => (
+              <tr key={`medicine_${index}`} className="border-b border-gray-300">
+                <td className="py-4 px-6">
+                  <div className="space-y-3">
                     <input
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
+                      type="text"
+                      name={`medicine_${index}_name`}
+                      value={med.name}
                       onChange={handleChange}
-                      placeholder="Confirm password"
-                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Medicine Name"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
-                  </td>
-                </tr>
-
-                {/* Summary Section */}
-                <tr className="border-b border-gray-300">
-                  <td className="py-3 text-gray-800 font-medium">Summary</td>
-                  <td className="py-3">
-                    <textarea
-                      name="summary"
-                      value={formData.summary}
+                    <input
+                      type="text"
+                      name={`medicine_${index}_dosage`}
+                      value={med.dosage}
                       onChange={handleChange}
-                      rows={4}
-                      placeholder="Enter diagnostic summary..."
-                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+                      placeholder="Dosage"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
-                  </td>
-                </tr>
-
-                {/* Medicines Section */}
-                {formData.medicines.map((med, index) => (
-                  <tr key={`medicine_${index}`} className="border-b border-gray-300">
-                    <td className="py-3">
-                      <div className="flex flex-col space-y-2">
-                        <input
-                          type="text"
-                          name={`medicine_${index}_name`}
-                          value={med.name}
-                          onChange={handleChange}
-                          placeholder="Medicine Name"
-                          className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        <input
-                          type="text"
-                          name={`medicine_${ index}_dosage`}
-                          value={med.dosage}
-                          onChange={handleChange}
-                          placeholder="Dosage"
-                          className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                  </div>
+                </td>
+                <td className="py-4 px-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    {["Breakfast", "Lunch", "Dinner"].map((meal) => (
+                      <div key={meal}>
+                        <p className="font-semibold text-gray-700 mb-1">
+                          {meal}
+                        </p>
+                        {["Before", "After"].map((time) => (
+                          <label
+                            key={time}
+                            className="flex items-center text-sm mb-2"
+                          >
+                            <input
+                              type="checkbox"
+                              name={`medicine_${index}_${time.toLowerCase()}${meal}`}
+                              checked={med[`${time.toLowerCase()}${meal}`]}
+                              onChange={handleChange}
+                              className="mr-2"
+                            />
+                            {time}
+                          </label>
+                        ))}
                       </div>
-                    </td>
-                    <td className="text-black p-4">
-                      <div className="grid grid-cols-3 gap-4">
-                        <div>
-                          <p className="font-semibold text-gray-700 mb-2">Breakfast</p>
-                          <label className="flex items-center mb-2">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_beforeBreakfast`}
-                              checked={med.beforeBreakfast}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            Before
-                          </label>
-                          <label className="flex items-center">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_afterBreakfast`}
-                              checked={med.afterBreakfast}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            After
-                          </label>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold text-gray-700 mb-2">Lunch</p>
-                          <label className="flex items-center mb-2">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_beforeLunch`}
-                              checked={med.beforeLunch}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            Before
-                          </label>
-                          <label className="flex items-center">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_afterLunch`}
-                              checked={med.afterLunch}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            After
-                          </label>
-                        </div>
-                        
-                        <div>
-                          <p className="font-semibold text-gray-700 mb-2">Dinner</p>
-                          <label className="flex items-center mb-2">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_beforeDinner`}
-                              checked={med.beforeDinner}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            Before
-                          </label>
-                          <label className="flex items-center">
-                            <input
-                              type="checkbox"
-                              name={`medicine_${index}_afterDinner`}
-                              checked={med.afterDinner}
-                              onChange={handleChange}
-                              className="mr-2"
-                            />
-                            After
-                          </label>
-                        </div>
-                      </div>
-                      <div className="w-full flex flex-row justify-center">
-                        <button
-                          type="button"
-                          onClick={() => deleteMedicine(index)}
-                          className="mt-2 bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
-                        >
-                          Delete Medicine
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => deleteMedicine(index)}
+                    className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                  >
+                    Delete Medicine
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-            {/* Button Container */}
-            <div className="flex justify-center space-x-4 mt-6">
-              <button
-                type="button"
-                onClick={addMedicine}
-                className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out"
-              >
-                Add Medicine
-              </button> 
-            </div>
-          </div>
+      {/* Add Medicine Button */}
+      <div className="flex justify-center mt-6">
+        <button
+          type="button"
+          onClick={addMedicine}
+          className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300"
+        >
+          Add Medicine
+        </button>
+      </div>
 
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={addDiag}
-              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out"
-            >
-              Generate PDF
-            </button>
-          </div>
-        </div>
+      {/* Generate PDF Button */}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={addDiag}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+        >
+          Generate PDF
+        </button>
       </div>
     </div>
+  </div>
+</div>
+
   );
 }
 
