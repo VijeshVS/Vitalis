@@ -13,6 +13,26 @@ function DiagnosticReport() {
   const patientAddress = params.address;
   const router = useRouter();
 
+  const [toastLoading,setToastLoading] = useState(false);
+
+  useEffect(() => {
+    let toastId: any;
+
+    if (toastLoading) {
+        toastId = toast("Generating report ...", {
+            icon: "⏳",
+            duration: Infinity,
+        });
+    } else {
+        toast.dismiss(toastId);
+    }
+
+    return () => {
+        if (toastId) toast.dismiss(toastId);
+    };
+}, [toastLoading]);
+
+
   const [formData, setFormData] = useState({
     bloodPressure: "",
     sao2: "",
@@ -105,6 +125,7 @@ function DiagnosticReport() {
   };
 
   const generatePDF = () => {
+    setToastLoading(true);
     // Validate passwords
     console.log(formData.password)
     console.log(formData.confirmpassword)
@@ -281,6 +302,8 @@ function DiagnosticReport() {
       toast.success("Diagnosis report generated successfully !!");
       console.log(ans);
       router.push('/doctor/appointments');
+
+      setTimeout(()=>setToastLoading(false),4000);
     }
   }
 
