@@ -248,7 +248,7 @@ function DiagnosticReport() {
     formData1.append("file", blob, fileName);
 
     // Send the FormData using fetch
-    fetch("http://192.168.138.35:4567/add", {
+    fetch("https://65hqhf12-7000.inc1.devtunnels.ms/add", {
       method: "POST",
       body: formData1,
     })
