@@ -14,7 +14,7 @@ export default function Onboarding() {
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
-        dob: "dob",
+        dob: "",
         email: "",
         age: "",
         weight: "",
@@ -74,10 +74,10 @@ export default function Onboarding() {
 
                 const address = account;
                 const type = "patient";
-                const payload = {address,type};
+                const payload = { address, type };
                 const token = await generateToken(payload);
-                
-                localStorage.setItem('token',JSON.stringify(token));
+
+                localStorage.setItem('token', JSON.stringify(token));
 
                 router.push("/patient");
             })
@@ -177,28 +177,40 @@ export default function Onboarding() {
                         )}
                         {step === 4 && (
                             <div className="flex flex-col space-y-2">
-                                <label className="text-lg">Weight (kg)</label>
+                                <label className="text-lg">Date of Birth</label>
                                 <input
-                                    type="number"
-                                    name="weight"
-                                    value={formData.weight}
+                                    type="date"
+                                    name="dob"
+                                    value={formData.dob}
                                     onChange={handleChange}
-                                    placeholder="Enter your weight in kg"
                                     className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
                         {step === 5 && (
-                            <div className="flex flex-col space-y-2">
-                                <label className="text-lg">Height (cm)</label>
-                                <input
-                                    type="number"
-                                    name="height"
-                                    value={formData.height}
-                                    onChange={handleChange}
-                                    placeholder="Enter your height in cm"
-                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                />
+                            <div className="flex flex-col space-y-4">
+                                <div className="flex flex-col space-y-2">
+                                    <label className="text-lg">Weight (kg)</label>
+                                    <input
+                                        type="number"
+                                        name="weight"
+                                        value={formData.weight}
+                                        onChange={handleChange}
+                                        placeholder="Enter your weight in kg"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col space-y-2">
+                                    <label className="text-lg">Height (cm)</label>
+                                    <input
+                                        type="number"
+                                        name="height"
+                                        value={formData.height}
+                                        onChange={handleChange}
+                                        placeholder="Enter your height in cm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    />
+                                </div>
                             </div>
                         )}
                         {step === 6 && (
@@ -241,9 +253,9 @@ export default function Onboarding() {
                         </button>
                         <button
                             onClick={nextStep}
-                            className="px-5 py-3 bg-blue-600 rounded-lg shadow-lg text-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                            className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow-lg text-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
                         >
-                            {step < 6 ? "Next" : "Finish"}
+                            {step === 6 ? "Submit" : "Next"}
                         </button>
                     </div>
                 </div>
