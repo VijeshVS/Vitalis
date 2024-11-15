@@ -23,15 +23,23 @@ const getGravatarUrl = (email: any, size = 200) => {
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
 
-const UserProfile = ({ email }: { email: any }) => {
+const UserProfile = ({
+    email,
+    width,
+    height,
+}: {
+    email: any;
+    width: any;
+    height: any;
+}) => {
     const avatarUrl = getGravatarUrl(email);
 
     return (
         <Image
             src={avatarUrl}
-            alt="User Profile Picture"
-            width={200}
-            height={200}
+            alt="User  Profile Picture"
+            width={width}
+            height={height}
             className="rounded-full"
         />
     );
@@ -54,10 +62,12 @@ const page = () => {
         {
             doctorName: "Dr. Smith",
             dateTime: "2023-11-15T10:00:00",
+            email: 'vijesh@gmail.com'
         },
         {
             doctorName: "Dr. Jones",
             dateTime: "2023-11-16T14:30:00",
+            email: ""
         },
     ]);
 
@@ -99,7 +109,7 @@ const page = () => {
                 age: ans.age,
                 bloodGroup: ans.bloodGroup,
                 weight: ans.weight,
-                height: ans.height
+                height: ans.height,
             };
 
             console.log(appoints);
@@ -177,21 +187,21 @@ const page = () => {
         <div className="bg-neutral-200 flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
-                    <UserProfile email={data.email} />
+                    <UserProfile email={data.email} width={200} height={200} />
                 </div>
-                <div className="ml-6 mt-4 text-2xl text-blue-950 font-semibold ">
+                <div className="ml-6 mt-4 text-2xl text-black font-semibold ">
                     {data.name}
                 </div>
                 <div className="ml-6 mt-4 text-black font-semibold">
-                    Gender - {data.gender}
+                    Gender: {data.gender}
                 </div>
                 <div className="ml-6 text-black font-semibold">
-                    DOB - {data.dob}
+                    DOB: {data.dob}
                 </div>
-                <div className="ml-6 pl-3 mt-4 bg-gradient-to-br from-green-200 to bg-green-300 w-3/4 p-1 rounded-md text-black font-semibold">
+                <div className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
                     {data.phone}
                 </div>
-                <div className="ml-6 pl-3 mt-2 text-black bg-gradient-to-tr from-teal-500 w-3/4 overflow-hidden to-teal-500 p-1 rounded-md font-semibold">
+                <div className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
                     {data.email}
                 </div>
                 <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
@@ -278,7 +288,7 @@ const page = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="bg-blue-300 hover:bg-blue-400 duration-300 transition-all text-black font-bold py-2 px-4 rounded"
+                                className="bg-gradient-to-br from-cyan-600 to-cyan-800 duration-300 transition-all text-white font-bold py-2 px-4 rounded"
                             >
                                 {isLoading
                                     ? "Loading..."
@@ -306,30 +316,17 @@ const page = () => {
                                     key={index}
                                     className="flex items-center justify-between"
                                 >
-                                    <div className="flex items-center">
-                                        <span className="font-medium">
-                                            {/* @ts-ignore */}
-                                            {appointment.name}
-                                        </span>
-                                        <span className="ml-2 text-gray-600">
-                                            {new Date(
-                                                appointment.dateTime
-                                            ).toLocaleDateString("en-US", {
-                                                weekday: "long",
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                            })}{" "}
-                                            at{" "}
-                                            {new Date(
-                                                appointment.dateTime
-                                            ).toLocaleTimeString("en-US", {
-                                                hour: "numeric",
-                                                minute: "numeric",
-                                                hour12: true,
-                                            })}{" "}
-                                            IST
-                                        </span>
+                                    <div className=" flex flex-row items-center space-x-4 border-b-[1px] border-gray-300 w-full">
+                                        {/* <UserProfile email={appointment.email} width={50} height={50}/> */}
+                                        <div className="flex flex-col">
+                                            <span className="font-medium">
+                                                {/* @ts-ignore */}
+                                                {appointment.name} | {/* {appointment.specialization} */}
+                                            </span>
+                                            <span className="text-gray-600">
+                                                {appointment.dateTime}
+                                            </span>
+                                        </div>
                                     </div>
                                 </li>
                             ))}
