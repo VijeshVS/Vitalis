@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import md5 from "md5";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaSuitcaseMedical } from "react-icons/fa6";
 import { MdOutlineSecurity } from "react-icons/md";
@@ -62,12 +63,12 @@ const page = () => {
         {
             doctorName: "Dr. Smith",
             dateTime: "2023-11-15T10:00:00",
-            email: 'vijesh@gmail.com'
+            email: "vijesh@gmail.com",
         },
         {
             doctorName: "Dr. Jones",
             dateTime: "2023-11-16T14:30:00",
-            email: ""
+            email: "",
         },
     ]);
 
@@ -186,56 +187,87 @@ const page = () => {
     return (
         <div className="bg-neutral-200 flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
-                <div className="ml-4 mt-4 ">
+                <motion.div
+                    whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }}
+                    className="ml-4 mt-4 "
+                >
                     <UserProfile email={data.email} width={200} height={200} />
-                </div>
-                <div className="ml-6 mt-4 text-2xl text-black font-semibold ">
+                </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }} className="ml-6 mt-4 text-2xl text-black font-semibold ">
                     {data.name}
-                </div>
-                <div className="ml-6 mt-4 text-black font-semibold">
+                </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }} className="ml-6 mt-4 text-black font-semibold">
                     Gender: {data.gender}
-                </div>
-                <div className="ml-6 text-black font-semibold">
+                </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }} className="ml-6 text-black font-semibold">
                     DOB: {data.dob}
-                </div>
-                <div className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
+                </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
                     {data.phone}
-                </div>
-                <div className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
+                </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+					initial={{ x: -100, opacity: 0 }}
+					transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
                     {data.email}
-                </div>
+                </motion.div>
                 <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
-                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }}
+
+ className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.age} years
                         </span>{" "}
                         <br />
                         <span className="text-neutral-200">Age</span>
-                    </div>
-                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
+                    </motion.div>
+                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }}
+
+ className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.bloodGroup}
                         </span>{" "}
                         <br />
                         <span className="text-neutral-200">Blood Group</span>
-                    </div>
-                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
+                    </motion.div>
+                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }}
+
+ className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.weight} kg
                         </span>{" "}
                         <br />
                         <span className="text-neutral-200">Weight</span>
-                    </div>
-                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                    </motion.div>
+                    <motion.div whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }}
+
+ className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.height} cm
                         </span>{" "}
                         <br />
                         <span className="text-neutral-200">Height</span>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
-            <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
+            <motion.div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
                 <div className="text-3xl font-semibold">Hello {data.name},</div>
                 <div>
                     At Vitalis, we prioritize providing top-notch facilities for
@@ -321,7 +353,8 @@ const page = () => {
                                         <div className="flex flex-col">
                                             <span className="font-medium">
                                                 {/* @ts-ignore */}
-                                                {appointment.name} | {/* {appointment.specialization} */}
+                                                {appointment.name} |{" "}
+                                                {/* {appointment.specialization} */}
                                             </span>
                                             <span className="text-gray-600">
                                                 {appointment.dateTime}
@@ -333,7 +366,7 @@ const page = () => {
                         </ul>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
