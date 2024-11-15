@@ -38,39 +38,45 @@ export default function Login() {
         }
     };
 
-    const checkUserExists = () => {
+    const checkUser = async () => {
         setLog(true);
         // @ts-ignore
         const contract = new web3.eth.Contract(
             PatientContractABI,
             PATIENT_CONTRACT_ADDRESS
         );
-        contract.methods
-            .doesPatientExist(account)
-            .call()
-            .then(async (res) => {
-                console.log(res);
-                if (res) {
-                    toast.success("Patient logged in successfully !!");
+        const res = await contract.methods.doesPatientExist(account).call();
 
-                    // creating a session of 4hrs
-                    const address = account;
-                    const type = "patient";
-                    const payload = { address, type };
-                    const token = await generateToken(payload);
-                    localStorage.setItem("token", token);
-                    router.push("/patient");
-                } else {
-                    toast.error("Patient not registered!!");
-                    router.push("/onboarding/patient");
-                }
-                setLog(false);
-            });
+        if (res) {
+            toast.success("Patient logged in successfully !!");
+
+            // creating a session of 4hrs
+            const address = account;
+            const type = "patient";
+            const payload = { address, type };
+            const token = await generateToken(payload);
+            localStorage.setItem("token", token);
+            router.push("/patient");
+        } else {
+            toast.error("Patient not registered!!");
+            router.push("/onboarding/patient");
+        }
+        setLog(false);
     };
 
+    function checkUserExists() {
+        const res = checkUser();
+
+        toast.promise(res, {
+            loading: "Logging in !!",
+        });
+    }
+
     return (
-        <div style={{ backgroundImage: "url('/patientloginbg.png')" }} 
-         className="flex items-center bg-cover bg-center justify-center h-screen bg-gray-100">
+        <div
+            style={{ backgroundImage: "url('/patientloginbg.png')" }}
+            className="flex items-center bg-cover bg-center justify-center h-screen bg-gray-100"
+        >
             <div className="w-80 p-6 bg-white rounded-lg shadow-lg text-center">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                     Patient Login

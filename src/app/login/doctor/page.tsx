@@ -29,39 +29,45 @@ const DoctorLogin = () => {
         }
     };
 
-    const checkIfDoctorExists = () => {
+    const checkIfDoctorExists = async () => {
         setLog(true);
         // @ts-ignore
         const contract = new web3.eth.Contract(
             doctorABI,
             DOCTOR_CONTRACT_ADDRESS
         );
-        contract.methods
-            .doesDoctorExist(account)
-            .call()
-            .then(async (res) => {
-                console.log(res);
-                if (res) {
-                    toast.success("Doctor logged in successfully !!");
+        const res = await contract.methods.doesDoctorExist(account).call();
+        if (res) {
+            toast.success("Doctor logged in successfully !!");
 
-                    // creating a session of 4hrs
-                    const address = account;
-                    const type = "doctor";
-                    const payload = { address, type };
-                    const token = await generateToken(payload);
-                    localStorage.setItem("token", token);
+            // creating a session of 4hrs
+            const address = account;
+            const type = "doctor";
+            const payload = { address, type };
+            const token = await generateToken(payload);
+            localStorage.setItem("token", token);
 
-                    router.push("/doctor");
-                } else {
-                    toast.error("Doctor not registered!!");
-                    router.push("/onboarding/doctor");
-                }
-                setLog(false);
-            });
+            router.push("/doctor");
+        } else {
+            toast.error("Doctor not registered!!");
+            router.push("/onboarding/doctor");
+        }
+        setLog(false);
     };
 
+    function checkDoctor() {
+        const res = checkIfDoctorExists();
+
+        toast.promise(res, {
+            loading: "Logging in !!",
+        });
+    }
+
     return (
-        <div style={{ backgroundImage: "url('/doctorLoginbg.png')" }} className="flex bg-cover bg-center justify-center items-center min-h-screen bg-gray-50">
+        <div
+            style={{ backgroundImage: "url('/doctorLoginbg.png')" }}
+            className="flex bg-cover bg-center justify-center items-center min-h-screen bg-gray-50"
+        >
             <div className="text-center p-6 rounded-lg shadow-lg bg-white w-80">
                 <h3 className="text-xl font-semibold mb-6">Doctor Login</h3>
                 <div className="space-y-4">
@@ -75,7 +81,7 @@ const DoctorLogin = () => {
                     </button>
                     <button
                         className="w-full py-3 bg-slate-500 text-white disabled:bg-black disabled:cursor-not-allowed rounded-md hover:bg-gray-300 transition duration-200"
-                        onClick={checkIfDoctorExists}
+                        onClick={checkDoctor}
                         disabled={!walletConnect || log}
                     >
                         {log ? "Logging in" : "Login"}
