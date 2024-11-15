@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
@@ -316,4 +316,12 @@ const Page = () => {
     );
 };
 
-export default Page;
+const TheRealPage = () => {
+    return (
+        <Suspense>
+            <Page />
+        </Suspense>
+    );
+}
+
+export default TheRealPage;
