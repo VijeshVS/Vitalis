@@ -17,6 +17,8 @@ function DiagnosticReport() {
     date: "", // This will be set in useEffect
     doctorName: "",
     patientName: "",
+    password: "", 
+    confirmPassword: "", // New field for confirm password
     summary: "",
     medicines: [
       { 
@@ -97,7 +99,18 @@ function DiagnosticReport() {
   };
 
   const generatePDF = () => {
-    const pdf = new jsPDF();
+    // Validate passwords
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const pdf = new jsPDF({
+      encryption: {
+        userPassword: formData.password,
+        ownerPassword: formData.password
+      }
+    });
 
     // Page dimensions
     const pageWidth = pdf.internal.pageSize.width;
@@ -119,7 +132,7 @@ function DiagnosticReport() {
 
     // Prepare data for the table
     const tableData = Object.entries(formData)
-      .filter(([key]) => key !== 'summary' && key !== 'medicines')
+      .filter(([key]) => key !== 'summary' && key !== 'medicines' && key !== 'password' && key !== 'confirmPassword') // Exclude password fields
       .map(([key, value]) => [
         key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
         value
@@ -227,18 +240,18 @@ function DiagnosticReport() {
     const formData1 = new FormData();
     formData1.append("file", blob, fileName);
 
-  // Send the FormData using fetch
-  fetch("http://192.168.137.17:4567/add", {
-    method: "POST",
-    body: formData1,
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log("CID:", data.cid); // Log the IPFS CID returned by the server
+    // Send the FormData using fetch
+    fetch("http://192.168.138.2:4567/add", {
+      method: "POST",
+      body: formData1,
     })
-    .catch(error => {
-      console.error("Error uploading to IPFS:", error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log("CID:", data.cid); // Log the IPFS CID returned by the server
+      })
+      .catch(error => {
+        console.error(" Error uploading to IPFS:", error);
+      });
   };
 
   if (loading) {
@@ -269,11 +282,11 @@ function DiagnosticReport() {
               </thead>
               <tbody>
                 {Object.keys(formData)
-                  .filter(key => key !== 'summary' && key !== 'medicines')
+                  .filter(key => key !== 'summary' && key !== 'medicines' && key !== 'confirmPassword' && key !== 'password') // Exclude confirm password
                   .map((key) => (
                   <tr key={key} className="border-b border-gray-300">
                     <td className="py-3 text-gray-800 font-medium">
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str .toUpperCase())}
+                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                     </td>
                     <td className="py-3">
                       <input
@@ -288,6 +301,36 @@ function DiagnosticReport() {
                   </tr>
                 ))}
                 
+                {/* Password Section */}
+                <tr className="border-b border-gray-300">
+                  <td className="py-3 text-gray-800 font-medium">Password</td>
+                  <td className="py-3">
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Enter password"
+                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </td>
+                </tr>
+
+                {/* Confirm Password Section */}
+                <tr className="border-b border-gray-300">
+                  <td className="py-3 text-gray-800 font-medium">Confirm Password</td>
+                  <td className="py-3">
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="Confirm password"
+                      className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </td>
+                </tr>
+
                 {/* Summary Section */}
                 <tr className="border-b border-gray-300">
                   <td className="py-3 text-gray-800 font-medium">Summary</td>
@@ -318,7 +361,7 @@ function DiagnosticReport() {
                         />
                         <input
                           type="text"
-                          name={`medicine_${index}_dosage`}
+                          name={`medicine_${ index}_dosage`}
                           value={med.dosage}
                           onChange={handleChange}
                           placeholder="Dosage"

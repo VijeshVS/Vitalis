@@ -327,6 +327,13 @@ transition={{ duration: 0.5, delay: 0.5 }}
                                     : "Get Recommendation"}
                             </button>
                         </form>
+                        <button type="submit" className="bg-blue-300 hover:bg-blue-400 mt-8 duration-300 transition-all text-black font-bold py-2 px-4 rounded"
+                        >
+                            {isLoading
+                                    ? "Loading..."
+                                    : "Submit Data"}
+                            
+                        </button>
                         {/* @ts-ignore */}
                         {results?.specialty && (
                             <div className="mt-4">
