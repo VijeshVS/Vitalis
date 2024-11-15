@@ -55,46 +55,28 @@ const Page = () => {
     const [selectedSpecialization, setSelectedSpecialization] = useState(searchParams?.[1] || "");
     const [loading, setLoading] = useState(true);
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
-    const [doctors,setDoctors] = useState([
-        {
-            id: 1,
-            name: "Dr. Rajiv Sharma",
-            email: "rajiv.sharma@healthcenter.com",
-            phone: "123-456-7890",
-            hospital: "City Hospital",
-            specialization: "General Physician",
-            education: "fill data",
-            experience: 7,
-            fee: 500,
-        },
-        {
-            id: 2,
-            name: "Dr. Neha Verma",
-            email: "neha.verma@wellnessclinic.com",
-            phone: "321-654-0987",
-            hospital: "Wellness Clinic",
-            specialization: "General Physician",
-            fee: 600,
-        },
-        {
-            id: 3,
-            name: "Dr. Meera Kapoor",
-            email: "meera.kapoor@sunshinehospital.com",
-            phone: "234-567-8901",
-            hospital: "Sunshine Hospital",
-            specialization: "Geriatrics",
-            fee: 700,
-        },
-        {
-            id: 4,
-            name: "Dr. Sanjay Desai",
-            email: "sanjay.desai@cityhospital.com",
-            phone: "876-543-2109",
-            hospital: "City Hospital",
-            specialization: "Geriatrics",
-            fee: 750,
-        },
-    ])
+    const [doctors, setDoctors] = useState([]);
+
+    const specializations = {
+        "": "All Specializations",
+        "General Physician": "General Physician",
+        Geriatrics: "Geriatrics",
+        Cardiology: "Cardiology",
+        Neurology: "Neurology",
+        Orthopedics: "Orthopedics",
+        Dermatology: "Dermatology",
+        Pediatrics: "Pediatrics",
+        Psychiatry: "Psychiatry",
+        Oncology: "Oncology",
+        Gastroenterology: "Gastroenterology",
+        Endocrinology: "Endocrinology",
+        Ophthalmology: "Ophthalmology",
+        Urology: "Urology",
+        Gynecology: "Gynecology",
+        Pulmonology: "Pulmonology",
+        Rheumatology: "Rheumatology",
+        Anesthesiology: "Anesthesiology",
+    };
 
     const handleSpecializationChange = (event: any) => {
         setSelectedSpecialization(event.target.value);
@@ -111,12 +93,12 @@ const Page = () => {
                 DOCTOR_CONTRACT_ADDRESS
             );
 
-            const details:any = await contract.methods.getAllDoctors().call({
+            const details: any = await contract.methods.getAllDoctors().call({
                 from: res[0],
             });
-            console.log(details)
-            setDoctors(details)
-            setLoading(false)
+            console.log(details);
+            setDoctors(details);
+            setLoading(false);
         }
     }
 
@@ -164,8 +146,8 @@ const Page = () => {
                 });
 
             const doctorDetails = await docContract.methods.getDoctor().call({
-                from: res[0]
-            })
+                from: res[0],
+            });
 
             console.log(patientDetails);
             console.log(filteredDoctors[index]);
@@ -190,316 +172,26 @@ const Page = () => {
                 <h3 className="font-semibold text-xl">Select Specialization</h3>
 
                 <div className="mt-2 p-2 rounded flex flex-col overflow-scroll">
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200  rounded-md ${
-                            selectedSpecialization === ""
-                        } ? 'bg-gradient-to-br from-teal-600 to-teal-800' : bg-neutral-200`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value=""
-                            checked={selectedSpecialization === ""}
-                            onChange={handleSpecializationChange}
-                        />
-                        All Specializations
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 hover:bg-cyan-300 duration-300 transition-all text-black rounded-md ${
-                            selectedSpecialization === "General Physician"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="General Physician"
-                            checked={
-                                selectedSpecialization === "General Physician"
-                            }
-                            onChange={handleSpecializationChange}
-                        />
-                        General Physician
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Geriatrics"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Geriatrics"
-                            checked={selectedSpecialization === "Geriatrics"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Geriatrics
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Cardiology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Cardiology"
-                            checked={selectedSpecialization === "Cardiology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Cardiology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Neurology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Neurology"
-                            checked={selectedSpecialization === "Neurology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Neurology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Orthopedics"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Orthopedics"
-                            checked={selectedSpecialization === "Orthopedics"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Orthopedics
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Dermatology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Dermatology"
-                            checked={selectedSpecialization === "Dermatology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Dermatology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Pediatrics"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Pediatrics"
-                            checked={selectedSpecialization === "Pediatrics"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Pediatrics
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Psychiatry"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Psychiatry"
-                            checked={selectedSpecialization === "Psychiatry"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Psychiatry
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Oncology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Oncology"
-                            checked={selectedSpecialization === "Oncology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Oncology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Gastroenterology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            type="radio"
-                            hidden={true}
-                            name="specialization"
-                            value="Gastroenterology"
-                            checked={
-                                selectedSpecialization === "Gastroenterology"
-                            }
-                            onChange={handleSpecializationChange}
-                        />
-                        Gastroenterology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Endocrinology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Endocrinology"
-                            checked={selectedSpecialization === "Endocrinology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Endocrinology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Ophthalmology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Ophthalmology"
-                            checked={selectedSpecialization === "Ophthalmology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Ophthalmology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Urology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Urology"
-                            checked={selectedSpecialization === "Urology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Urology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Gynecology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Gynecology"
-                            checked={selectedSpecialization === "Gynecology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Gynecology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Pulmonology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Pulmonology"
-                            checked={selectedSpecialization === "Pulmonology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Pulmonology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Rheumatology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Rheumatology"
-                            checked={selectedSpecialization === "Rheumatology"}
-                            onChange={handleSpecializationChange}
-                        />
-                        Rheumatology
-                    </label>
-                    <label
-                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
-                            selectedSpecialization === "Anesthesiology"
-                                ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
-                                : "bg-neutral-200 text-black"
-                        }`}
-                    >
-                        <input
-                            hidden={true}
-                            type="radio"
-                            name="specialization"
-                            value="Anesthesiology"
-                            checked={
-                                selectedSpecialization === "Anesthesiology"
-                            }
-                            onChange={handleSpecializationChange}
-                        />
-                        Anesthesiology
-                    </label>
+                    {Object.entries(specializations).map(([key, value]) => (
+                        <label
+                            key={key}
+                            className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 hover:bg-cyan-300 duration-300 cursor-pointer transition-all rounded-md ${
+                                selectedSpecialization === key
+                                    ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
+                                    : "bg-neutral-200 text-black"
+                            }`}
+                        >
+                            <input
+                                hidden={true}
+                                type="radio"
+                                name="specialization"
+                                value={key}
+                                checked={selectedSpecialization === key}
+                                onChange={handleSpecializationChange}
+                            />
+                            {value}
+                        </label>
+                    ))}
                 </div>
             </div>
 
@@ -534,14 +226,18 @@ const Page = () => {
                                             <strong>{doctor.name}</strong>
                                         </HoverCardTrigger>
                                         <HoverCardContent className="">
-                                            <div className="p-2 flex flex-col justify-center items-center space-y-2">
+                                            <div className="flex flex-col justify-center items-center">
                                                 <UserProfile
-                                                // @ts-ignore
-                                                    email={doctor.contact.emailId}
+                                                    // @ts-ignore
+                                                    email={
+                                                        doctor.contact.emailId
+                                                    }
                                                     width={75}
                                                     height={50}
                                                 />
-                                                <strong>{doctor.name}</strong>
+                                                <strong className="mt-2">
+                                                    {doctor.name}
+                                                </strong>
                                                 <p className="">
                                                     {doctor.specialization}
                                                 </p>
@@ -552,7 +248,7 @@ const Page = () => {
                                                     {doctor.education}
                                                 </p>
                                                 <p className="">
-                                                {/* @ts-ignore */}
+                                                    {/* @ts-ignore */}
                                                     {doctor.yoe} years of
                                                     experience
                                                 </p>
