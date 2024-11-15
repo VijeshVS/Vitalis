@@ -14,7 +14,11 @@
       { "internalType": "address", "name": "patient", "type": "address" },
       { "internalType": "address", "name": "doctor", "type": "address" },
       { "internalType": "string", "name": "dateTime", "type": "string" },
-      { "internalType": "string", "name": "name", "type": "string" }
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "string", "name": "specialization", "type": "string" },
+      { "internalType": "string", "name": "email", "type": "string" },
+      { "internalType": "string", "name": "patientName", "type": "string" },
+      { "internalType": "string", "name": "patientEmail", "type": "string" }
     ],
     "name": "createAppointment",
     "outputs": [],
@@ -32,7 +36,15 @@
           { "internalType": "string", "name": "name", "type": "string" },
           { "internalType": "address", "name": "doctor", "type": "address" },
           { "internalType": "address", "name": "patient", "type": "address" },
-          { "internalType": "string", "name": "dateTime", "type": "string" }
+          { "internalType": "string", "name": "dateTime", "type": "string" },
+          {
+            "internalType": "string",
+            "name": "specialization",
+            "type": "string"
+          },
+          { "internalType": "string", "name": "email", "type": "string" },
+          { "internalType": "string", "name": "patientName", "type": "string" },
+          { "internalType": "string", "name": "patientEmail", "type": "string" }
         ],
         "internalType": "struct Appointment.AppointmentType[]",
         "name": "",
@@ -53,7 +65,15 @@
           { "internalType": "string", "name": "name", "type": "string" },
           { "internalType": "address", "name": "doctor", "type": "address" },
           { "internalType": "address", "name": "patient", "type": "address" },
-          { "internalType": "string", "name": "dateTime", "type": "string" }
+          { "internalType": "string", "name": "dateTime", "type": "string" },
+          {
+            "internalType": "string",
+            "name": "specialization",
+            "type": "string"
+          },
+          { "internalType": "string", "name": "email", "type": "string" },
+          { "internalType": "string", "name": "patientName", "type": "string" },
+          { "internalType": "string", "name": "patientEmail", "type": "string" }
         ],
         "internalType": "struct Appointment.AppointmentType[]",
         "name": "",

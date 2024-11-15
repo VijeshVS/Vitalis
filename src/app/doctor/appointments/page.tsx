@@ -9,8 +9,8 @@ import Link from "next/link";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
 import Web3 from 'web3'
-import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DOCTOR_ABI from '@/../contracts/doctor.abi.json'
+import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
+import APPOINT_ABI from '@/../contracts/appointment.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -39,40 +39,6 @@ const UserProfile = ({
     );
 };
 
-const users = {
-    user1: {
-        email: "samkit@gmail.com",
-        name: "Samkit Samsukha",
-        age: 19,
-    },
-    user2: {
-        email: "john.doe@example.com",
-        name: "John Doe",
-        age: 25,
-    },
-    user3: {
-        email: "jane.smith@example.com",
-        name: "Jane Smith",
-        age: 30,
-    },
-    user4: {
-        email: "emily.jones@example.com",
-        name: "Emily Jones",
-        age: 22,
-    },
-    user5: {
-        email: "michael.brown@example.com",
-        name: "Michael Brown",
-        age: 28,
-    },
-    user6: {
-        email: "sophia.wilson@example.com",
-        name: "Sophia Wilson",
-        age: 35,
-    },
-};
-
-
 const page = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -93,23 +59,15 @@ const page = () => {
             await new_web3.eth.requestAccounts();
             const res = await new_web3.eth.getAccounts();
             const contract = new new_web3.eth.Contract(
-                DOCTOR_ABI,
-                DOCTOR_CONTRACT_ADDRESS
+                APPOINT_ABI,
+                APPOINTMENT_CONTRACT_ADDRESS
             );
 
-            const details: any = await contract.methods.getDoctor().call({
+            const details: any = await contract.methods.getDoctorAppointments(res[0]).call({
                 from : res[0]
             });
 
-            const new_data = {
-                name : details.name,
-                email : details.contact.emailId,
-                phone: details.contact.phoneNumber,
-                license: details.licenceNumber,
-                education: details.education,
-                specialization: details.specialization
-            }
-            setData(new_data)
+            console.log(details)
             setLoading(false);
         }
     }
