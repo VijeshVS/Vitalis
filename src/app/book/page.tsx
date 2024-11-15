@@ -513,7 +513,7 @@ const Page = () => {
                     <FaSortAmountDownAlt /> <p>Sort by Fee</p>
                 </button>
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    {doctors.map((doctor, index) => (
+                    {filteredDoctors.map((doctor, index) => (
                         <div
                             // @ts-ignore
                             key={doctor.docAddress}
@@ -534,7 +534,8 @@ const Page = () => {
                                         <HoverCardContent className="">
                                             <div className="p-2 flex flex-col justify-center items-center space-y-2">
                                                 <UserProfile
-                                                    email={doctor.email}
+                                                // @ts-ignore
+                                                    email={doctor.contact.emailId}
                                                     width={75}
                                                     height={50}
                                                 />
@@ -549,7 +550,8 @@ const Page = () => {
                                                     {doctor.education}
                                                 </p>
                                                 <p className="">
-                                                    {doctor.experience} years of
+                                                {/* @ts-ignore */}
+                                                    {doctor.yoe} years of
                                                     experience
                                                 </p>
                                             </div>
