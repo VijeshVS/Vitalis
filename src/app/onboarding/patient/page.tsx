@@ -284,14 +284,14 @@ export default function Onboarding() {
                         {step > 1 && (
                             <button
                                 onClick={prevStep}
-                                className="px-4 py-2 bg-gray-300 rounded text-black"
+                                className="px-4 py-2 bg-teal-400 hover:bg-teal-500 rounded transition-all duration-300 text-black"
                             >
                                 Previous
                             </button>
                         )}
                         <button
                             onClick={nextStep}
-                            className="px-4 py-2 bg-blue-500 text-white rounded"
+                            className="px-4 py-2 bg-cyan-400 hover:bg-cyan-500 transition-all duration-300 text-black rounded"
                         >
                             {step === 6 ? "Submit" : "Next"}
                         </button>

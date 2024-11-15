@@ -29,10 +29,10 @@ const OnboardingPage = () => {
                 <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Welcome to Onboarding</h1>
                 <p className="text-center text-gray-600 mb-8">Select your profile to get started</p>
                 <div className="flex flex-col gap-4">
-                    <button onClick={() => router.push('/onboarding/doctor')} className="transform transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-blue-300">
+                    <button onClick={() => router.push('/onboarding/doctor')} className="transform transition-all duration-300 ease-in-out bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-blue-300">
                         Doctor Onboarding
                     </button>
-                    <button onClick={() => router.push('/onboarding/patient')} className="transform transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-green-300">
+                    <button onClick={() => router.push('/onboarding/patient')} className="transform transition-all duration-300 ease-in-out bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-green-300">
                         Patient Onboarding
                     </button>
                 </div>
