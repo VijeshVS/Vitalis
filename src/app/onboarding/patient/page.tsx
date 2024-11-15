@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { generateToken } from "@/lib/actions/jwtLogics";
 
 export default function Onboarding() {
-    const [reg, setReg] = useState(true);
+    const [reg, setReg] = useState(false);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         name: "",
@@ -22,6 +22,23 @@ export default function Onboarding() {
         gender: "Male", // Default to "Male" or set as needed
     });
     const router = useRouter();
+
+    useEffect(() => {
+        let toastId: any;
+
+        if (reg) {
+            toastId = toast("Loading...", {
+                icon: "⏳",
+                duration: Infinity,
+            });
+        } else {
+            toast.dismiss(toastId);
+        }
+
+        return () => {
+            if (toastId) toast.dismiss(toastId);
+        };
+    }, [reg]);
 
     const nextStep = () => {
         if (step < 6) {
@@ -47,7 +64,10 @@ export default function Onboarding() {
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDifference = today.getMonth() - birthDate.getMonth();
-        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        if (
+            monthDifference < 0 ||
+            (monthDifference === 0 && today.getDate() < birthDate.getDate())
+        ) {
             age--;
         }
         return age;
@@ -83,16 +103,14 @@ export default function Onboarding() {
                 from: account,
             })
             .on("receipt", async function (receipt: any) {
-                toast.success("Patient registered successfully");
                 setReg(false);
-
                 const address = account;
                 const type = "patient";
                 const payload = { address, type };
                 const token = await generateToken(payload);
 
-                localStorage.setItem('token', JSON.stringify(token));
-
+                localStorage.setItem("token", JSON.stringify(token));
+                toast.success("Patient registered successfully");
                 router.push("/patient");
             })
             .on("error", function (error: any) {
@@ -107,8 +125,10 @@ export default function Onboarding() {
                 <title>Onboarding</title>
             </Head>
 
-            <div style={{ backgroundImage: "url('/onbpat.png')" }}
-             className="flex items-center bg-center bg-cover flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black">
+            <div
+                style={{ backgroundImage: "url('/onbpat.png')" }}
+                className="flex items-center bg-center bg-cover flex-col space-y-6 justify-center h-screen bg-neutral-800 text-black"
+            >
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-100 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">
@@ -199,14 +219,18 @@ export default function Onboarding() {
                                 >
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
-                                    <option value="Prefer not to say">Prefer not to say</option>
+                                    <option value="Prefer not to say">
+                                        Prefer not to say
+                                    </option>
                                 </select>
                             </div>
                         )}
                         {step === 5 && (
                             <div className="flex flex-col space-y-4">
                                 <div className="flex flex-col space-y-2">
-                                    <label className="text-lg">Weight (kg)</label>
+                                    <label className="text-lg">
+                                        Weight (kg)
+                                    </label>
                                     <input
                                         type="number"
                                         name="weight"
@@ -217,7 +241,9 @@ export default function Onboarding() {
                                     />
                                 </div>
                                 <div className="flex flex-col space-y-2">
-                                    <label className="text-lg">Height (cm)</label>
+                                    <label className="text-lg">
+                                        Height (cm)
+                                    </label>
                                     <input
                                         type="number"
                                         name="height"

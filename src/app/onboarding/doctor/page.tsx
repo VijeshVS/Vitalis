@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
-import Web3 from 'web3';
+import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DOCTORABI from '@/../contracts/doctor.abi.json';
+import DOCTORABI from "@/../contracts/doctor.abi.json";
 import { toast } from "sonner";
 import { generateToken } from "@/lib/actions/jwtLogics";
 
@@ -22,6 +22,23 @@ export default function Onboarding() {
         gender: "Male", // Default to "Male" or set as empty for no default
     });
     const router = useRouter();
+
+    useEffect(() => {
+        let toastId: any;
+
+        if (reg) {
+            toastId = toast("Loading...", {
+                icon: "⏳",
+                duration: Infinity,
+            });
+        } else {
+            toast.dismiss(toastId);
+        }
+
+        return () => {
+            if (toastId) toast.dismiss(toastId);
+        };
+    }, [reg]);
 
     async function registerDoctor() {
         setReg(true);
@@ -45,20 +62,19 @@ export default function Onboarding() {
                 "Profile",
                 formData.email,
                 formData.phone,
-                formData.gender  // Pass the selected gender
+                formData.gender // Pass the selected gender
             )
             .send({
                 from: account,
             })
             .on("receipt", async function (receipt) {
-                toast.success("Doctor registered successfully");
                 setReg(false);
-
                 const address = account;
                 const type = "doctor";
                 const payload = { address, type };
                 const token = await generateToken(payload);
-                localStorage.setItem('token', token);
+                localStorage.setItem("token", token);
+                toast.success("Doctor registered successfully");
                 router.push("/doctor");
             })
             .on("error", function (error) {
@@ -81,15 +97,16 @@ export default function Onboarding() {
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     return (
         <>
-            <div style={{ backgroundImage: "url('/onbdoc.png')" }}
-                className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white">
-
+            <div
+                style={{ backgroundImage: "url('/onbdoc.png')" }}
+                className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white"
+            >
                 <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-900 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">
@@ -132,7 +149,9 @@ export default function Onboarding() {
                         {step === 2 && (
                             <div className="flex flex-col space-y-4">
                                 <div className="flex flex-col space-y-2">
-                                    <label className="text-lg">Phone Number</label>
+                                    <label className="text-lg">
+                                        Phone Number
+                                    </label>
                                     <input
                                         type="tel"
                                         name="phone"
@@ -178,7 +197,9 @@ export default function Onboarding() {
                                     >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
-                                        <option value="Prefer not to say">Prefer not to say</option>
+                                        <option value="Prefer not to say">
+                                            Prefer not to say
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -233,10 +254,11 @@ export default function Onboarding() {
                         <button
                             onClick={prevStep}
                             disabled={step === 1}
-                            className={`px-5 py-3 rounded-lg shadow-lg text-lg ${step === 1
-                                ? "bg-neutral-600 cursor-not-allowed"
-                                : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
-                                }`}
+                            className={`px-5 py-3 rounded-lg shadow-lg text-lg ${
+                                step === 1
+                                    ? "bg-neutral-600 cursor-not-allowed"
+                                    : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                            }`}
                         >
                             Previous
                         </button>
