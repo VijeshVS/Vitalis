@@ -9,12 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/md5": "^2.3.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/md5": "^2.3.5",
     "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
