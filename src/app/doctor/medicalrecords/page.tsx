@@ -11,9 +11,13 @@ import { toast } from "sonner";
 import { IoMdSchool } from "react-icons/io";
 import Loading from "@/components/Loading";
 import Web3 from "web3";
-import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
 import Calendar from "@/components/ui/calender";
+import { FaFilePdf } from "react-icons/fa6";
+import { MdFileDownload } from "react-icons/md";
+import { DIAGNOSIS_CONTACT_ADDRESS } from "../../../../contracts/contactAddress";
+import DIA_ABI from '@/../contracts/diagnosis.abi.json' 
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {
@@ -22,8 +26,6 @@ const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
-
-const events = [{ title: "Meeting", start: new Date() }];
 
 const UserProfile = ({
     email,
@@ -51,6 +53,19 @@ const page = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    const [reports, setReports] = useState([
+        {
+            id: 1,
+            doctor: "Dr. Jones",
+            content: "xxxxxxxxxxxxxxxxx",
+        },
+        {
+            id: 2,
+            doctor: "Dr. Jones 1",
+            content: "xxxxxxxxxxxxxxxxx",
+        },
+    ]);
+
     const [data, setData] = useState({
         name: "Samkit Samsukha",
         email: "samkitsamsukha.is23@rvce.edu.in",
@@ -70,6 +85,17 @@ const page = () => {
                 DOCTOR_ABI,
                 DOCTOR_CONTRACT_ADDRESS
             );
+
+            const diaContract = new new_web3.eth.Contract(
+                DIA_ABI,
+                DIAGNOSIS_CONTACT_ADDRESS
+            );
+
+            const reps:any = await diaContract.methods.getDoctorDiagnosis(res[0]).call({
+                from: res[0]
+            })
+
+            setReports(reps)
 
             const details: any = await contract.methods.getDoctor(res[0]).call({
                 from: res[0],
@@ -104,7 +130,6 @@ const page = () => {
             return;
         }
 
-        // get doctors details
         connectAndGetDetails();
     };
 
@@ -115,7 +140,7 @@ const page = () => {
     return loading ? (
         <Loading />
     ) : (
-        <div className="bg-neutral-200 flex flex-row text-black flex-1">
+        <div className="bg-neutral-200 min-h-screen flex flex-row text-black flex-1">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="flex flex-col items-center">
                     <UserProfile email={data.email} width={200} height={300} />
@@ -127,19 +152,6 @@ const page = () => {
                             License No. - {data.license}
                         </p>
                     </div>
-                </div>
-                <div
-                    onClick={() => router.push("/doctor/appointments")}
-                    className="mt-6 p-3 bg-gradient-to-br from-gray-600 to-gray-800 text-white text-xl font-semibold text-center rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
-                >
-                    My Appointments
-                </div>
-
-                <div
-                    onClick={() => router.push("/doctor/medicalrecords")}
-                    className="mt-6 p-3 bg-gradient-to-br from-gray-600 to-gray-800 text-white text-xl font-semibold text-center rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
-                >
-                    View Issued Documents
                 </div>
                 <div className="flex flex-row space-x-4  items-center mt-6 p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-lg shadow-sm">
                     <div className="text-3xl font-semibold">
@@ -160,10 +172,25 @@ const page = () => {
                 </div>
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
-                <div className="text-3xl font-semibold">Hello {data.name},</div>
+                <div className="text-3xl font-semibold">Issued medical records</div>
                 <div className="flex flex-row">
-                    <div className="min-h-screen w-full flex flex-col items-center justify-center">
-                        <Calendar />
+                <div className="grid grid-cols-2 gap-4">
+                    {reports.map((report, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-row p-4 space-x-2 items-center bg-white rounded-md"
+                        >
+                            <FaFilePdf />
+                            <p>Issued to {report.patient}</p>
+                            <button
+                                onClick={() => {
+                                    alert("File downloading");
+                                }}
+                            >
+                                <MdFileDownload />
+                            </button>
+                        </div>
+                    ))}
                     </div>
                 </div>
             </div>

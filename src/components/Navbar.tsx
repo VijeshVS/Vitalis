@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { checkToken } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { toast } from "sonner";
 const Navbar = () => {
@@ -50,7 +50,12 @@ const Navbar = () => {
                         Log out
                     </button>
                     <div
-                        onClick={() => router.push("/patient")}
+                        onClick={async () => {
+                            const decoded: any = await getDecoded(
+                                localStorage.getItem("token") || ""
+                            );
+                            router.push(`/${decoded.type}`);
+                        }}
                         className="text-cyan-800 text-4xl cursor-pointer"
                     >
                         <FaRegCircleUser />
