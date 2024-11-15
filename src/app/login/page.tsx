@@ -47,13 +47,13 @@ const LoginPage = () => {
                 <div className="flex flex-col gap-4">
                     <button
                         onClick={() => router.push("/login/doctor")}
-                        className="transform transition-all duration-300 ease-in-out bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-blue-300"
+                        className="transform transition-all duration-300 ease-in-out bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-blue-300"
                     >
                         Doctor Login
                     </button>
                     <button
                         onClick={() => router.push("/login/patient")}
-                        className="transform transition-all duration-300 ease-in-out bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-green-300"
+                        className="transform transition-all duration-300 ease-in-out bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-5 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-green-300"
                     >
                         Patient Login
                     </button>

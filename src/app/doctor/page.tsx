@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
 import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { FaPhone } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { IoIosMail } from "react-icons/io";
 import { toast } from "sonner";
+import { IoMdSchool } from "react-icons/io";
 import Loading from "@/components/Loading";
 import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
@@ -125,32 +128,28 @@ const page = () => {
                         </p>
                     </div>
                 </div>
-
-                {/* Qualification Section */}
-                <div className="mt-6 p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-lg shadow-sm">
-                    <h2 className="text-lg font-semibold">Qualification:</h2>
-                    <p className="text-sm">Education: {data.education}</p>
-                    <p className="text-sm">
-                        Specialization: {data.specialization}
-                    </p>
-                </div>
-
-                {/* Contact Section */}
-                <div className="mt-4 p-4 bg-gradient-to-br from-teal-600 to-teal-800 text-white rounded-lg shadow-sm">
-                    <p className="text-sm font-semibold">Phone:</p>
-                    <p className="text-sm">{data.phone}</p>
-                </div>
-                <div className="mt-2 p-4 bg-gradient-to-tr from-teal-600 to-teal-800 text-white rounded-lg shadow-sm">
-                    <p className="text-sm font-semibold">Email:</p>
-                    <p className="text-sm">{data.email}</p>
-                </div>
-
-                {/* Appointments Button */}
                 <div
                     onClick={() => router.push("/doctor/appointments")}
-                    className="mt-6 p-3 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white text-xl font-semibold text-center rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
+                    className="mt-6 p-3 bg-gradient-to-br from-gray-600 to-gray-800 text-white text-xl font-semibold text-center rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
                 >
                     My Appointments
+                </div>
+                <div className="flex flex-row space-x-4  items-center mt-6 p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-lg shadow-sm">
+                    <div className="text-3xl font-semibold">
+                        <IoMdSchool />
+                    </div>
+                    <div>
+                        <p className="text-sm">{data.education}</p>
+                        <p className="text-sm">{data.specialization}</p>
+                    </div>
+                </div>
+                <div className="flex flex-row space-x-4 items-center mt-4 p-4 bg-gradient-to-br from-teal-600 to-teal-800 text-white rounded-lg shadow-sm">
+                    <span className="text-white "><FaPhone /></span>
+                    <p className="text-sm">{data.phone}</p>
+                </div>
+                <div className="flex flex-row space-x-4 items-center mt-2 p-4 bg-gradient-to-tr from-teal-600 to-teal-800 text-white rounded-lg shadow-sm">
+                    <span className="text-white text-xl"><IoIosMail /></span>
+                    <p className="text-sm">{data.email}</p>
                 </div>
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">

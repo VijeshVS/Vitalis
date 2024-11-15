@@ -72,7 +72,7 @@ const DoctorLogin = () => {
                 <h3 className="text-xl font-semibold mb-6">Doctor Login</h3>
                 <div className="space-y-4">
                     <button
-                        className="w-full py-3 bg-blue-500 disabled:bg-black disabled:cursor-not-allowed text-white rounded-md hover:bg-blue-600 transition duration-200"
+                        className="w-full py-3 bg-cyan-600 disabled:bg-black disabled:cursor-not-allowed text-white rounded-md hover:bg-cyan-700 transition duration-200"
                         // onClick={() => alert('Connect Wallet')}
                         onClick={connectWallet}
                         disabled={walletConnect}
@@ -80,7 +80,7 @@ const DoctorLogin = () => {
                         {walletConnect ? <>Connected</> : <>Connect Wallet</>}
                     </button>
                     <button
-                        className="w-full py-3 bg-slate-500 text-white disabled:bg-black disabled:cursor-not-allowed rounded-md hover:bg-gray-300 transition duration-200"
+                        className="w-full py-3 bg-teal-600 text-white disabled:bg-gray-500 disabled:cursor-not-allowed rounded-md hover:bg-teal-700 transition duration-200"
                         onClick={checkDoctor}
                         disabled={!walletConnect || log}
                     >
