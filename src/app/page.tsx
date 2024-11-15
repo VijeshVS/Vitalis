@@ -20,6 +20,7 @@ import gynecology from "../../public/specializations/gynecology.png";
 import pulmonology from "../../public/specializations/pulmonology.png";
 import rheumatology from "../../public/specializations/rheumatology.png";
 import { HiSparkles } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 const docs = [
     {
@@ -231,22 +232,31 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center w-3/4">
                 <div className="herosection py-20 flex flex-row justify-center items-center">
                     <div className="flex flex-col w-3/5 p-4">
-                        <div className="text-6xl font-semibold text-cyan-900 p-2">
+                        <motion.div whileInView={{ x: 0, opacity: 1 }}
+                            initial={{ x: -100, opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="text-6xl font-semibold text-cyan-900 p-2">
                             Your Health is <br /> Our Top Priority
-                        </div>
-                        <div className="text-2xl p-2 ">
+                        </motion.div>
+                        <motion.div whileInView={{ x: 0, opacity: 1 }}
+                            initial={{ x: 100, opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="text-2xl p-2 ">
                             Securely share your comprehensive medical history
                             with doctors and loved ones, for better
                             communication and care
-                        </div>
-                        <div className="p-2">
+                        </motion.div>
+                        <motion.div whileInView={{ x:0, scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                            initial={{ x: -125, scale: 0.5, opacity: 0 }}
+                            className="p-2">
                             <Link
                                 href={"/book"}
                                 className="w-fit px-4 py-2 hover:from-teal-700 hover:to-teal-900 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white"
                             >
                                 Get Appointment
                             </Link>
-                        </div>
+                        </motion.div>
                     </div>
                     <div className="w-2/5">
                         <Image
@@ -258,27 +268,27 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="badges py-20 flex flex-row justify-evenly w-3/4 space-x-5 text-center">
-                    <div className="w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
+                    <div className="hover:scale-105 transition-all duration-300 w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
                         <h2 className="text-4xl p-2">500+</h2>
                         <p>Doctors</p>
                     </div>
 
-                    <div className="w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
+                    <div className="hover:scale-105 transition-all duration-300 w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
                         <h2 className="text-4xl p-2">20k+</h2>
                         <p>Happy Patients</p>
                     </div>
 
-                    <div className="w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
+                    <div className="hover:scale-105 transition-all duration-300 w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
                         <h2 className="text-4xl p-2">24/7</h2>
                         <p>Emergency Services</p>
                     </div>
 
-                    <div className="w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
+                    <div className="hover:scale-105 transition-all duration-300 w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
                         <h2 className="text-4xl p-2">100+</h2>
                         <p>Operation Theatres</p>
                     </div>
 
-                    <div className="w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
+                    <div className="hover:scale-105 transition-all duration-300 w-1/5 rounded-md bg-neutral-100 shadow-md p-2 flex flex-col justify-center items-center">
                         <h2 className="text-4xl p-2">850+</h2>
                         <p>Hospital Rooms</p>
                     </div>
@@ -291,16 +301,20 @@ export default function Home() {
                     <div className="py-8 flex flex-row justify-center items-center">
                         <div className="grid grid-cols-4 gap-2 w-3/5">
                             {docs.map((doc) => (
-                                <div
+                                <motion.div
+                                
+                                
                                     key={doc.id}
                                     onClick={() => handleDocSelect(doc)}
                                 >
-                                    <label
-                                        className={`p-2 bg-white shadow-md flex flex-col justify-center items-center space-y-2 cursor-pointer rounded-md ${
-                                            selectedDoc?.id === doc.id
+                                    <motion.label 
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        initial={{ y: 100, opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        className={`p-2 bg-white shadow-md flex flex-col justify-center items-center space-y-2 cursor-pointer rounded-md ${selectedDoc?.id === doc.id
                                                 ? "bg-gradient-to-br from-teal-100 to-teal-400"
                                                 : ""
-                                        }`}
+                                            }`}
                                     >
                                         <Image
                                             src={doc.img}
@@ -312,14 +326,14 @@ export default function Home() {
                                         <h2 className="text-xl text-black">
                                             {doc.specialization}
                                         </h2>
-                                    </label>
+                                    </motion.label>
 
                                     <input
                                         type="radio"
                                         hidden={true}
                                         className="cursor-pointer"
                                     />
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
 
@@ -330,7 +344,10 @@ export default function Home() {
                                         {selectedDoc.specialization}
                                     </h3>
 
-                                    <ul className="p-2">
+                                    <motion.ul whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="p-2">
                                         {selectedDoc.data.map((item, index) => (
                                             <li
                                                 className="flex flex-row items-center p-2"
@@ -341,7 +358,7 @@ export default function Home() {
                                                 {item}
                                             </li>
                                         ))}
-                                    </ul>
+                                    </motion.ul>
 
                                     <Link
                                         href={"/book"}
@@ -355,7 +372,10 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="flex flex-row w-3/4 py-20">
-                    <div className="w-1/2">
+                    <motion.div whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: -100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="w-1/2">
                         <h2 className="text-3xl text-cyan-900 font-medium">
                             We Are Always Here To Ensure Best Medical Treatment
                         </h2>
@@ -368,21 +388,27 @@ export default function Home() {
                                 Discount for all medical treatments
                             </li>
                         </ul>
-                    </div>
-                    <div className="w-1/2">
+                    </motion.div>
+                    <motion.div whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="w-1/2">
                         <Image
                             src={"/hero2.png"}
                             width={400}
                             height={500}
                             alt="hero img"
                         ></Image>
-                    </div>
+                    </motion.div>
                 </div>
                 <div className="specialists py-20 w-full">
                     <h2 className="text-cyan-800 text-center text-3xl font-semibold py-8">
                         Meet Our Specialists
                     </h2>
-                    <div className="flex flex-row justify-center items-center space-x-10">
+                    <motion.div whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="flex flex-row justify-center items-center space-x-10">
                         <div>
                             <div className="rounded-tl-[120px] rounded-br-[120px] bg-gradient-to-tr from-cyan-600 to-cyan-800 flex justify-center">
                                 <Image
@@ -431,7 +457,7 @@ export default function Home() {
                             <p className="font-semibold">Dr. John Smith</p>
                             <p>Cardiologist</p>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

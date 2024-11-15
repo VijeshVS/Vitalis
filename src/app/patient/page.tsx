@@ -268,33 +268,51 @@ transition={{ duration: 0.5, delay: 0.5 }}
                 </div>
             </div>
             <motion.div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
-                <div className="text-3xl font-semibold">Hello {data.name},</div>
-                <div>
+            
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="text-3xl font-semibold">Hello {data.name}, </motion.div>
+                <motion.div whileInView={{ x: 0, opacity: 1 }}
+initial={{ x: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+>
                     At Vitalis, we prioritize providing top-notch facilities for
                     our patients. We are committed to ensuring their comfort and
                     well-being. Additionally, we implement robust measures to
                     safeguard patient data, maintaining confidentiality and
                     security at all times. Your trust is our utmost priority.
-                </div>
-                <div className="flex md:flex-row flex-col md:space-x-4 justify-center">
-                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                </motion.div >
+                <motion.div className="flex md:flex-row flex-col md:space-x-4 justify-center">
+                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaSuitcaseMedical />
                         <div className="pt-3">Access Medical Records</div>
-                    </button>
-                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                    </motion.button>
+                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
-                    </button>
-                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                    </motion.button>
+                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaStethoscope />
                         <div className="pt-3">Consult a doctor</div>
-                    </button>
-                    <button className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                    </motion.button>
+                    <motion.button whileInView={{ scale: 1, opacity: 1 }}
+initial={{ scale: 0.5, opacity: 0 }}
+transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <RiMoneyRupeeCircleFill />
                         <div className="pt-3">Sell your data</div>
-                    </button>
-                </div>
-                <div className="flex flex-row">
+                    </motion.button>
+                </motion.div>
+                <motion.div whileInView={{ y: 0, opacity: 1 }}
+initial={{ y: 100, opacity: 0 }}
+transition={{ duration: 0.5 }}
+ className="flex flex-row">
                     <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
                         <h2 className="text-2xl font-bold mb-4 w-fit">
                             Symptom Checker
@@ -372,7 +390,7 @@ transition={{ duration: 0.5, delay: 0.5 }}
                             ))}
                         </ul>
                     </div>
-                </div>
+                </motion.div>
             </motion.div>
         </div>
     );
