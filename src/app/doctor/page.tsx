@@ -12,6 +12,9 @@ import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
 import DOCTOR_ABI from '@/../contracts/doctor.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
+    if (!email) {
+        return "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+    }
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
