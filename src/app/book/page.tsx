@@ -16,6 +16,12 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
+import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import APPOINT_ABI from "@/../contracts/appointment.abi.json";
+
+import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import PATIENT_ABI from "@/../contracts/patient.abi.json";
+
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
@@ -452,6 +458,47 @@ const Page = () => {
         return doctor.specialization === selectedSpecialization;
     });
 
+    async function handleAddingAppointment(index: any) {
+        const provider = (window as any).ethereum;
+        if (provider) {
+            const new_web3 = new Web3(provider);
+            await new_web3.eth.requestAccounts();
+            const res = await new_web3.eth.getAccounts(); // patient
+            const contract = new new_web3.eth.Contract(
+                APPOINT_ABI,
+                APPOINTMENT_CONTRACT_ADDRESS
+            );
+            
+            const docContract = new new_web3.eth.Contract(
+                DOCTOR_ABI,
+                DOCTOR_CONTRACT_ADDRESS
+            );
+            const patContract = new new_web3.eth.Contract(
+                PATIENT_ABI,
+                PATIENT_CONTRACT_ADDRESS
+            );
+
+            const patientDetails = await patContract.methods
+                .getPatient(res[0])
+                .call({
+                    from: res[0],
+                });
+
+            // const doctorDetails = await docContract.methods.getDoctor().call({
+            //     from: res[0]
+            // })
+
+            console.log(patientDetails);
+            console.log(filteredDoctors[index]);
+
+            // const details = await contract.methods.createAppointment().send({
+            //     from: res[0]
+            // })
+
+            // console.log(details);
+        }
+    }
+
     if (sortByFee) {
         filteredDoctors.sort((a, b) => a.fee - b.fee);
     }
@@ -790,7 +837,7 @@ const Page = () => {
                 </button>
 
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    {filteredDoctors.map((doctor) => (
+                    {filteredDoctors.map((doctor, index) => (
                         <div
                             key={doctor.id}
                             className="flex flex-row p-2 border rounded bg-white justify-between"
@@ -807,17 +854,26 @@ const Page = () => {
                                             <strong>{doctor.name}</strong>
                                         </HoverCardTrigger>
                                         <HoverCardContent className="">
-                                            <div className="p-2 flex flex-col justify-center items-center space-y-2" >
+                                            <div className="p-2 flex flex-col justify-center items-center space-y-2">
                                                 <UserProfile
                                                     email={doctor.email}
                                                     width={75}
                                                     height={50}
                                                 />
                                                 <strong>{doctor.name}</strong>
-                                                <p className="">{doctor.specialization}</p>
-                                                <p className="">{doctor.hospital}</p>
-                                                <p className="">{doctor.education}</p>
-                                                <p className="">{doctor.experience} years of experience</p>
+                                                <p className="">
+                                                    {doctor.specialization}
+                                                </p>
+                                                <p className="">
+                                                    {doctor.hospital}
+                                                </p>
+                                                <p className="">
+                                                    {doctor.education}
+                                                </p>
+                                                <p className="">
+                                                    {doctor.experience} years of
+                                                    experience
+                                                </p>
                                             </div>
                                         </HoverCardContent>
                                     </HoverCard>
@@ -831,7 +887,12 @@ const Page = () => {
                                     Fee: <FaIndianRupeeSign />
                                     {doctor.fee}
                                 </span>
-                                <button className="mt-2 px-2 py-1 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md hover:scale-105 duration-300 transition-all">
+                                <button
+                                    onClick={() =>
+                                        handleAddingAppointment(index)
+                                    }
+                                    className="mt-2 px-2 py-1 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md hover:scale-105 duration-300 transition-all"
+                                >
                                     Book Appointment
                                 </button>
                             </div>

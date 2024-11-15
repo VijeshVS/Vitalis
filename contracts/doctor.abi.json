@@ -45,7 +45,8 @@
         "internalType": "struct Doctor.ContactInfo",
         "name": "contact",
         "type": "tuple"
-      }
+      },
+      { "internalType": "uint256", "name": "yoe", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -122,7 +123,8 @@
             "internalType": "struct Doctor.ContactInfo",
             "name": "contact",
             "type": "tuple"
-          }
+          },
+          { "internalType": "uint256", "name": "yoe", "type": "uint256" }
         ],
         "internalType": "struct Doctor.Doc[]",
         "name": "",
@@ -133,7 +135,9 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      { "internalType": "address", "name": "doctor", "type": "address" }
+    ],
     "name": "getDoctor",
     "outputs": [
       {
@@ -174,7 +178,8 @@
             "internalType": "struct Doctor.ContactInfo",
             "name": "contact",
             "type": "tuple"
-          }
+          },
+          { "internalType": "uint256", "name": "yoe", "type": "uint256" }
         ],
         "internalType": "struct Doctor.Doc",
         "name": "",
@@ -194,7 +199,8 @@
       { "internalType": "string", "name": "_profilePicture", "type": "string" },
       { "internalType": "string", "name": "emailId", "type": "string" },
       { "internalType": "uint256", "name": "phoneNumber", "type": "uint256" },
-      { "internalType": "string", "name": "gender", "type": "string" }
+      { "internalType": "string", "name": "gender", "type": "string" },
+      { "internalType": "uint256", "name": "yoe", "type": "uint256" }
     ],
     "name": "registerDoctor",
     "outputs": [],

@@ -94,7 +94,7 @@ const page = () => {
                 APPOINTMENT_CONTRACT_ADDRESS
             );
             
-            const ans: any = await contract.methods.getPatient().call({
+            const ans: any = await contract.methods.getPatient(res[0]).call({
                 from: res[0] as string,
             });
 
