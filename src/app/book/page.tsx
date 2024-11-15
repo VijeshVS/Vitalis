@@ -1,13 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaSortAmountDownAlt } from "react-icons/fa";
+import Web3 from "web3";
+import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
+import Loading from "@/components/Loading";
 
-const getGravatarUrl = (email, size = 200) => {
+const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
@@ -375,7 +379,15 @@ const doctors = [
     },
 ];
 
-const UserProfile = ({ email, width, height }) => {
+const UserProfile = ({
+    email,
+    width,
+    height,
+}: {
+    email: any;
+    width: any;
+    height: any;
+}) => {
     const avatarUrl = getGravatarUrl(email);
 
     return (
@@ -391,12 +403,35 @@ const UserProfile = ({ email, width, height }) => {
 
 const Page = () => {
     const [selectedSpecialization, setSelectedSpecialization] = useState(""); // Empty string to show all doctors initially
-
+    const [loading, setLoading] = useState(false);
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
 
-    const handleSpecializationChange = (event) => {
+    const handleSpecializationChange = (event: any) => {
         setSelectedSpecialization(event.target.value);
     };
+
+    async function getDoctors() {
+        const provider = (window as any).ethereum;
+        if (provider) {
+            const new_web3 = new Web3(provider);
+            await new_web3.eth.requestAccounts();
+            const res = await new_web3.eth.getAccounts();
+            const contract = new new_web3.eth.Contract(
+                DOCTOR_ABI,
+                DOCTOR_CONTRACT_ADDRESS
+            );
+
+            const details = await contract.methods.getAllDoctors().call({
+                from: res[0]
+            })
+
+            console.log(details)
+        }
+    }
+
+    useEffect(() => {
+        getDoctors();
+    }, []);
 
     const handleSortByFee = () => {
         setSortByFee(!sortByFee);
@@ -413,6 +448,8 @@ const Page = () => {
     if (sortByFee) {
         filteredDoctors.sort((a, b) => a.fee - b.fee);
     }
+
+    if (loading) return <Loading />;
 
     return (
         <div className="flex flex-row flex-1">
