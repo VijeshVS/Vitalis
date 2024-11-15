@@ -27,371 +27,6 @@ const getGravatarUrl = (email: any, size = 200) => {
     return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
 
-const doctors = [
-    {
-        id: 1,
-        name: "Dr. Rajiv Sharma",
-        email: "rajiv.sharma@healthcenter.com",
-        phone: "123-456-7890",
-        hospital: "City Hospital",
-        specialization: "General Physician",
-        education: "fill data",
-        experience: 7,
-        fee: 500,
-    },
-    {
-        id: 2,
-        name: "Dr. Neha Verma",
-        email: "neha.verma@wellnessclinic.com",
-        phone: "321-654-0987",
-        hospital: "Wellness Clinic",
-        specialization: "General Physician",
-        fee: 600,
-    },
-    {
-        id: 3,
-        name: "Dr. Meera Kapoor",
-        email: "meera.kapoor@sunshinehospital.com",
-        phone: "234-567-8901",
-        hospital: "Sunshine Hospital",
-        specialization: "Geriatrics",
-        fee: 700,
-    },
-    {
-        id: 4,
-        name: "Dr. Sanjay Desai",
-        email: "sanjay.desai@cityhospital.com",
-        phone: "876-543-2109",
-        hospital: "City Hospital",
-        specialization: "Geriatrics",
-        fee: 750,
-    },
-    {
-        id: 5,
-        name: "Dr. Priya Singh",
-        email: "priya.singh@cardiaccare.com",
-        phone: "567-890-1234",
-        hospital: "Cardiac Care",
-        specialization: "Cardiology",
-        fee: 1000,
-    },
-    {
-        id: 6,
-        name: "Dr. Aman Trivedi",
-        email: "aman.trivedi@heartcenter.com",
-        phone: "678-901-2345",
-        hospital: "Heart Center",
-        specialization: "Cardiology",
-        fee: 1100,
-    },
-    {
-        id: 7,
-        name: "Dr. Kavita Joshi",
-        email: "kavita.joshi@brainclinic.com",
-        phone: "789-012-3456",
-        hospital: "Brain Clinic",
-        specialization: "Neurology",
-        fee: 1200,
-    },
-    {
-        id: 8,
-        name: "Dr. Ajay Bansal",
-        email: "ajay.bansal@neurocenter.com",
-        phone: "890-123-4567",
-        hospital: "Neuro Center",
-        specialization: "Neurology",
-        fee: 1250,
-    },
-    {
-        id: 9,
-        name: "Dr. Ritika Mehta",
-        email: "ritika.mehta@orthocare.com",
-        phone: "901-234-5678",
-        hospital: "Ortho Care",
-        specialization: "Orthopedics",
-        fee: 800,
-    },
-    {
-        id: 10,
-        name: "Dr. Manoj Jain",
-        email: "manoj.jain@bonehealth.com",
-        phone: "012-345-6789",
-        hospital: "Bone Health Clinic",
-        specialization: "Orthopedics",
-        fee: 850,
-    },
-    {
-        id: 11,
-        name: "Dr. Swati Rao",
-        email: "swati.rao@skinsolutions.com",
-        phone: "111-222-3333",
-        hospital: "Skin Solutions",
-        specialization: "Dermatology",
-        fee: 600,
-    },
-    {
-        id: 12,
-        name: "Dr. Sameer Naik",
-        email: "sameer.naik@skincare.com",
-        phone: "222-333-4444",
-        hospital: "Skin Care Clinic",
-        specialization: "Dermatology",
-        fee: 650,
-    },
-    {
-        id: 13,
-        name: "Dr. Aditi Agarwal",
-        email: "aditi.agarwal@pediatricsclinic.com",
-        phone: "333-444-5555",
-        hospital: "Pediatrics Clinic",
-        specialization: "Pediatrics",
-        fee: 700,
-    },
-    {
-        id: 14,
-        name: "Dr. Pankaj Dubey",
-        email: "pankaj.dubey@childcare.com",
-        phone: "444-555-6666",
-        hospital: "Child Care Center",
-        specialization: "Pediatrics",
-        fee: 750,
-    },
-    {
-        id: 15,
-        name: "Dr. Vishal Sinha",
-        email: "vishal.sinha@mentalwellness.com",
-        phone: "555-666-7777",
-        hospital: "Mental Wellness Center",
-        specialization: "Psychiatry",
-        fee: 900,
-    },
-    {
-        id: 16,
-        name: "Dr. Nisha Pandey",
-        email: "nisha.pandey@mindclinic.com",
-        phone: "666-777-8888",
-        hospital: "Mind Clinic",
-        specialization: "Psychiatry",
-        fee: 950,
-    },
-    {
-        id: 17,
-        name: "Dr. Anil Khanna",
-        email: "anil.khanna@oncocenter.com",
-        phone: "777-888-9999",
-        hospital: "Oncology Center",
-        specialization: "Oncology",
-        fee: 1500,
-    },
-    {
-        id: 18,
-        name: "Dr. Suman Tiwari",
-        email: "suman.tiwari@cancerclinic.com",
-        phone: "888-999-0000",
-        hospital: "Cancer Clinic",
-        specialization: "Oncology",
-        fee: 1550,
-    },
-    {
-        id: 19,
-        name: "Dr. Abhay Kumar",
-        email: "abhay.kumar@gastrohealth.com",
-        phone: "999-000-1111",
-        hospital: "Gastro Health Clinic",
-        specialization: "Gastroenterology",
-        fee: 1000,
-    },
-    {
-        id: 20,
-        name: "Dr. Smita Bhargava",
-        email: "smita.bhargava@digestionclinic.com",
-        phone: "000-111-2222",
-        hospital: "Digestion Clinic",
-        specialization: "Gastroenterology",
-        fee: 1050,
-    },
-    {
-        id: 21,
-        name: "Dr. Rohan Patel",
-        email: "rohan.patel@endocrineclinic.com",
-        phone: "111-222-3333",
-        hospital: "Endocrine Clinic",
-        specialization: "Endocrinology",
-        fee: 1100,
-    },
-    {
-        id: 22,
-        name: "Dr. Kavya Iyer",
-        email: "kavya.iyer@hormonecenter.com",
-        phone: "222-333-4444",
-        hospital: "Hormone Center",
-        specialization: "Endocrinology",
-        fee: 1150,
-    },
-    {
-        id: 23,
-        name: "Dr. Reena Sharma",
-        email: "reena.sharma@eyeclinic.com",
-        phone: "333-444-5555",
-        hospital: "Eye Clinic",
-        specialization: "Ophthalmology",
-        fee: 800,
-    },
-    {
-        id: 24,
-        name: "Dr. Arjun Kapoor",
-        email: "arjun.kapoor@visioncenter.com",
-        phone: "444-555-6666",
-        hospital: "Vision Center",
-        specialization: "Ophthalmology",
-        fee: 850,
-    },
-    {
-        id: 25,
-        name: "Dr. Pooja Reddy",
-        email: "pooja.reddy@urologycenter.com",
-        phone: "555-666-7777",
-        hospital: "Urology Center",
-        specialization: "Urology",
-        fee: 900,
-    },
-    {
-        id: 26,
-        name: "Dr. Deepak Arora",
-        email: "deepak.arora@kidneyclinic.com",
-        phone: "666-777-8888",
-        hospital: "Kidney Clinic",
-        specialization: "Urology",
-        fee: 950,
-    },
-    {
-        id: 27,
-        name: "Dr. Shruti Jain",
-        email: "shruti.jain@womenshealth.com",
-        phone: "777-888-9999",
-        hospital: "Women's Health Center",
-        specialization: "Gynecology",
-        fee: 1000,
-    },
-    {
-        id: 28,
-        name: "Dr. Amit Mehta",
-        email: "amit.mehta@gynecare.com",
-        phone: "888-999-0000",
-        hospital: "GyneCare Clinic",
-        specialization: "Gynecology",
-        fee: 1050,
-    },
-    {
-        id: 29,
-        name: "Dr. Sunil Shah",
-        email: "sunil.shah@breathwell.com",
-        phone: "999-000-1111",
-        hospital: "Breath Well Clinic",
-        specialization: "Pulmonology",
-        fee: 950,
-    },
-    {
-        id: 30,
-        name: "Dr. Ankita Gupta",
-        email: "ankita.gupta@lunghealth.com",
-        phone: "000-111-2222",
-        hospital: "Lung Health Center",
-        specialization: "Pulmonology",
-        fee: 1000,
-    },
-    {
-        id: 31,
-        name: "Dr. Rahul Kumar",
-        email: "rahul.kumar@arthritiscenter.com",
-        phone: "111-222-3333",
-        hospital: "Arthritis Center",
-        specialization: "Rheumatology",
-        fee: 800,
-    },
-    {
-        id: 32,
-        name: "Dr. Sonali Deshpande",
-        email: "sonali.deshpande@jointclinic.com",
-        phone: "222-333-4444",
-        hospital: "Joint Clinic",
-        specialization: "Rheumatology",
-        fee: 850,
-    },
-    {
-        id: 33,
-        name: "Dr. Vivek Singh",
-        email: "vivek.singh@painmanagement.com",
-        phone: "333-444-5555",
-        hospital: "Pain Management Clinic",
-        specialization: "Anesthesiology",
-        fee: 700,
-    },
-    {
-        id: 34,
-        name: "Dr. Alka Mukherjee",
-        email: "alka.mukherjee@anesthesiacenter.com",
-        phone: "444-555-6666",
-        hospital: "Anesthesia Center",
-        specialization: "Anesthesiology",
-        fee: 750,
-    },
-    {
-        id: 35,
-        name: "Dr. Dinesh Rathi",
-        email: "dinesh.rathi@cityhospital.com",
-        phone: "555-666-7777",
-        hospital: "City Hospital",
-        specialization: "General Physician",
-        fee: 550,
-    },
-    {
-        id: 36,
-        name: "Dr. Priyanka Kaul",
-        email: "priyanka.kaul@healthclinic.com",
-        phone: "666-777-8888",
-        hospital: "Health Clinic",
-        specialization: "General Physician",
-        fee: 600,
-    },
-    {
-        id: 37,
-        name: "Dr. Manish Chawla",
-        email: "manish.chawla@heartwell.com",
-        phone: "777-888-9999",
-        hospital: "HeartWell Hospital",
-        specialization: "Cardiology",
-        fee: 1200,
-    },
-    {
-        id: 38,
-        name: "Dr. Tanya Reddy",
-        email: "tanya.reddy@pediatricclinic.com",
-        phone: "888-999-0000",
-        hospital: "Pediatric Clinic",
-        specialization: "Pediatrics",
-        fee: 800,
-    },
-    {
-        id: 39,
-        name: "Dr. Vijay Shah",
-        email: "vijay.shah@dermatologyclinic.com",
-        phone: "999-000-1111",
-        hospital: "Dermatology Clinic",
-        specialization: "Dermatology",
-        fee: 700,
-    },
-    {
-        id: 40,
-        name: "Dr. Neetu Garg",
-        email: "neetu.garg@orthocare.com",
-        phone: "000-111-2222",
-        hospital: "OrthoCare Clinic",
-        specialization: "Orthopedics",
-        fee: 750,
-    },
-];
-
 const UserProfile = ({
     email,
     width,
@@ -416,8 +51,48 @@ const UserProfile = ({
 
 const Page = () => {
     const [selectedSpecialization, setSelectedSpecialization] = useState(""); // Empty string to show all doctors initially
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
+    const [doctors,setDoctors] = useState([
+        {
+            id: 1,
+            name: "Dr. Rajiv Sharma",
+            email: "rajiv.sharma@healthcenter.com",
+            phone: "123-456-7890",
+            hospital: "City Hospital",
+            specialization: "General Physician",
+            education: "fill data",
+            experience: 7,
+            fee: 500,
+        },
+        {
+            id: 2,
+            name: "Dr. Neha Verma",
+            email: "neha.verma@wellnessclinic.com",
+            phone: "321-654-0987",
+            hospital: "Wellness Clinic",
+            specialization: "General Physician",
+            fee: 600,
+        },
+        {
+            id: 3,
+            name: "Dr. Meera Kapoor",
+            email: "meera.kapoor@sunshinehospital.com",
+            phone: "234-567-8901",
+            hospital: "Sunshine Hospital",
+            specialization: "Geriatrics",
+            fee: 700,
+        },
+        {
+            id: 4,
+            name: "Dr. Sanjay Desai",
+            email: "sanjay.desai@cityhospital.com",
+            phone: "876-543-2109",
+            hospital: "City Hospital",
+            specialization: "Geriatrics",
+            fee: 750,
+        },
+    ])
 
     const handleSpecializationChange = (event: any) => {
         setSelectedSpecialization(event.target.value);
@@ -434,11 +109,12 @@ const Page = () => {
                 DOCTOR_CONTRACT_ADDRESS
             );
 
-            const details = await contract.methods.getAllDoctors().call({
+            const details:any = await contract.methods.getAllDoctors().call({
                 from: res[0],
             });
-
-            console.log(details);
+            console.log(details)
+            setDoctors(details)
+            setLoading(false)
         }
     }
 
@@ -485,9 +161,9 @@ const Page = () => {
                     from: res[0],
                 });
 
-            // const doctorDetails = await docContract.methods.getDoctor().call({
-            //     from: res[0]
-            // })
+            const doctorDetails = await docContract.methods.getDoctor().call({
+                from: res[0]
+            })
 
             console.log(patientDetails);
             console.log(filteredDoctors[index]);
@@ -836,16 +512,17 @@ const Page = () => {
                 >
                     <FaSortAmountDownAlt /> <p>Sort by Fee</p>
                 </button>
-
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    {filteredDoctors.map((doctor, index) => (
+                    {doctors.map((doctor, index) => (
                         <div
-                            key={doctor.id}
+                            // @ts-ignore
+                            key={doctor.docAddress}
                             className="flex flex-row p-2 border rounded bg-white justify-between"
                         >
                             <div className="flex flex-row items-center">
                                 <UserProfile
-                                    email={doctor.email}
+                                    // @ts-ignore
+                                    email={doctor.contact.emailId}
                                     width={75}
                                     height={50}
                                 />
@@ -886,7 +563,7 @@ const Page = () => {
                             <div className="flex flex-col items-center justify-center p-2">
                                 <span className="flex flex-row items-center">
                                     Fee: <FaIndianRupeeSign />
-                                    {doctor.fee}
+                                    500
                                 </span>
                                 <button
                                     onClick={() =>
