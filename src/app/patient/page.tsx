@@ -8,7 +8,7 @@ import { MdOutlineSecurity } from "react-icons/md";
 import { FaStethoscope } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useState } from "react";
-import { checkToken } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
@@ -114,6 +114,14 @@ const page = () => {
 
     async function verifyPatient() {
         const verify = await checkToken(localStorage.getItem("token") || "");
+        const decoded = await getDecoded(localStorage.getItem("token") || "");
+
+        //@ts-ignore
+        if(decoded?.type == "doctor"){
+            router.push('/doctor')
+            toast.info("You are a patient !!");
+        }
+
         if (!verify) {
             toast.success("Please login to continue");
             router.push("/login/patient");

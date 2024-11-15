@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
-import { checkToken } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
@@ -115,6 +115,13 @@ const page = () => {
 
     const verifyDoctor = async () => {
         const verify = await checkToken(localStorage.getItem("token") || "");
+        const decoded = await getDecoded(localStorage.getItem("token") || "");
+
+        //@ts-ignore
+        if(decoded?.type == "patient"){
+            router.push('/patient')
+            toast.info("You are a doctor !!");
+        }
 
         if (!verify) {
             router.push("/login/doctor");
