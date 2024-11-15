@@ -123,10 +123,9 @@ const page = () => {
         }
 
         // get doctors details
-
         connectAndGetDetails();
 
-        // setLoading(false);
+        
     };
 
     useEffect(() => {

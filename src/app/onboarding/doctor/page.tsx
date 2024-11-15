@@ -43,7 +43,8 @@ export default function Onboarding() {
                 formData.licensenum,
                 "Profile",
                 formData.email,
-                formData.phone
+                formData.phone,
+                "Male"
             )
             .send({
                 from: account,
@@ -55,7 +56,7 @@ export default function Onboarding() {
                 const address = account;
                 const type = "doctor";
                 const payload = {address,type};
-                const token = await generateToken(JSON.stringify(payload));
+                const token = await generateToken(payload);
                 localStorage.setItem('token',token)
                 router.push("/doctor");
             })
