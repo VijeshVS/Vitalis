@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { checkToken } from "@/lib/actions/jwtLogics";
+import { FaRegCircleUser } from "react-icons/fa6";
 import { toast } from "sonner";
 const Navbar = () => {
     const router = useRouter();
@@ -41,13 +42,16 @@ const Navbar = () => {
                 VITALIS
             </div>
             {isLogged ? (
-                <div className="mr-6 p-2 flex flex-row justify-center items-center space-x-2 w-[180px]">
+                <div className="mr-6 p-2 flex flex-row justify-center items-center space-x-4 w-[180px]">
                     <button
                         onClick={logOut}
                         className="text-white w-1/2 bg-teal-700 px-2 py-1 rounded-md hover:bg-teal-800 duration-300 transition-all"
                     >
                         Log out
                     </button>
+                    <div onClick={()=>router.push('/patient')} className="text-cyan-800 text-4xl cursor-pointer">
+                      <FaRegCircleUser />
+                    </div>
                 </div>
             ) : (
                 <div className="mr-6 p-2 flex flex-row justify-center items-center space-x-2 w-[180px]">

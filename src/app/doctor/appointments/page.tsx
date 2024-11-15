@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
-import Web3 from 'web3'
+import Web3 from "web3";
 import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import APPOINT_ABI from '@/../contracts/appointment.abi.json'
+import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -42,17 +42,18 @@ const UserProfile = ({
 const page = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const [appointments, setAppointments] = useState({});
 
-    const [data,setData] = useState({
+    const [data, setData] = useState({
         name: "Samkit Samsukha",
         email: "samkitsamsukha.is23@rvce.edu.in",
         phone: "9239089089",
         license: "xxxxxxxxxxx",
         education: "idk",
         specialization: "idk",
-    })
+    });
 
-    const connectAndGetDetails = async () =>{
+    const connectAndGetDetails = async () => {
         const provider = (window as any).ethereum;
         if (provider) {
             const new_web3 = new Web3(provider);
@@ -63,22 +64,24 @@ const page = () => {
                 APPOINTMENT_CONTRACT_ADDRESS
             );
 
-            const details: any = await contract.methods.getDoctorAppointments(res[0]).call({
-                from : res[0]
-            });
-
-            console.log(details)
+            const details: any = await contract.methods
+                .getDoctorAppointments(res[0])
+                .call({
+                    from: res[0],
+                });
+            setAppointments(details);
+            console.log(details);
             setLoading(false);
         }
-    }
+    };
 
     const verifyDoctor = async () => {
         const verify = await checkToken(localStorage.getItem("token") || "");
         const decoded = await getDecoded(localStorage.getItem("token") || "");
 
         //@ts-ignore
-        if(decoded?.type == "patient"){
-            router.push('/patient')
+        if (decoded?.type == "patient") {
+            router.push("/patient");
             toast.info("You are a patient !!");
         }
 
@@ -90,8 +93,6 @@ const page = () => {
 
         // get doctors details
         connectAndGetDetails();
-
-        
     };
 
     useEffect(() => {
@@ -114,9 +115,7 @@ const page = () => {
                     </span>
                 </div>
                 <div className="ml-6 pl-3 p-1 mt-4 w-3/4 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md">
-                    <span className="font-semibold">
-                        Qualification:
-                    </span>
+                    <span className="font-semibold">Qualification:</span>
                     <br />
                     Education: {data.education}
                     <br />
@@ -131,16 +130,34 @@ const page = () => {
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
                 <div className="text-3xl font-semibold py-6">Appointments</div>
-                <div className="flex flex-col">
-                    {
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row space-x-4">
-                                <UserProfile email={data.email} width={50} height={50} />
-                                <p className="text-xl font-semibold">Varenya Thaker</p>
+                <div className="grid grid-cols-2 gap-8">
+                    {appointments.map((appointment, index) => (
+                        <div key={index} className="flex items-center justify-between bg-white p-2 rounded-md">
+                            <div className="flex flex-row space-x-4  justify-between items-center">
+                                <UserProfile
+                                    email={appointment.patientEmail}
+                                    width={50}
+                                    height={50}
+                                />
+                                <div className="flex flex-col">
+                                    <p className="text-xl font-semibold">
+                                        {appointment.patientName ||
+                                            "Unknown User"}
+                                    </p>
+                                    <p>
+                                        {appointment.patientEmail ||
+                                            "Unknown User"}
+                                    </p>
+                                </div>
                             </div>
-                            <Link className="flex flex-row justify-center items-center rounded-md px-2 h-fit py-1 bg-gradient-to-br hover:scale-105 duration-300 transition-all from-cyan-600 to-cyan-800 text-white" href={'/diagnostic'}>Generate Diagnosis</Link>
+                            <Link
+                                className="flex flex-row justify-center items-center rounded-md px-2 h-fit py-1 bg-gradient-to-br hover:scale-105 duration-300 transition-all from-cyan-600 to-cyan-800 text-white"
+                                href={"/diagnostic"}
+                            >
+                                Generate Diagnosis
+                            </Link>
                         </div>
-                    }
+                    ))}
                 </div>
             </div>
         </div>
