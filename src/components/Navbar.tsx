@@ -20,11 +20,11 @@ const Navbar = () => {
         loggedCheck();
     }, []);
 
-    function logOut(){
-        localStorage.setItem('token',"");
-        router.push('/');
-        toast.success("Logged out successfully !!")
-        setIsLogged(false)
+    function logOut() {
+        localStorage.setItem("token", "");
+        router.push("/");
+        toast.success("Logged out successfully !!");
+        setIsLogged(false);
     }
 
     return (
@@ -49,8 +49,11 @@ const Navbar = () => {
                     >
                         Log out
                     </button>
-                    <div onClick={()=>router.push('/patient')} className="text-cyan-800 text-4xl cursor-pointer">
-                      <FaRegCircleUser />
+                    <div
+                        onClick={() => router.push("/patient")}
+                        className="text-cyan-800 text-4xl cursor-pointer"
+                    >
+                        <FaRegCircleUser />
                     </div>
                 </div>
             ) : (

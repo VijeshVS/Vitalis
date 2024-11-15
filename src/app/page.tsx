@@ -20,7 +20,6 @@ import gynecology from "../../public/specializations/gynecology.png";
 import pulmonology from "../../public/specializations/pulmonology.png";
 import rheumatology from "../../public/specializations/rheumatology.png";
 import { HiSparkles } from "react-icons/hi";
-import { motion } from "framer-motion";
 import router from "next/router";
 
 const docs = [
@@ -233,23 +232,17 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center w-3/4">
                 <div className="herosection py-20 flex flex-row justify-center items-center">
                     <div className="flex flex-col w-3/5 p-4">
-                        <motion.div whileInView={{ x: 0, opacity: 1 }}
-                            initial={{ x: -100, opacity: 0 }}
-                            transition={{ duration: 0.5 }}
+                        <div 
                             className="text-6xl font-semibold text-cyan-900 p-2">
                             Your Health is <br /> Our Top Priority
-                        </motion.div>
-                        <motion.div whileInView={{ x: 0, opacity: 1 }}
-                            initial={{ x: 100, opacity: 0 }}
-                            transition={{ duration: 0.5 }}
+                        </div>
+                        <div 
                             className="text-2xl p-2 ">
                             Securely share your comprehensive medical history
                             with doctors and loved ones, for better
                             communication and care
-                        </motion.div>
-                        <motion.div whileInView={{ x:0, scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5, delay: 0.5 }}
-                            initial={{ x: -125, scale: 0.5, opacity: 0 }}
+                        </div>
+                        <div 
                             className="p-2">
                             <Link
                                 href={"/book"}
@@ -257,7 +250,7 @@ export default function Home() {
                             >
                                 Get Appointment
                             </Link>
-                        </motion.div>
+                        </div>
                     </div>
                     <div className="w-2/5">
                         <Image
@@ -302,16 +295,14 @@ export default function Home() {
                     <div className="py-8 flex flex-row justify-center items-center">
                         <div className="grid grid-cols-4 gap-2 w-3/5">
                             {docs.map((doc) => (
-                                <motion.div
+                                <div
                                 
                                 
                                     key={doc.id}
                                     onClick={() => handleDocSelect(doc)}
                                 >
-                                    <motion.label 
-                                        whileInView={{ y: 0, opacity: 1 }}
-                                        initial={{ y: 100, opacity: 0 }}
-                                        transition={{ duration: 0.5 }}
+                                    <label 
+                                        
                                         className={`p-2 bg-white shadow-md flex flex-col justify-center items-center space-y-2 cursor-pointer rounded-md ${selectedDoc?.id === doc.id
                                                 ? "bg-gradient-to-br from-teal-100 to-teal-400"
                                                 : ""
@@ -327,14 +318,14 @@ export default function Home() {
                                         <h2 className="text-xl text-black">
                                             {doc.specialization}
                                         </h2>
-                                    </motion.label>
+                                    </label>
 
                                     <input
                                         type="radio"
                                         hidden={true}
                                         className="cursor-pointer"
                                     />
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
 
@@ -345,9 +336,7 @@ export default function Home() {
                                         {selectedDoc.specialization}
                                     </h3>
 
-                                    <motion.ul whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
+                                    <ul
  className="p-2">
                                         {selectedDoc.data.map((item, index) => (
                                             <li
@@ -359,7 +348,7 @@ transition={{ duration: 0.5 }}
                                                 {item}
                                             </li>
                                         ))}
-                                    </motion.ul>
+                                    </ul>
                                     
                                     <Link
                                         href={`/book?sp=${selectedDoc.specialization}`}
@@ -373,9 +362,7 @@ transition={{ duration: 0.5 }}
                     </div>
                 </div>
                 <div className="flex flex-row w-3/4 py-20">
-                    <motion.div whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: -100, opacity: 0 }}
-transition={{ duration: 0.5 }}
+                    <div 
  className="w-1/2">
                         <h2 className="text-3xl text-cyan-900 font-medium">
                             We Are Always Here To Ensure Best Medical Treatment
@@ -389,10 +376,8 @@ transition={{ duration: 0.5 }}
                                 Discount for all medical treatments
                             </li>
                         </ul>
-                    </motion.div>
-                    <motion.div whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
+                    </div>
+                    <div 
  className="w-1/2">
                         <Image
                             src={"/hero2.png"}
@@ -400,15 +385,13 @@ transition={{ duration: 0.5 }}
                             height={500}
                             alt="hero img"
                         ></Image>
-                    </motion.div>
+                    </div>
                 </div>
                 <div className="specialists py-20 w-full">
                     <h2 className="text-cyan-800 text-center text-3xl font-semibold py-8">
                         Meet Our Specialists
                     </h2>
-                    <motion.div whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
+                    <div 
  className="flex flex-row justify-center items-center space-x-10">
                         <div>
                             <div className="rounded-tl-[120px] rounded-br-[120px] bg-gradient-to-tr from-cyan-600 to-cyan-800 flex justify-center">
@@ -458,7 +441,7 @@ transition={{ duration: 0.5 }}
                             <p className="font-semibold">Dr. John Smith</p>
                             <p>Cardiologist</p>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </div>

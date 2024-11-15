@@ -102,7 +102,7 @@ const page = () => {
     return loading ? (
         <Loading />
     ) : (
-        <div className="bg-neutral-200 flex flex-row text-black flex-1">
+        <div className="bg-neutral-200 flex flex-row text-black flex-1 min-h-screen">
             <div className="w-1/4 bg-neutral-100 p-5">
                 <div className="ml-4 mt-4 ">
                     <UserProfile email={data.email} width={200} height={300} />
