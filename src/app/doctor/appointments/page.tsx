@@ -5,10 +5,11 @@ import md5 from "md5";
 import Image from "next/image";
 import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
 import Web3 from 'web3'
-import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import DOCTOR_ABI from '@/../contracts/doctor.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
@@ -171,38 +172,17 @@ const page = () => {
                 </div>
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
-                <div className="text-3xl font-semibold">Hello {data.name},</div>
-                <div className="flex flex-row">
-                    <div className="w-2/3">
-                    </div>
-                    <div className="w-1/3">
-                        <h2 className="text-2xl font-semibold mb-2 text-center">
-                            My Patients
-                        </h2>
-                        <div className="flex flex-col space-y-2">
-                            {Object.values(users).map((user, index) => (
-                                <div
-                                    key={index}
-                                    className="p-2 bg-neutral-100 rounded-md flex flex-row items-center space-x-4"
-                                >
-                                    <div>
-                                        <UserProfile
-                                            email={user.email}
-                                            width={50}
-                                            height={50}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <h2 className="font-bold">
-                                            {user.name}
-                                        </h2>
-                                        <p>Email: {user.email}</p>
-                                        <p>Age: {user.age}</p>
-                                    </div>
-                                </div>
-                            ))}
+                <div className="text-3xl font-semibold py-6">Appointments</div>
+                <div className="flex flex-col">
+                    {
+                        <div className="flex flex-row justify-between">
+                            <div className="flex flex-row space-x-4">
+                                <UserProfile email={data.email} width={50} height={50} />
+                                <p className="text-xl font-semibold">Varenya Thaker</p>
+                            </div>
+                            <Link className="flex flex-row justify-center items-center rounded-md px-2 h-fit py-1 bg-gradient-to-br hover:scale-105 duration-300 transition-all from-cyan-600 to-cyan-800 text-white" href={'/diagnostic'}>Generate Diagnosis</Link>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
