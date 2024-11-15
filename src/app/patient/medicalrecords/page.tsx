@@ -250,13 +250,12 @@ const page = () => {
                         >
                             <FaFilePdf />
                             <p>Report from {report.doctor}</p>
-                            <button
-                                onClick={() => {
-                                    alert("File downloading");
-                                }}
+                            <a
+                                href={`https://65hqhf12-7000.inc1.devtunnels.ms/get/${report.content}`}
+                                target="_blank"
                             >
                                 <MdFileDownload />
-                            </button>
+                            </a>
                         </div>
                     ))}
                 </div>
