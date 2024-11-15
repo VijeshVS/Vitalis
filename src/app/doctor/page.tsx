@@ -120,7 +120,7 @@ const page = () => {
         //@ts-ignore
         if(decoded?.type == "patient"){
             router.push('/patient')
-            toast.info("You are a doctor !!");
+            toast.info("You are a patient !!");
         }
 
         if (!verify) {
