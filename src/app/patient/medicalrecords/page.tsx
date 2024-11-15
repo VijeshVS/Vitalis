@@ -11,10 +11,12 @@ import { FaFilePdf } from "react-icons/fa6";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
 import Web3 from "web3";
-import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import PATIENTABI from "@/../contracts/patient.abi.json";
-import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import APPOINT_ABI from "@/../contracts/appointment.abi.json";
+import {
+    DIAGNOSIS_CONTACT_ADDRESS,
+    PATIENT_CONTRACT_ADDRESS,
+} from "../../../../contracts/contactAddress";
+import DIA_ABI from "@/../contracts/diagnosis.abi.json";
+import PAT_ABI from "@/../contracts/patient.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {
@@ -59,18 +61,6 @@ const page = () => {
         weight: "77",
         height: "181",
     });
-    const [appointments, setAppointments] = useState([
-        {
-            doctorName: "Dr. Smith",
-            dateTime: "2023-11-15T10:00:00",
-            email: "vijesh@gmail.com",
-        },
-        {
-            doctorName: "Dr. Jones",
-            dateTime: "2023-11-16T14:30:00",
-            email: "",
-        },
-    ]);
 
     const [reports, setReports] = useState([
         {
@@ -93,41 +83,29 @@ const page = () => {
             const res = await new_web3.eth.getAccounts();
 
             const contract = new new_web3.eth.Contract(
-                PATIENTABI,
+                DIA_ABI,
+                DIAGNOSIS_CONTACT_ADDRESS
+            );
+
+            const patientContract = new new_web3.eth.Contract(
+                PAT_ABI,
                 PATIENT_CONTRACT_ADDRESS
             );
 
-            const appoint_contract = new new_web3.eth.Contract(
-                APPOINT_ABI,
-                APPOINTMENT_CONTRACT_ADDRESS
-            );
-
-            const ans: any = await contract.methods.getPatient(res[0]).call({
-                from: res[0] as string,
-            });
-
-            const appoints: any = await appoint_contract.methods
-                .getPatientAppointments(res[0])
+            const patDetails: any = await patientContract.methods
+                .getPatient(res[0])
                 .call({
-                    from: res[0] as string,
+                    from: res[0],
                 });
 
-            const new_data = {
-                name: ans.name,
-                gender: ans.gender,
-                dob: ans.DOB,
-                phone: ans.phoneNumber,
-                email: ans.email,
-                age: ans.age,
-                bloodGroup: ans.bloodGroup,
-                weight: ans.weight,
-                height: ans.height,
-            };
+            setData(patDetails);
+            console.log(patDetails);
 
-            console.log(appoints);
-            setAppointments(appoints);
+            const ans: any = await contract.methods
+                .getDoctorDiagnosis(res[0])
+                .call();
+            setReports(ans);
 
-            setData(new_data);
             setLoading(false);
         } else {
             console.log("Wallet not connected");
@@ -198,59 +176,70 @@ const page = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className="bg-neutral-200 flex flex-row text-black flex-1">
-            <div className="w-1/4 bg-neutral-100 p-5">
-                <div className="ml-4 mt-4 ">
-                    <UserProfile email={data.email} width={200} height={200} />
-                </div>
-                <div className="ml-6 mt-4 text-2xl text-black font-semibold ">
-                    {data.name}
-                </div>
-                <div className="ml-6 mt-4 text-black font-semibold">
-                    Gender: {data.gender}
-                </div>
-                <div className="ml-6 text-black font-semibold">
-                    DOB: {data.dob}
-                </div>
-                <div className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
-                    {data.phone}
-                </div>
-                <div className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
-                    {data.email}
-                </div>
-                <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
-                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
-                        <span className="font-semibold text-xl">
-                            {data.age} years
-                        </span>{" "}
-                        <br />
-                        <span className="text-neutral-200">Age</span>
+        <div className="bg-neutral-200 min-h-screen flex flex-row text-black flex-1">
+            <div className="w-1/4 bg-neutral-50 p-6 shadow-lg rounded-lg">
+                <div className="flex flex-col items-center">
+                    <UserProfile email={data.email} width={120} height={120} />
+                    <div className="mt-4 text-3xl font-bold text-gray-800">
+                        {data.name}
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
-                        <span className="font-semibold text-xl">
+                    <div className="mt-2 text-lg text-gray-600">
+                        <span className="inline-flex items-center">
+                            <i className="fas fa-venus-mars mr-2 text-teal-500"></i>
+                            Gender: {data.gender}
+                        </span>
+                    </div>
+                    <div className="text-lg text-gray-600 mt-1">
+                        <span className="inline-flex items-center">
+                            <i className="fas fa-birthday-cake mr-2 text-teal-500"></i>
+                            DOB: {data.DOB}
+                        </span>
+                    </div>
+                </div>
+                <div className="mt-6 text-center">
+                    <div className="text-md bg-gradient-to-br from-teal-500 to-teal-700 p-2 rounded-md text-white font-medium shadow-md">
+                        <i className="fas fa-phone-alt mr-2"></i>
+                        {data.phoneNumber}
+                    </div>
+                    <div className="text-md bg-gradient-to-tr from-cyan-500 to-cyan-700 mt-2 p-2 rounded-md text-white font-medium shadow-md">
+                        <i className="fas fa-envelope mr-2"></i>
+                        {data.email}
+                    </div>
+                </div>
+                <div className="mt-6 grid grid-cols-2 gap-4 text-white text-center">
+                    <div className="p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 rounded-lg shadow-md">
+                        <span className="font-semibold text-2xl">
+                            {data.age} yrs
+                        </span>
+                        <br />
+                        <span className="text-gray-200">Age</span>
+                    </div>
+                    <div className="p-4 bg-gradient-to-br from-teal-600 to-teal-800 rounded-lg shadow-md">
+                        <span className="font-semibold text-2xl">
                             {data.bloodGroup}
-                        </span>{" "}
+                        </span>
                         <br />
-                        <span className="text-neutral-200">Blood Group</span>
+                        <span className="text-gray-200">Blood Group</span>
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
-                        <span className="font-semibold text-xl">
+                    <div className="p-4 bg-gradient-to-br from-teal-600 to-teal-800 rounded-lg shadow-md">
+                        <span className="font-semibold text-2xl">
                             {data.weight} kg
-                        </span>{" "}
+                        </span>
                         <br />
-                        <span className="text-neutral-200">Weight</span>
+                        <span className="text-gray-200">Weight</span>
                     </div>
-                    <div className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
-                        <span className="font-semibold text-xl">
+                    <div className="p-4 bg-gradient-to-br from-cyan-600 to-cyan-800 rounded-lg shadow-md">
+                        <span className="font-semibold text-2xl">
                             {data.height} cm
-                        </span>{" "}
+                        </span>
                         <br />
-                        <span className="text-neutral-200">Height</span>
+                        <span className="text-gray-200">Height</span>
                     </div>
                 </div>
             </div>
-            <div className="p-16 ">
-                <div className="text-3xl font-semibold p-6">
+
+            <div className="p-12">
+                <div className="text-3xl font-semibold p-2">
                     Medical Records
                 </div>
                 <div className="grid grid-cols-2 gap-4">
