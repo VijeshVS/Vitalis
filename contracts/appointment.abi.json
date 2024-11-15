@@ -1,0 +1,66 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "patient", "type": "address" },
+      { "internalType": "address", "name": "doctor", "type": "address" }
+    ],
+    "name": "cancelAppointment",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "patient", "type": "address" },
+      { "internalType": "address", "name": "doctor", "type": "address" },
+      { "internalType": "string", "name": "dateTime", "type": "string" },
+      { "internalType": "string", "name": "name", "type": "string" }
+    ],
+    "name": "createAppointment",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "doctor", "type": "address" }
+    ],
+    "name": "getDoctorAppointments",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "address", "name": "doctor", "type": "address" },
+          { "internalType": "address", "name": "patient", "type": "address" },
+          { "internalType": "string", "name": "dateTime", "type": "string" }
+        ],
+        "internalType": "struct Appointment.AppointmentType[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "patient", "type": "address" }
+    ],
+    "name": "getPatientAppointments",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "address", "name": "doctor", "type": "address" },
+          { "internalType": "address", "name": "patient", "type": "address" },
+          { "internalType": "string", "name": "dateTime", "type": "string" }
+        ],
+        "internalType": "struct Appointment.AppointmentType[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

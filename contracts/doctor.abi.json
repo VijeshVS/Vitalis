@@ -26,6 +26,7 @@
     "name": "docArray",
     "outputs": [
       { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "string", "name": "gender", "type": "string" },
       { "internalType": "string", "name": "education", "type": "string" },
       { "internalType": "string", "name": "specialization", "type": "string" },
       { "internalType": "uint256", "name": "age", "type": "uint256" },
@@ -81,11 +82,64 @@
   },
   {
     "inputs": [],
+    "name": "getAllDoctors",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "string", "name": "gender", "type": "string" },
+          { "internalType": "string", "name": "education", "type": "string" },
+          {
+            "internalType": "string",
+            "name": "specialization",
+            "type": "string"
+          },
+          { "internalType": "uint256", "name": "age", "type": "uint256" },
+          {
+            "internalType": "string",
+            "name": "licenceNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "profilePicture",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "verificationStatus",
+            "type": "bool"
+          },
+          {
+            "components": [
+              { "internalType": "string", "name": "emailId", "type": "string" },
+              {
+                "internalType": "uint256",
+                "name": "phoneNumber",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Doctor.ContactInfo",
+            "name": "contact",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Doctor.Doc[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getDoctor",
     "outputs": [
       {
         "components": [
           { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "string", "name": "gender", "type": "string" },
           { "internalType": "string", "name": "education", "type": "string" },
           {
             "internalType": "string",
@@ -139,7 +193,8 @@
       { "internalType": "string", "name": "_licenceNumber", "type": "string" },
       { "internalType": "string", "name": "_profilePicture", "type": "string" },
       { "internalType": "string", "name": "emailId", "type": "string" },
-      { "internalType": "uint256", "name": "phoneNumber", "type": "uint256" }
+      { "internalType": "uint256", "name": "phoneNumber", "type": "uint256" },
+      { "internalType": "string", "name": "gender", "type": "string" }
     ],
     "name": "registerDoctor",
     "outputs": [],

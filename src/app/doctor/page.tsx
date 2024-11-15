@@ -7,6 +7,9 @@ import { checkToken } from "@/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Loading from "@/components/Loading";
+import Web3 from 'web3'
+import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import DOCTOR_ABI from '@/../contracts/doctor.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -68,18 +71,47 @@ const users = {
     },
 };
 
-const data = {
-    name: "Samkit Samsukha",
-    email: "samkitsamsukha.is23@rvce.edu.in",
-    phone: "9239089089",
-    license: "xxxxxxxxxxx",
-    education: "idk",
-    specialization: "idk",
-};
 
 const page = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+
+    const [data,setData] = useState({
+        name: "Samkit Samsukha",
+        email: "samkitsamsukha.is23@rvce.edu.in",
+        phone: "9239089089",
+        license: "xxxxxxxxxxx",
+        education: "idk",
+        specialization: "idk",
+    })
+
+    const connectAndGetDetails = async () =>{
+        const provider = (window as any).ethereum;
+        if (provider) {
+            const new_web3 = new Web3(provider);
+            await new_web3.eth.requestAccounts();
+            const res = await new_web3.eth.getAccounts();
+            const contract = new new_web3.eth.Contract(
+                DOCTOR_ABI,
+                DOCTOR_CONTRACT_ADDRESS
+            );
+
+            const details: any = await contract.methods.getDoctor().call({
+                from : res[0]
+            });
+
+            const new_data = {
+                name : details.name,
+                email : details.contact.emailId,
+                phone: details.contact.phoneNumber,
+                license: details.licenceNumber,
+                education: details.education,
+                specialization: details.specialization
+            }
+            setData(new_data)
+            setLoading(false);
+        }
+    }
 
     const verifyDoctor = async () => {
         const verify = await checkToken(localStorage.getItem("token") || "");
@@ -92,10 +124,14 @@ const page = () => {
 
         // get doctors details
 
+        connectAndGetDetails();
+
         // setLoading(false);
     };
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        verifyDoctor();
+    }, []);
 
     return loading ? (
         <Loading />

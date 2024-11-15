@@ -15,6 +15,8 @@ import Loading from "@/components/Loading";
 import Web3 from "web3";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
 import PATIENTABI from "@/../contracts/patient.abi.json";
+import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
+import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -48,6 +50,16 @@ const page = () => {
         weight: "77",
         height: "181",
     });
+    const [appointments, setAppointments] = useState([
+        {
+            doctorName: "Dr. Smith",
+            dateTime: "2023-11-15T10:00:00",
+        },
+        {
+            doctorName: "Dr. Jones",
+            dateTime: "2023-11-16T14:30:00",
+        },
+    ]);
 
     const router = useRouter();
 
@@ -63,9 +75,20 @@ const page = () => {
                 PATIENT_CONTRACT_ADDRESS
             );
 
+            const appoint_contract = new new_web3.eth.Contract(
+                APPOINT_ABI,
+                APPOINTMENT_CONTRACT_ADDRESS
+            );
+
             const ans: any = await contract.methods.getPatient().call({
                 from: res[0] as string,
             });
+
+            const appoints: any = await appoint_contract.methods
+                .getPatientAppointments(res[0])
+                .call({
+                    from: res[0] as string,
+                });
 
             const new_data = {
                 name: ans.name,
@@ -78,6 +101,9 @@ const page = () => {
                 weight: ans.weight,
                 height: ans.height,
             };
+
+            console.log(appoints);
+            setAppointments(appoints);
 
             setData(new_data);
             setLoading(false);
@@ -101,16 +127,6 @@ const page = () => {
         verifyPatient();
     }, []);
 
-    const [appointments, setAppointments] = useState([
-        {
-            doctorName: "Dr. Smith",
-            dateTime: "2023-11-15T10:00:00",
-        },
-        {
-            doctorName: "Dr. Jones",
-            dateTime: "2023-11-16T14:30:00",
-        },
-    ]);
     const [symptoms, setSymptoms] = useState("");
     const [age, setAge] = useState("19");
     const [doctors, setDoctors] = useState(
@@ -284,7 +300,8 @@ const page = () => {
                                 >
                                     <div className="flex items-center">
                                         <span className="font-medium">
-                                            {appointment.doctorName}
+                                            {/* @ts-ignore */}
+                                            {appointment.name}
                                         </span>
                                         <span className="ml-2 text-gray-600">
                                             {new Date(
