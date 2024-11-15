@@ -11,6 +11,9 @@ contract Appointment {
         string dateTime;
         string specialization;
         string email;
+
+        string patientName;
+        string patientEmail;
     }
 
     function createAppointment(
@@ -19,9 +22,11 @@ contract Appointment {
         string memory dateTime,
         string memory name,
         string memory specialization,
-        string memory email
+        string memory email,
+        string memory patientName,
+        string memory patientEmail
     ) public {
-        bruh.push(AppointmentType(name,doctor, patient, dateTime,specialization,email));
+        bruh.push(AppointmentType(name,doctor, patient, dateTime,specialization,email,patientName,patientEmail));
     }
 
     function cancelAppointment(address patient, address doctor) public {

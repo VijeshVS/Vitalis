@@ -10,7 +10,9 @@ contract Doctor {
     }
 
     struct Doc {
+        address docAddress;
         string name;
+        string gender;
         string education;
         string specialization;
         uint age;
@@ -18,11 +20,13 @@ contract Doctor {
         string profilePicture;
         bool verificationStatus;
         ContactInfo contact;
+        uint yoe;
     }
     
     
     mapping(address => Doc) public docArray;
-    
+    Doc[] docList;
+
     struct access {
         uint documentId;
         address patient;
@@ -30,12 +34,18 @@ contract Doctor {
 
     mapping(address => access[]) AccessList;
 
-    function registerDoctor(string memory _name,string memory _education, string memory _specialization , uint _age, string memory _licenceNumber, string memory _profilePicture, string memory emailId, uint phoneNumber) public{
-        docArray[msg.sender] = Doc(_name,_education,_specialization,_age,_licenceNumber,_profilePicture, false, ContactInfo(emailId,phoneNumber));
+    function registerDoctor(string memory _name,string memory _education, string memory _specialization , uint _age, string memory _licenceNumber, string memory _profilePicture, string memory emailId, uint phoneNumber,string memory gender,uint yoe) public{
+        docArray[msg.sender] = Doc(msg.sender,_name,gender,_education,_specialization,_age,_licenceNumber,_profilePicture, false, ContactInfo(emailId,phoneNumber),yoe);
+        docList.push(Doc(msg.sender,_name,gender,_education,_specialization,_age,_licenceNumber,_profilePicture, false, ContactInfo(emailId,phoneNumber),yoe));
     }
 
-    function getDoctor() public view returns(Doc memory){
-        return docArray[msg.sender];
+    function doesDoctorExist(address docAddress) public view returns (bool) {
+            Doc memory doc = docArray[docAddress];
+            return bytes(doc.name).length > 0;
+    }
+
+    function getDoctor(address doctor) public view returns(Doc memory){
+        return docArray[doctor];
     }
     
     function addAccess(address _patient,address _doctor,uint _documentId) public {
@@ -56,4 +66,8 @@ contract Doctor {
     function getAccessList() public view returns(access[] memory) {
         return AccessList[msg.sender];
     }
+    
+    function getAllDoctors() public view returns (Doc[] memory){
+        return docList;
+    }   
 }

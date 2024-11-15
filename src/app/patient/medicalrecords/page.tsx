@@ -102,7 +102,7 @@ const page = () => {
             console.log(patDetails);
 
             const ans: any = await contract.methods
-                .getDoctorDiagnosis(res[0])
+                .getPatientDiagnosis(res[0])
                 .call();
             setReports(ans);
 
