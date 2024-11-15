@@ -436,7 +436,7 @@ const Page = () => {
                         All Specializations
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 hover:bg-cyan-300 duration-300 transition-all text-black rounded-md ${
                             selectedSpecialization === "General Physician"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -455,7 +455,7 @@ const Page = () => {
                         General Physician
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Geriatrics"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -472,7 +472,7 @@ const Page = () => {
                         Geriatrics
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Cardiology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -489,7 +489,7 @@ const Page = () => {
                         Cardiology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Neurology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -506,7 +506,7 @@ const Page = () => {
                         Neurology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Orthopedics"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -523,7 +523,7 @@ const Page = () => {
                         Orthopedics
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Dermatology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -540,7 +540,7 @@ const Page = () => {
                         Dermatology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Pediatrics"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -557,7 +557,7 @@ const Page = () => {
                         Pediatrics
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Psychiatry"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -574,7 +574,7 @@ const Page = () => {
                         Psychiatry
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Oncology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -591,7 +591,7 @@ const Page = () => {
                         Oncology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Gastroenterology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -610,7 +610,7 @@ const Page = () => {
                         Gastroenterology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Endocrinology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -627,7 +627,7 @@ const Page = () => {
                         Endocrinology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Ophthalmology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -644,7 +644,7 @@ const Page = () => {
                         Ophthalmology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Urology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -661,7 +661,7 @@ const Page = () => {
                         Urology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Gynecology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -678,7 +678,7 @@ const Page = () => {
                         Gynecology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Pulmonology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -695,7 +695,7 @@ const Page = () => {
                         Pulmonology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Rheumatology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
@@ -712,7 +712,7 @@ const Page = () => {
                         Rheumatology
                     </label>
                     <label
-                        className={`px-4 py-1 w-3/4 m-1 bg-neutral-200 text-black rounded-md ${
+                        className={`px-4 py-1 w-3/4 m-1 hover:bg-cyan-300 duration-300 transition-al bg-neutral-200 text-black rounded-md ${
                             selectedSpecialization === "Anesthesiology"
                                 ? "bg-gradient-to-br from-teal-600 to-teal-800 text-white font-semibold"
                                 : "bg-neutral-200 text-black"
