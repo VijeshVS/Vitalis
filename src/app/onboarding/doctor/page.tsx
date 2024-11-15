@@ -54,7 +54,6 @@ export default function Onboarding() {
 
         contract.methods
             .registerDoctor(
-                account,
                 formData.name,
                 formData.education,
                 formData.spec,
@@ -63,7 +62,9 @@ export default function Onboarding() {
                 "Profile",
                 formData.email,
                 formData.phone,
-                formData.gender // Pass the selected gender
+                formData.gender,
+                Number(formData.experience)
+                // Pass the selected gender
             )
             .send({
                 from: account,
@@ -114,11 +115,11 @@ export default function Onboarding() {
                         {[1, 2, 3, 4, 5, 6].map((index) => (
                             <div
                                 key={index}
-                                className="h-1 w-1/6 bg-neutral-300 rounded transition-all duration-500"
+                                className="h-1 w-1/6 bg-teal-700 rounded transition-all duration-500"
                                 style={{
                                     backgroundImage:
                                         step >= index
-                                            ? "linear-gradient(to right, #3b82f6, #2563eb)"
+                                            ? "linear-gradient(to right, #008080, #0ffff)"
                                             : "none",
                                     backgroundSize: "200% 100%",
                                     backgroundPosition:
@@ -203,6 +204,19 @@ export default function Onboarding() {
                                         </option>
                                     </select>
                                 </div>
+                                <div className="flex flex-col space-y-2">
+                                    <label className="text-lg">
+                                        Years of Experience
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="experience"
+                                        value={formData.experience}
+                                        onChange={handleChange}
+                                        placeholder="Enter your years of experience"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    />
+                                </div>
                             </div>
                         )}
                         {step === 4 && (
@@ -221,64 +235,79 @@ export default function Onboarding() {
                             </div>
                         )}
                         {step === 5 && (
-                            <div className="flex flex-col space-y-4">
-                                <div className="flex flex-col space-y-2">
-                                    <label className="text-lg">Education</label>
-                                    <input
-                                        type="text"
-                                        name="education"
-                                        value={formData.education}
-                                        onChange={handleChange}
-                                        placeholder="Enter your College Name"
-                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                    />
-                                </div>
-                                <div className="flex flex-col space-y-2">
-                                    <label className="text-lg">
-                                        Years of Experience
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="experience"
-                                        value={formData.experience}
-                                        onChange={handleChange}
-                                        placeholder="Enter your years of experience"
-                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                    />
-                                </div>
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-lg">Education </label>
+                                <input
+                                    type="text"
+                                    name="education"
+                                    value={formData.education}
+                                    onChange={handleChange}
+                                    placeholder="Enter your College Name"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                />
                             </div>
                         )}
                         {step === 6 && (
                             <div className="flex flex-col space-y-2">
-                            <label className="text-lg">
-                                Specialization{" "}
-                            </label>
-                            <select
-                                name="spec"
-                                value={formData.spec}
-                                onChange={handleChange}
-                                className="p-3 rounded bg-neutral-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                            >
-                                <option value="" disabled>Select your Specialization</option>
-                                <option value="General Physician">General Physician</option>
-                                <option value="Geriatrics">Geriatrics</option>
-                                <option value="Cardiology">Cardiology</option>
-                                <option value="Neurology">Neurology</option>
-                                <option value="Orthopedics">Orthopedics</option>
-                                <option value="Dermatology">Dermatology</option>
-                                <option value="Pediatrics">Pediatrics</option>
-                                <option value="Psychiatry">Psychiatry</option>
-                                <option value="Oncology">Oncology</option>
-                                <option value="Gastroenterology">Gastroenterology</option>
-                                <option value="Endocrinology">Endocrinology</option>
-                                <option value="Ophthalmology">Ophthalmology</option>
-                                <option value="Urology">Urology</option>
-                                <option value="Gynecology">Gynecology</option>
-                                <option value="Pulmonology">Pulmonology</option>
-                                <option value="Rheumatology">Rheumatology</option>
-                                <option value="Anesthesiology">Anesthesiology</option>
-                            </select>
-                        </div>
+                                <label className="text-lg">
+                                    Specialization{" "}
+                                </label>
+                                <select
+                                    name="spec"
+                                    value={formData.spec}
+                                    onChange={handleChange}
+                                    className="p-3 rounded bg-neutral-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                >
+                                    <option value="" disabled>
+                                        Select your Specialization
+                                    </option>
+                                    <option value="General Physician">
+                                        General Physician
+                                    </option>
+                                    <option value="Geriatrics">
+                                        Geriatrics
+                                    </option>
+                                    <option value="Cardiology">
+                                        Cardiology
+                                    </option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Orthopedics">
+                                        Orthopedics
+                                    </option>
+                                    <option value="Dermatology">
+                                        Dermatology
+                                    </option>
+                                    <option value="Pediatrics">
+                                        Pediatrics
+                                    </option>
+                                    <option value="Psychiatry">
+                                        Psychiatry
+                                    </option>
+                                    <option value="Oncology">Oncology</option>
+                                    <option value="Gastroenterology">
+                                        Gastroenterology
+                                    </option>
+                                    <option value="Endocrinology">
+                                        Endocrinology
+                                    </option>
+                                    <option value="Ophthalmology">
+                                        Ophthalmology
+                                    </option>
+                                    <option value="Urology">Urology</option>
+                                    <option value="Gynecology">
+                                        Gynecology
+                                    </option>
+                                    <option value="Pulmonology">
+                                        Pulmonology
+                                    </option>
+                                    <option value="Rheumatology">
+                                        Rheumatology
+                                    </option>
+                                    <option value="Anesthesiology">
+                                        Anesthesiology
+                                    </option>
+                                </select>
+                            </div>
                         )}
                     </div>
 

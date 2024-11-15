@@ -99,7 +99,7 @@ const page = () => {
                 DOCTOR_CONTRACT_ADDRESS
             );
 
-            const details: any = await contract.methods.getDoctor().call({
+            const details: any = await contract.methods.getDoctor(res[0]).call({
                 from : res[0]
             });
 
