@@ -17,7 +17,7 @@ import Calendar from "@/components/ui/calender";
 import { FaFilePdf } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { DIAGNOSIS_CONTACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DIA_ABI from '@/../contracts/diagnosis.abi.json' 
+import DIA_ABI from '@/../contracts/diagnosis.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {
@@ -182,13 +182,12 @@ const page = () => {
                         >
                             <FaFilePdf />
                             <p>Issued to {report.patient}</p>
-                            <button
-                                onClick={() => {
-                                    alert("File downloading");
-                                }}
+                            <a
+                                href={`https://65hqhf12-7000.inc1.devtunnels.ms/get/${report.content}`}
+                                target="_blank"
                             >
                                 <MdFileDownload />
-                            </button>
+                            </a>
                         </div>
                     ))}
                     </div>
