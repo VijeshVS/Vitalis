@@ -82,23 +82,23 @@ const Calendar = () => {
       <h1 className="text-3xl font-bold mb-4 text-center">{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h1>
       <div className="flex justify-between mb-4">
         <div className="flex items-center space-x-2">
-          <button onClick={() => setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
+          {/* <button onClick={() => setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
             <FaChevronLeft className="mr-1" />{"<<"}
-          </button>
-          <button onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
-            <FaChevronLeft className="mr-1" />{"<"}
+          </button> */}
+          <button onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))} className="bg-cyan-600 text-white px-3 py-2 rounded shadow hover:bg-cyan-700 transition flex items-center">
+            <FaChevronLeft className="mr-1" />{"Previous Month"}
           </button>
         </div>
-        <button onClick={() => setCurrentDate(new Date())} className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition flex items-center">
+        <button onClick={() => setCurrentDate(new Date())} className="bg-teal-600 text-white px-4 py-2 rounded shadow hover:bg-teal-700 transition flex items-center">
           <MdToday className="mr-1" /> Back to Today
         </button>
         <div className="flex items-center space-x-2">
-          <button onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
-            {">"}<FaChevronRight className="ml-1" />
+          <button onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))} className="bg-cyan-600 text-white px-3 py-2 rounded shadow hover:bg-cyan-700 transition flex items-center">
+            Next Month<FaChevronRight className="ml-1" />
           </button>
-          <button onClick={() => setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() + 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
+          {/* <button onClick={() => setCurrentDate(new Date(currentDate.setFullYear(currentDate.getFullYear() + 1)))} className="bg-blue-600 text-white px-3 py-2 rounded shadow hover:bg-blue-700 transition flex items-center">
             {">>"}<FaChevronRight className="ml-1" />
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="grid grid-cols-7 gap-0 border border-gray-300 rounded-lg shadow-lg overflow-hidden">
@@ -122,7 +122,7 @@ const Calendar = () => {
   new Date(event.date).getDate() === date?.getDate()).map((event, index) => (
                       <div key={index} className="text-sm">
                         {event.startTime} - {event.name}
-                        <button onClick={(event) => handleDeleteEvent(event,index)} className="text-red-500 ml-2">Delete</button>
+                        <button onClick={(event) => handleDeleteEvent(event,index)} className="text-red-500 font-extrabold ml-2">X</button>
                       </div>
                     ))}
                   </div>
