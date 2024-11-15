@@ -277,7 +277,7 @@ const page = () => {
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
                     initial={{ x: 100, opacity: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-3xl font-semibold">Hello {data.name}, </motion.div>
+                    className="text-3xl font-semibold w-fit">Hello {data.name}, </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
                     initial={{ x: 100, opacity: 0 }}
                     transition={{ duration: 0.5 }}
@@ -353,13 +353,13 @@ const page = () => {
                         {/* @ts-ignore */}
                         {results?.specialty && (
                             <div className="mt-4">
-                                <h3 className="text-lg font-semibold">
+                                <h3 className="text-lg font-semibold mt-4">
                                     Recommended Specialty:
                                 </h3>
                                 {/* @ts-ignore */}
                                 <p>{results.specialty}</p>
                                 {/* @ts-ignore */}
-                                <button className = "px-2 py-1 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white font-semibold " onClick={()=>router.push(`/book?sp=${results.specialty}`)} href={`/book?sp=${results.specialty}`}>Book an Appointment</button>
+                                <button className = "px-2 mt-2 py-1 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white font-semibold " onClick={()=>router.push(`/book?sp=${results.specialty}`)} href={`/book?sp=${results.specialty}`}>Book an Appointment</button>
                             </div>
                         )}
                     </div>

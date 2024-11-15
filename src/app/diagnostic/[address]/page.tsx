@@ -2,11 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { useWallet } from '@/hooks/useWallet';
-import router from 'next/router';
+import Web3 from 'web3'
+import { DIAGNOSIS_CONTACT_ADDRESS } from '../../../../contracts/contactAddress';
+import DIAG_ABI from '@/../contracts/diagnosis.abi.json'
+import { useParams, useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 function DiagnosticReport() {
-  const [web3, account, loading] = useWallet();
+  const params = useParams();
+  const patientAddress = params.address;
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     bloodPressure: "",
     sao2: "",
@@ -44,7 +50,7 @@ function DiagnosticReport() {
     }));
   }, []); // Empty dependency array to run only once on mount
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value, checked, type } = e.target;
 
     if (name.startsWith('medicine')) {
@@ -91,7 +97,7 @@ function DiagnosticReport() {
     });
   };
 
-  const deleteMedicine = (indexToRemove) => {
+  const deleteMedicine = (indexToRemove:any) => {
     setFormData({
       ...formData,
       medicines: formData.medicines.filter((_, index) => index !== indexToRemove)
@@ -230,6 +236,7 @@ function DiagnosticReport() {
         .toLowerCase();
     };
     
+    
     const fileName = `${sanitizeFileName(formData.patientName)}_${formData.date}.pdf`;
 
     // Open the PDF in a new window or save with dynamic filename
@@ -254,14 +261,24 @@ function DiagnosticReport() {
       });
   };
 
-  if (loading) {
-    return (
-      <h1>Loading...</h1>
-    )
-  }
+  async function addDiag(){
+    const provider = (window as any).ethereum;
+    if (provider) {
+      const new_web3 = new Web3(provider);
+      await new_web3.eth.requestAccounts();
+      const res = await new_web3.eth.getAccounts(); // patient
+      const contract = new new_web3.eth.Contract(DIAG_ABI,DIAGNOSIS_CONTACT_ADDRESS);
 
-  if (!loading && !account) {
-    router.push('/onboarding');
+      // generate the ipfs link here and replace below
+
+      const ans = await contract.methods.createDiagnosis(patientAddress,res[0],"contentAddress","binod").send({
+        from: res[0]
+      })
+      
+      toast.success("Diagnosis report generated successfully !!");
+      console.log(ans);
+      router.push('/doctor/appointments');
+    }
   }
 
   return (
@@ -472,7 +489,7 @@ function DiagnosticReport() {
 
           <div className="flex justify-center mt-6">
             <button
-              onClick={generatePDF}
+              onClick={addDiag}
               className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out"
             >
               Generate PDF

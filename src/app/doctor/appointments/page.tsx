@@ -156,7 +156,7 @@ const page = () => {
                             </div>
                             <Link
                                 className="flex flex-row justify-center items-center rounded-md px-2 h-fit py-1 bg-gradient-to-br hover:scale-105 duration-300 transition-all from-cyan-600 to-cyan-800 text-white"
-                                href={"/diagnostic"}
+                                href={`/diagnostic/${appointment.patient}`}
                             >
                                 Generate Diagnosis
                             </Link>

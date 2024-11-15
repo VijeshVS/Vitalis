@@ -187,9 +187,8 @@ const Page = () => {
                 .send({
                     from: res[0],
                 });
-            setBookLoading(false)
-            console.log("whhwa")
             toast.success(`Appointment with ${doctorDetails.name} booked successfully`)
+            setTimeout(()=>setBookLoading(false),5000)
         }
     }
 
