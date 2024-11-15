@@ -16,10 +16,10 @@ export default function Onboarding() {
         phone: "",
         dob: "",
         email: "",
-        age: "",
         weight: "",
         height: "",
         bloodGroup: "",
+        gender: "Male", // Default to "Male" or set as needed
     });
     const router = useRouter();
 
@@ -41,6 +41,18 @@ export default function Onboarding() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Calculate age from dob
+    const calculateAge = (dob: string) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    };
+
     async function registerPatient() {
         setReg(true);
         const provider = (window as any).ethereum;
@@ -53,17 +65,19 @@ export default function Onboarding() {
             PATIENT_CONTRACT_ADDRESS
         );
 
+        const age = calculateAge(formData.dob);
+
         contract.methods
             .addPatient(
                 formData.name,
-                formData.age,
+                age,
                 formData.dob,
                 formData.phone,
                 formData.email,
                 formData.weight,
                 formData.height,
                 formData.bloodGroup,
-                "Male"
+                formData.gender
             )
             .send({
                 from: account,
@@ -164,19 +178,6 @@ export default function Onboarding() {
                         )}
                         {step === 3 && (
                             <div className="flex flex-col space-y-2">
-                                <label className="text-lg">Age</label>
-                                <input
-                                    type="number"
-                                    name="age"
-                                    value={formData.age}
-                                    onChange={handleChange}
-                                    placeholder="Enter your age"
-                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                />
-                            </div>
-                        )}
-                        {step === 4 && (
-                            <div className="flex flex-col space-y-2">
                                 <label className="text-lg">Date of Birth</label>
                                 <input
                                     type="date"
@@ -185,6 +186,21 @@ export default function Onboarding() {
                                     onChange={handleChange}
                                     className="p-3 rounded bg-neutral-200 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
+                            </div>
+                        )}
+                        {step === 4 && (
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-lg">Gender</label>
+                                <select
+                                    name="gender"
+                                    value={formData.gender}
+                                    onChange={handleChange}
+                                    className="p-3 rounded bg-neutral-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                >
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
                             </div>
                         )}
                         {step === 5 && (
@@ -238,22 +254,18 @@ export default function Onboarding() {
                         )}
                     </div>
 
-                    {/* Navigation Buttons */}
-                    <div className="flex justify-between w-full mt-10 space-x-4">
-                        <button
-                            onClick={prevStep}
-                            disabled={step === 1}
-                            className={`px-5 py-3 rounded-lg shadow-lg text-lg ${
-                                step === 1
-                                    ? "bg-neutral-400 cursor-not-allowed"
-                                    : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
-                            }`}
-                        >
-                            Previous
-                        </button>
+                    <div className="flex justify-between w-full mt-8">
+                        {step > 1 && (
+                            <button
+                                onClick={prevStep}
+                                className="px-4 py-2 bg-gray-300 rounded text-black"
+                            >
+                                Previous
+                            </button>
+                        )}
                         <button
                             onClick={nextStep}
-                            className="px-5 py-3 bg-blue-600 text-white rounded-lg shadow-lg text-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                            className="px-4 py-2 bg-blue-500 text-white rounded"
                         >
                             {step === 6 ? "Submit" : "Next"}
                         </button>
