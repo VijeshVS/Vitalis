@@ -131,6 +131,7 @@ const page = () => {
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
                 <div className="text-3xl font-semibold py-6">Appointments</div>
                 <div className="grid grid-cols-2 gap-8">
+                    {/* @ts-ignore */}
                     {appointments.map((appointment, index) => (
                         <div key={index} className="flex items-center justify-between bg-white p-2 rounded-md">
                             <div className="flex flex-row space-x-4  justify-between items-center">
