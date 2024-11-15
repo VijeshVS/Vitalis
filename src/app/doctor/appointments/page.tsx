@@ -148,6 +148,9 @@ const page = () => {
                                         {appointment.patientEmail ||
                                             "Unknown User"}
                                     </p>
+                                    <p>
+                                        {appointment.dateTime}
+                                    </p>
                                 </div>
                             </div>
                             <Link
