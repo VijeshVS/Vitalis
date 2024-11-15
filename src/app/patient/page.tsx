@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useEffect } from "react";
 import md5 from "md5";
@@ -37,11 +37,11 @@ const UserProfile = ({
     height: any;
 }) => {
     const avatarUrl = getGravatarUrl(email);
-    
+
     return (
         <Image
-        src={avatarUrl}
-        alt="User  Profile Picture"
+            src={avatarUrl}
+            alt="User  Profile Picture"
             width={width}
             height={height}
             className="rounded-full"
@@ -75,31 +75,31 @@ const page = () => {
         },
     ]);
 
-    
-    
+
+
     const connectAndGetDetails = async () => {
         const provider = (window as any).ethereum;
         if (provider) {
             const new_web3 = new Web3(provider);
             await new_web3.eth.requestAccounts();
             const res = await new_web3.eth.getAccounts();
-            
+
             const contract = new new_web3.eth.Contract(
                 PATIENTABI,
                 PATIENT_CONTRACT_ADDRESS
             );
-            
+
             const appoint_contract = new new_web3.eth.Contract(
                 APPOINT_ABI,
                 APPOINTMENT_CONTRACT_ADDRESS
             );
-            
+
             const ans: any = await contract.methods.getPatient(res[0]).call({
                 from: res[0] as string,
             });
 
             const appoints: any = await appoint_contract.methods
-            .getPatientAppointments(res[0])
+                .getPatientAppointments(res[0])
                 .call({
                     from: res[0] as string,
                 });
@@ -115,10 +115,10 @@ const page = () => {
                 weight: ans.weight,
                 height: ans.height,
             };
-            
+
             console.log(appoints);
             setAppointments(appoints);
-            
+
             setData(new_data);
             setLoading(false);
         } else {
@@ -131,26 +131,26 @@ const page = () => {
         const decoded = await getDecoded(localStorage.getItem("token") || "");
 
         //@ts-ignore
-        if(decoded?.type == "doctor"){
+        if (decoded?.type == "doctor") {
             router.push('/doctor')
             toast.info("You are a doctor !!");
         }
-        
+
         if (!verify) {
             toast.success("Please login to continue");
             router.push("/login/patient");
             return;
         }
-        
+
         connectAndGetDetails();
     }
-    
+
     useEffect(() => {
         verifyPatient();
     }, []);
 
     const router = useRouter();
-    
+
     const [symptoms, setSymptoms] = useState("");
     const [age, setAge] = useState("19");
     const [doctors, setDoctors] = useState(
@@ -194,43 +194,43 @@ const page = () => {
             <div className="w-1/4 bg-neutral-100 p-5">
                 <motion.div
                     whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }}
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
                     className="ml-4 mt-4 "
                 >
                     <UserProfile email={data.email} width={200} height={200} />
                 </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }} className="ml-6 mt-4 text-2xl text-black font-semibold ">
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }} className="ml-6 mt-4 text-2xl text-black font-semibold ">
                     {data.name}
                 </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }} className="ml-6 mt-4 text-black font-semibold">
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }} className="ml-6 mt-4 text-black font-semibold">
                     Gender: {data.gender}
                 </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }} className="ml-6 text-black font-semibold">
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }} className="ml-6 text-black font-semibold">
                     DOB: {data.dob}
                 </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-4 bg-gradient-to-br from-teal-600 to bg-teal-800 w-3/4 p-1 rounded-md text-white font-semibold">
                     {data.phone}
                 </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-					initial={{ x: -100, opacity: 0 }}
-					transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
+                    initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }} className="text-sm ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-cyan-600 w-3/4 overflow-hidden to-cyan-800 p-1 rounded-md font-semibold">
                     {data.email}
                 </motion.div>
                 <div className="ml-6 mt-4 grid grid-cols-2 gap-1 w-3/4 text-white text-center">
                     <motion.div whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
 
- className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                        className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.age} years
                         </span>{" "}
@@ -238,10 +238,10 @@ transition={{ duration: 0.5, delay: 0.5 }}
                         <span className="text-neutral-200">Age</span>
                     </motion.div>
                     <motion.div whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
 
- className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.bloodGroup}
                         </span>{" "}
@@ -249,10 +249,10 @@ transition={{ duration: 0.5, delay: 0.5 }}
                         <span className="text-neutral-200">Blood Group</span>
                     </motion.div>
                     <motion.div whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
 
- className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        className="p-4 bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <span className="font-semibold text-xl">
                             {data.weight} kg
                         </span>{" "}
@@ -260,10 +260,10 @@ transition={{ duration: 0.5, delay: 0.5 }}
                         <span className="text-neutral-200">Weight</span>
                     </motion.div>
                     <motion.div whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
 
- className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                        className="p-4 bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <span className="font-semibold text-xl">
                             {data.height} cm
                         </span>{" "}
@@ -273,15 +273,15 @@ transition={{ duration: 0.5, delay: 0.5 }}
                 </div>
             </div>
             <motion.div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
-            
+
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
- className="text-3xl font-semibold">Hello {data.name}, </motion.div>
+                    initial={{ x: 100, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-3xl font-semibold">Hello {data.name}, </motion.div>
                 <motion.div whileInView={{ x: 0, opacity: 1 }}
-initial={{ x: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
->
+                    initial={{ x: 100, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
                     At Vitalis, we prioritize providing top-notch facilities for
                     our patients. We are committed to ensuring their comfort and
                     well-being. Additionally, we implement robust measures to
@@ -290,34 +290,34 @@ transition={{ duration: 0.5 }}
                 </motion.div >
                 <motion.div className="flex md:flex-row flex-col md:space-x-4 justify-center">
                     <motion.button whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaSuitcaseMedical />
                         <div className="pt-3">Access Medical Records</div>
                     </motion.button>
                     <motion.button whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <MdOutlineSecurity />
                         <div className="pt-3">Get insurance</div>
                     </motion.button>
-                    <motion.button onClick={()=>router.push('/book')} whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
+                    <motion.button onClick={() => router.push('/book')} whileInView={{ scale: 1, opacity: 1 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center  hover:scale-105 duration-300 transition-all rounded-md bg-gradient-to-br from-cyan-600 to bg-cyan-800">
                         <FaStethoscope />
                         <div className="pt-3">Consult a doctor</div>
                     </motion.button>
                     <motion.button whileInView={{ scale: 1, opacity: 1 }}
-initial={{ scale: 0.5, opacity: 0 }}
-transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 }} className="text-white p-4 w-1/3 text-xl flex flex-col items-center justify-center hover:scale-105  duration-300 transition-all rounded-md bg-gradient-to-br from-teal-600 to bg-teal-800">
                         <RiMoneyRupeeCircleFill />
                         <div className="pt-3">Sell your data</div>
                     </motion.button>
                 </motion.div>
                 <motion.div whileInView={{ y: 0, opacity: 1 }}
-initial={{ y: 100, opacity: 0 }}
-transition={{ duration: 0.5 }}
- className="flex flex-row">
+                    initial={{ y: 100, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-row">
                     <div className="py-8 p-8 w-1/2 flex flex-col space-y-4">
                         <h2 className="text-2xl font-bold mb-4 w-fit">
                             Symptom Checker
@@ -358,6 +358,8 @@ transition={{ duration: 0.5 }}
                                 </h3>
                                 {/* @ts-ignore */}
                                 <p>{results.specialty}</p>
+                                {/* @ts-ignore */}
+                                <button className = "px-2 py-1 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white font-semibold " onClick={()=>router.push(`/book?sp=${results.specialty}`)} href={`/book?sp=${results.specialty}`}>Book an Appointment</button>
                             </div>
                         )}
                     </div>
@@ -372,7 +374,7 @@ transition={{ duration: 0.5 }}
                                     className="flex items-center justify-between p-2"
                                 >
                                     <div className=" flex flex-row items-center bg-white space-x-4 p-2 w-3/4 rounded-md">
-                                        <UserProfile email={appointment.email} width={50} height={50}/>
+                                        <UserProfile email={appointment.email} width={50} height={50} />
                                         <div className="flex flex-col">
                                             <span className="font-medium">
                                                 {/* @ts-ignore */}

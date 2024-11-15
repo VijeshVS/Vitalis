@@ -21,6 +21,7 @@ import pulmonology from "../../public/specializations/pulmonology.png";
 import rheumatology from "../../public/specializations/rheumatology.png";
 import { HiSparkles } from "react-icons/hi";
 import { motion } from "framer-motion";
+import router from "next/router";
 
 const docs = [
     {
@@ -359,9 +360,9 @@ transition={{ duration: 0.5 }}
                                             </li>
                                         ))}
                                     </motion.ul>
-
+                                    
                                     <Link
-                                        href={"/book"}
+                                        href={`/book?sp=${selectedDoc.specialization}`}
                                         className="w-fit px-4 py-2 hover:from-teal-700 hover:to-teal-900 bg-gradient-to-br from-teal-600 to-teal-800 rounded-md text-white"
                                     >
                                         Get Appointment

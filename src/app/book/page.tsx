@@ -21,6 +21,7 @@ import APPOINT_ABI from "@/../contracts/appointment.abi.json";
 
 import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
 import PATIENT_ABI from "@/../contracts/patient.abi.json";
+import { useSearchParams } from "next/navigation";
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -50,7 +51,8 @@ const UserProfile = ({
 };
 
 const Page = () => {
-    const [selectedSpecialization, setSelectedSpecialization] = useState(""); // Empty string to show all doctors initially
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [selectedSpecialization, setSelectedSpecialization] = useState(searchParams?.[1] || "");
     const [loading, setLoading] = useState(true);
     const [sortByFee, setSortByFee] = useState(false); // State for sorting
     const [doctors,setDoctors] = useState([
