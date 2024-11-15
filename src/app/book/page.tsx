@@ -791,52 +791,51 @@ const Page = () => {
 
                 <div className="grid grid-cols-2 gap-4 mt-4">
                     {filteredDoctors.map((doctor) => (
-                        <HoverCard key={doctor.id}>
-                            <HoverCardTrigger>
-                                <div
-                                    
-                                    className="flex flex-row p-2 border rounded bg-white justify-between"
-                                >
-                                    <div className="flex flex-row items-center">
-                                        <UserProfile
-                                            email={doctor.email}
-                                            width={75}
-                                            height={50}
-                                        />
-                                        <div className="flex flex-col ml-4">
+                        <div
+                            key={doctor.id}
+                            className="flex flex-row p-2 border rounded bg-white justify-between"
+                        >
+                            <div className="flex flex-row items-center">
+                                <UserProfile
+                                    email={doctor.email}
+                                    width={75}
+                                    height={50}
+                                />
+                                <div className="flex flex-col ml-4">
+                                    <HoverCard>
+                                        <HoverCardTrigger>
                                             <strong>{doctor.name}</strong>
-                                            <span>{doctor.phone}</span>
-                                            <span>{doctor.specialization}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <span className="flex flex-row items-center">
-                                            Fee: <FaIndianRupeeSign />
-                                            {doctor.fee}
-                                        </span>
-                                        <button className="mt-2 px-2 py-1 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md hover:scale-105 duration-300 transition-all">
-                                            Book Appointment
-                                        </button>
-                                    </div>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent className="">
+                                            <div className="p-2 flex flex-col justify-center items-center space-y-2" >
+                                                <UserProfile
+                                                    email={doctor.email}
+                                                    width={75}
+                                                    height={50}
+                                                />
+                                                <strong>{doctor.name}</strong>
+                                                <p className="">{doctor.specialization}</p>
+                                                <p className="">{doctor.hospital}</p>
+                                                <p className="">{doctor.education}</p>
+                                                <p className="">{doctor.experience} years of experience</p>
+                                            </div>
+                                        </HoverCardContent>
+                                    </HoverCard>
+
+                                    <span>{doctor.phone}</span>
+                                    <span>{doctor.specialization}</span>
                                 </div>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="">
-                                <div className="p-2 flex flex-col justify-center items-center space-y-2">
-                                    <UserProfile
-                                        email={doctor.email}
-                                        width={75}
-                                        height={50}
-                                    />
-                                    <strong>{doctor.name}</strong>
-                                    <p className="">{doctor.specialization}</p>
-                                    <p className="">{doctor.hospital}</p>
-                                    <p className="">{doctor.education}</p>
-                                    <p className="">
-                                        {doctor.experience} years of experience
-                                    </p>
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
+                            </div>
+                            <div className="flex flex-col items-center justify-center p-2">
+                                <span className="flex flex-row items-center">
+                                    Fee: <FaIndianRupeeSign />
+                                    {doctor.fee}
+                                </span>
+                                <button className="mt-2 px-2 py-1 bg-gradient-to-br from-cyan-600 to-cyan-800 text-white rounded-md hover:scale-105 duration-300 transition-all">
+                                    Book Appointment
+                                </button>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
