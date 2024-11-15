@@ -262,7 +262,7 @@ function DiagnosticReport() {
       });
   };
 
-  async function addDiag(cid: string, pass: string){
+  async function addDiag(cid: string, password: string) {
     const provider = (window as any).ethereum;
     if (provider) {
       const new_web3 = new Web3(provider);
@@ -272,7 +272,7 @@ function DiagnosticReport() {
 
       // generate the ipfs link here and replace below
 
-      const ans = await contract.methods.createDiagnosis(patientAddress,res[0],cid,pass).send({
+      const ans = await contract.methods.createDiagnosis(patientAddress,res[0],cid,password).send({
         from: res[0]
       })
 
