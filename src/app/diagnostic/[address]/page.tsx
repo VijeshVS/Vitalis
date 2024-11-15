@@ -23,19 +23,19 @@ function DiagnosticReport() {
     date: "", // This will be set in useEffect
     doctorName: "",
     patientName: "",
-    password: "", 
+    password: "",
     confirmPassword: "", // New field for confirm password
     summary: "",
     medicines: [
-      { 
-        name: "", 
-        dosage: "", 
+      {
+        name: "",
+        dosage: "",
         beforeBreakfast: false,
-        afterBreakfast: false, 
+        afterBreakfast: false,
         beforeLunch: false,
-        afterLunch: false, 
+        afterLunch: false,
         beforeDinner: false,
-        afterDinner: false 
+        afterDinner: false
       }
     ]
   });
@@ -58,9 +58,9 @@ function DiagnosticReport() {
 
       const updatedMedicines = formData.medicines.map((med, i) => {
         if (i === parseInt(index, 10)) {
-          return { 
-            ...med, 
-            [field]: type === 'checkbox' ? checked : value 
+          return {
+            ...med,
+            [field]: type === 'checkbox' ? checked : value
           };
         }
         return med;
@@ -83,15 +83,15 @@ function DiagnosticReport() {
       ...formData,
       medicines: [
         ...formData.medicines,
-        { 
-          name: "", 
-          dosage: "", 
+        {
+          name: "",
+          dosage: "",
           beforeBreakfast: false,
-          afterBreakfast: false, 
+          afterBreakfast: false,
           beforeLunch: false,
-          afterLunch: false, 
+          afterLunch: false,
           beforeDinner: false,
-          afterDinner: false 
+          afterDinner: false
         }
       ]
     });
@@ -129,11 +129,11 @@ function DiagnosticReport() {
     pdf.setFontSize(36);
     pdf.setTextColor(0, 73, 158);
     pdf.setFont('helvetica', 'bold');
-    
+
     // Calculate width of the text to center it
     const textWidth = pdf.getStringUnitWidth('VITALIS') * pdf.getFontSize() / pdf.internal.scaleFactor;
     const x = (pageWidth - textWidth) / 2;
-    
+
     pdf.text('VITALIS', x, 30);
 
     // Prepare data for the table
@@ -164,16 +164,16 @@ function DiagnosticReport() {
         fontStyle: 'bold'
       },
       columnStyles: {
-        0: { 
+        0: {
           cellWidth: 80,
           fontStyle: 'bold'
         },
         1: { cellWidth: 80 }
       },
       tableWidth: 'auto',
-      margin: { 
+      margin: {
         left: (pageWidth - 160) / 2,
-        right: (pageWidth - 160) / 2 
+        right: (pageWidth - 160) / 2
       }
     };
 
@@ -187,7 +187,7 @@ function DiagnosticReport() {
 
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(12);
-    
+
     // Wrap summary text
     const summaryLines = pdf.splitTextToSize(formData.summary, 160);
     pdf.text(summaryLines, (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 30);
@@ -200,7 +200,7 @@ function DiagnosticReport() {
 
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(12);
-    
+
     formData.medicines.forEach((med, index) => {
       const checkedMedicines = [];
       if (med.beforeBreakfast) checkedMedicines.push('Before Breakfast');
@@ -209,7 +209,7 @@ function DiagnosticReport() {
       if (med.afterLunch) checkedMedicines.push('After Lunch');
       if (med.beforeDinner) checkedMedicines.push('Before Dinner');
       if (med.afterDinner) checkedMedicines.push('After Dinner');
-      
+
       const medicineText = `${med.name} (${med.dosage}): ${checkedMedicines.join(', ')}`;
       const medicineLines = pdf.splitTextToSize(medicineText, 160);
       pdf.text(medicineLines, (pageWidth - 160) / 2, pdf.previousAutoTable.finalY + 50 + (index * 10));
@@ -222,10 +222,10 @@ function DiagnosticReport() {
     // Add a subtle border around the table
     pdf.setDrawColor(200, 200, 200);
     pdf.rect(
-      tableOptions.margin.left, 
-      tableOptions.startY, 
-      160, 
-      pdf.previousAutoTable.finalY - tableOptions.startY + 10, 
+      tableOptions.margin.left,
+      tableOptions.startY,
+      160,
+      pdf.previousAutoTable.finalY - tableOptions.startY + 10,
       'S'
     );
 
@@ -235,15 +235,15 @@ function DiagnosticReport() {
         .replace(/[^a-z0-9]/gi, '_')
         .toLowerCase();
     };
-    
-    
+
+
     const fileName = `${sanitizeFileName(formData.patientName)}_${formData.date}.pdf`;
 
     // Open the PDF in a new window or save with dynamic filename
     pdf.output('dataurlnewwindow', { filename: fileName });
     pdf.save(fileName);
 
-    let blob = pdf.output("blob"); 
+    let blob = pdf.output("blob");
     const formData1 = new FormData();
     formData1.append("file", blob, fileName);
 
@@ -255,13 +255,14 @@ function DiagnosticReport() {
       .then(response => response.json())
       .then(data => {
         console.log("CID:", data.cid); // Log the IPFS CID returned by the server
+        addDiag(data.cid, formData.password);
       })
       .catch(error => {
         console.error(" Error uploading to IPFS:", error);
       });
   };
 
-  async function addDiag(){
+  async function addDiag(cid: string, pass: string){
     const provider = (window as any).ethereum;
     if (provider) {
       const new_web3 = new Web3(provider);
@@ -271,10 +272,10 @@ function DiagnosticReport() {
 
       // generate the ipfs link here and replace below
 
-      const ans = await contract.methods.createDiagnosis(patientAddress,res[0],"contentAddress","binod").send({
+      const ans = await contract.methods.createDiagnosis(patientAddress,res[0],cid,pass).send({
         from: res[0]
       })
-      
+
       toast.success("Diagnosis report generated successfully !!");
       console.log(ans);
       router.push('/doctor/appointments');
@@ -441,7 +442,7 @@ function DiagnosticReport() {
       {/* Generate PDF Button */}
       <div className="flex justify-center mt-6">
         <button
-          onClick={addDiag}
+          onClick={generatePDF}
           className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
         >
           Generate PDF
