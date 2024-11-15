@@ -25,6 +25,7 @@
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "docArray",
     "outputs": [
+      { "internalType": "address", "name": "docAddress", "type": "address" },
       { "internalType": "string", "name": "name", "type": "string" },
       { "internalType": "string", "name": "gender", "type": "string" },
       { "internalType": "string", "name": "education", "type": "string" },
@@ -87,6 +88,11 @@
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "address",
+            "name": "docAddress",
+            "type": "address"
+          },
           { "internalType": "string", "name": "name", "type": "string" },
           { "internalType": "string", "name": "gender", "type": "string" },
           { "internalType": "string", "name": "education", "type": "string" },
@@ -142,6 +148,11 @@
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "address",
+            "name": "docAddress",
+            "type": "address"
+          },
           { "internalType": "string", "name": "name", "type": "string" },
           { "internalType": "string", "name": "gender", "type": "string" },
           { "internalType": "string", "name": "education", "type": "string" },

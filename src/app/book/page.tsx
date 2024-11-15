@@ -468,11 +468,12 @@ const Page = () => {
                 APPOINT_ABI,
                 APPOINTMENT_CONTRACT_ADDRESS
             );
-            
+
             const docContract = new new_web3.eth.Contract(
                 DOCTOR_ABI,
                 DOCTOR_CONTRACT_ADDRESS
             );
+
             const patContract = new new_web3.eth.Contract(
                 PATIENT_ABI,
                 PATIENT_CONTRACT_ADDRESS

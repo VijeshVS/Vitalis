@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Head from "next/head";
 import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import DOCTORABI from "@/../contracts/doctor.abi.json";
@@ -55,6 +54,7 @@ export default function Onboarding() {
 
         contract.methods
             .registerDoctor(
+                account,
                 formData.name,
                 formData.education,
                 formData.spec,
