@@ -105,19 +105,19 @@ export default function Onboarding() {
         <>
             <div
                 style={{ backgroundImage: "url('/onbdoc.png')" }}
-                className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen bg-neutral-800 text-white"
+                className="flex bg-cover bg-center items-center flex-col space-y-6 justify-center h-screen"
             >
-                <div className="flex flex-col items-center w-full max-w-md p-8 bg-neutral-900 rounded-lg shadow-lg transform transition-all duration-300">
+                <div className="flex flex-col items-center w-full max-w-md p-8 bg-white z-50 rounded-lg shadow-lg transform transition-all duration-300">
                     {/* Progress Bar */}
                     <div className="flex justify-between w-full mb-10">
                         {[1, 2, 3, 4, 5, 6].map((index) => (
                             <div
                                 key={index}
-                                className="h-1 w-1/6 bg-neutral-700 rounded transition-all duration-500"
+                                className="h-1 w-1/6 bg-teal-700 rounded transition-all duration-500"
                                 style={{
                                     backgroundImage:
                                         step >= index
-                                            ? "linear-gradient(to right, #3b82f6, #2563eb)"
+                                            ? "linear-gradient(to right, #008080, #0ffff)"
                                             : "none",
                                     backgroundSize: "200% 100%",
                                     backgroundPosition:
@@ -142,7 +142,7 @@ export default function Onboarding() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     placeholder="Enter your full name"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -158,7 +158,7 @@ export default function Onboarding() {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         placeholder="Enter your phone number"
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     />
                                 </div>
                                 <div className="flex flex-col space-y-2">
@@ -169,7 +169,7 @@ export default function Onboarding() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         placeholder="Enter your email address"
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     />
                                 </div>
                             </div>
@@ -184,7 +184,7 @@ export default function Onboarding() {
                                         value={formData.age}
                                         onChange={handleChange}
                                         placeholder="Enter your age"
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     />
                                 </div>
                                 <div className="flex flex-col space-y-2">
@@ -193,7 +193,7 @@ export default function Onboarding() {
                                         name="gender"
                                         value={formData.gender}
                                         onChange={handleChange}
-                                        className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                     >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -215,7 +215,7 @@ export default function Onboarding() {
                                     value={formData.licensenum}
                                     onChange={handleChange}
                                     placeholder="Enter your License Number"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
@@ -228,24 +228,41 @@ export default function Onboarding() {
                                     value={formData.education}
                                     onChange={handleChange}
                                     placeholder="Enter your College Name"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                                 />
                             </div>
                         )}
                         {step === 6 && (
                             <div className="flex flex-col space-y-2">
-                                <label className="text-lg">
-                                    Specialization{" "}
-                                </label>
-                                <input
-                                    type="text"
-                                    name="spec"
-                                    value={formData.spec}
-                                    onChange={handleChange}
-                                    placeholder="Enter your Specialization"
-                                    className="p-3 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                />
-                            </div>
+                            <label className="text-lg">
+                                Specialization{" "}
+                            </label>
+                            <select
+                                name="spec"
+                                value={formData.spec}
+                                onChange={handleChange}
+                                className="p-3 rounded bg-neutral-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                            >
+                                <option value="" disabled>Select your Specialization</option>
+                                <option value="General Physician">General Physician</option>
+                                <option value="Geriatrics">Geriatrics</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Dermatology">Dermatology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="Psychiatry">Psychiatry</option>
+                                <option value="Oncology">Oncology</option>
+                                <option value="Gastroenterology">Gastroenterology</option>
+                                <option value="Endocrinology">Endocrinology</option>
+                                <option value="Ophthalmology">Ophthalmology</option>
+                                <option value="Urology">Urology</option>
+                                <option value="Gynecology">Gynecology</option>
+                                <option value="Pulmonology">Pulmonology</option>
+                                <option value="Rheumatology">Rheumatology</option>
+                                <option value="Anesthesiology">Anesthesiology</option>
+                            </select>
+                        </div>
                         )}
                     </div>
 
@@ -256,15 +273,15 @@ export default function Onboarding() {
                             disabled={step === 1}
                             className={`px-5 py-3 rounded-lg shadow-lg text-lg ${
                                 step === 1
-                                    ? "bg-neutral-600 cursor-not-allowed"
-                                    : "bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                                    ? "bg-neutral-400 cursor-not-allowed"
+                                    : "bg-teal-400 hover:bg-teal-500 transition-all duration-300 transform hover:-translate-y-1"
                             }`}
                         >
                             Previous
                         </button>
                         <button
                             onClick={nextStep}
-                            className="px-5 py-3 bg-blue-600 rounded-lg shadow-lg text-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1"
+                            className="px-5 py-3 bg-cyan-400 rounded-lg shadow-lg text-lg hover:bg-cyan-500 transition-all duration-300 transform hover:-translate-y-1"
                         >
                             {step < 6 ? "Next" : "Finish"}
                         </button>

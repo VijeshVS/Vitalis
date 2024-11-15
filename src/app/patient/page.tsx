@@ -369,10 +369,10 @@ transition={{ duration: 0.5 }}
                             {appointments.map((appointment, index) => (
                                 <li
                                     key={index}
-                                    className="flex items-center justify-between"
+                                    className="flex items-center justify-between p-2"
                                 >
-                                    <div className=" flex flex-row items-center space-x-4 border-b-[1px] border-gray-300 w-full">
-                                        {/* <UserProfile email={appointment.email} width={50} height={50}/> */}
+                                    <div className=" flex flex-row items-center bg-white space-x-4 p-2 w-3/4 rounded-md">
+                                        <UserProfile email={appointment.email} width={50} height={50}/>
                                         <div className="flex flex-col">
                                             <span className="font-medium">
                                                 {/* @ts-ignore */}
