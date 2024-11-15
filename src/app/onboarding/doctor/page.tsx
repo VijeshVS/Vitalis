@@ -16,6 +16,7 @@ export default function Onboarding() {
         phone: "",
         email: "",
         age: "",
+        experience: "",
         licensenum: "",
         education: "",
         spec: "",
@@ -113,11 +114,11 @@ export default function Onboarding() {
                         {[1, 2, 3, 4, 5, 6].map((index) => (
                             <div
                                 key={index}
-                                className="h-1 w-1/6 bg-teal-700 rounded transition-all duration-500"
+                                className="h-1 w-1/6 bg-neutral-300 rounded transition-all duration-500"
                                 style={{
                                     backgroundImage:
                                         step >= index
-                                            ? "linear-gradient(to right, #008080, #0ffff)"
+                                            ? "linear-gradient(to right, #3b82f6, #2563eb)"
                                             : "none",
                                     backgroundSize: "200% 100%",
                                     backgroundPosition:
@@ -220,16 +221,31 @@ export default function Onboarding() {
                             </div>
                         )}
                         {step === 5 && (
-                            <div className="flex flex-col space-y-2">
-                                <label className="text-lg">Education </label>
-                                <input
-                                    type="text"
-                                    name="education"
-                                    value={formData.education}
-                                    onChange={handleChange}
-                                    placeholder="Enter your College Name"
-                                    className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                                />
+                            <div className="flex flex-col space-y-4">
+                                <div className="flex flex-col space-y-2">
+                                    <label className="text-lg">Education</label>
+                                    <input
+                                        type="text"
+                                        name="education"
+                                        value={formData.education}
+                                        onChange={handleChange}
+                                        placeholder="Enter your College Name"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col space-y-2">
+                                    <label className="text-lg">
+                                        Years of Experience
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="experience"
+                                        value={formData.experience}
+                                        onChange={handleChange}
+                                        placeholder="Enter your years of experience"
+                                        className="p-3 rounded bg-neutral-200 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                    />
+                                </div>
                             </div>
                         )}
                         {step === 6 && (
