@@ -172,6 +172,7 @@ const page = () => {
                 <div className="ml-6 pl-3 mt-2 text-white bg-gradient-to-tr from-teal-600 w-3/4 overflow-hidden to-teal-800 p-1 rounded-md text-sm">
                     {data.email}
                 </div>
+                <div onClick={()=>router.push('/doctor/appointments')} className="cursor-pointer ml-6 mt-2 p-3 bg-gradient-to-br from-cyan-600 to-cyan-800 w-3/4 rounded-md text-xl font-semibold text-white">My Appointments</div>
             </div>
             <div className="px-16 py-8 w-3/4 flex flex-col space-y-4">
                 <div className="text-3xl font-semibold">Hello {data.name},</div>
