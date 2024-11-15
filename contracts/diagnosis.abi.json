@@ -1,0 +1,64 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "patient", "type": "address" },
+      { "internalType": "address", "name": "doctor", "type": "address" },
+      { "internalType": "string", "name": "content", "type": "string" },
+      { "internalType": "string", "name": "encryptedPass", "type": "string" }
+    ],
+    "name": "createDiagnosis",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "doctor", "type": "address" }
+    ],
+    "name": "getDoctorDiagnosis",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "patient", "type": "address" },
+          { "internalType": "address", "name": "doctor", "type": "address" },
+          { "internalType": "string", "name": "content", "type": "string" },
+          {
+            "internalType": "string",
+            "name": "encryptedPass",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Diagnosis.Diag[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "patient", "type": "address" }
+    ],
+    "name": "getPatientDiagnosis",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "patient", "type": "address" },
+          { "internalType": "address", "name": "doctor", "type": "address" },
+          { "internalType": "string", "name": "content", "type": "string" },
+          {
+            "internalType": "string",
+            "name": "encryptedPass",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Diagnosis.Diag[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
