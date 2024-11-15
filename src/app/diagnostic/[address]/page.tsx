@@ -24,7 +24,7 @@ function DiagnosticReport() {
     doctorName: "",
     patientName: "",
     password: "",
-    confirmPassword: "", // New field for confirm password
+    confirmpassword: "", // New field for confirm password
     summary: "",
     medicines: [
       {
@@ -106,7 +106,9 @@ function DiagnosticReport() {
 
   const generatePDF = () => {
     // Validate passwords
-    if (formData.password !== formData.confirmPassword) {
+    console.log(formData.password)
+    console.log(formData.confirmpassword)
+    if (formData.password !== formData.confirmpassword) {
       alert("Passwords do not match!");
       return;
     }
@@ -138,7 +140,7 @@ function DiagnosticReport() {
 
     // Prepare data for the table
     const tableData = Object.entries(formData)
-      .filter(([key]) => key !== 'summary' && key !== 'medicines' && key !== 'password' && key !== 'confirmPassword') // Exclude password fields
+      .filter(([key]) => key !== 'summary' && key !== 'medicines' && key !== 'password' && key !== 'confirmpassword') // Exclude password fields
       .map(([key, value]) => [
         key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
         value
@@ -307,7 +309,7 @@ function DiagnosticReport() {
                 (key) =>
                   key !== "summary" &&
                   key !== "medicines" &&
-                  key !== "confirmPassword" &&
+                  key !== "confirmpassword" &&
                   key !== "password"
               )
               .map((key) => (
