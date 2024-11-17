@@ -3,44 +3,33 @@
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import PatientContractABI from "@/../contracts/patient.abi.json";
+import PatientContractABI from "@/src/../contracts/patient.abi.json";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
 import Web3 from "web3";
 import { toast } from "sonner";
-import { generateToken } from "@/lib/actions/jwtLogics";
+import { generateToken } from "@/src/lib/actions/jwtLogics";
+import { useSetRecoilState } from "recoil";
+import { isLoggedInAtom } from "@/store/store";
+import { useWallet } from "@/src/hooks/useWallet";
 
 // Placeholder Ethereum logo URL
 const ethereumLogoUrl =
     "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022";
 
 export default function Login() {
-    const [web3, setWeb3] = useState<Web3 | null>(null);
-    const [account, setAccount] = useState<string | null>(null);
     const [enableLogin, setEnableLogin] = useState(false);
     const [log, setLog] = useState(false);
+    const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
+    const [web3, account, loading, isAvailable] = useWallet() as [Web3, string[], boolean, boolean];
 
     const router = useRouter();
-
-    const [walletConnected, setWalletConnected] = useState(false);
-
     const connectWallet = async () => {
-        const provider = (window as any).ethereum;
-        if (provider) {
-            const new_web3 = new Web3(provider);
-            await new_web3.eth.requestAccounts();
-            const res = await new_web3.eth.getAccounts();
-            setWeb3(new_web3);
-            setAccount(res[0]);
-            setEnableLogin(true);
-            setWalletConnected(true);
-        } else {
-            console.log("Wallet not connected");
-        }
+        
     };
 
     const checkUser = async () => {
         setLog(true);
-        // @ts-ignore
+
         const contract = new web3.eth.Contract(
             PatientContractABI,
             PATIENT_CONTRACT_ADDRESS
@@ -56,6 +45,7 @@ export default function Login() {
             const payload = { address, type };
             const token = await generateToken(payload);
             localStorage.setItem("token", token);
+            setIsLoggedIn(true);
             router.push("/patient");
         } else {
             toast.error("Patient not registered!!");
@@ -65,6 +55,12 @@ export default function Login() {
     };
 
     function checkUserExists() {
+
+        if(!isAvailable) {
+            toast.error("Metmask is not available");
+            return;
+        }
+
         const res = checkUser();
 
         toast.promise(res, {
@@ -85,15 +81,15 @@ export default function Login() {
                 <button
                     className="w-full py-2 mb-4 disabled:bg-slate-400 disabled:cursor-not-allowed bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
                     onClick={connectWallet}
-                    disabled={walletConnected}
+                    disabled={!loading}
                 >
-                    {!walletConnected ? <>Connect Wallet</> : <>Connected</>}
+                    {loading ? <>Connect Wallet</> : <>Connected</>}
                 </button>
 
                 <button
                     className="w-full py-2 bg-green-600 text-white disabled:bg-slate-400 disabled:cursor-not-allowed font-medium rounded-lg hover:bg-green-700 transition-colors"
                     onClick={checkUserExists}
-                    disabled={!enableLogin || log}
+                    disabled={loading || log}
                 >
                     {!log ? "Login" : "Logging in !!"}
                 </button>

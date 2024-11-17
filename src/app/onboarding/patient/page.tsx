@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import PATIENT_ABI from "@/../contracts/patient.abi.json";
+import PATIENT_ABI from "@/src/../contracts/patient.abi.json";
 import Web3 from "web3";
 import { toast } from "sonner";
-import { generateToken } from "@/lib/actions/jwtLogics";
+import { generateToken } from "@/src/lib/actions/jwtLogics";
+import { useSetRecoilState } from "recoil";
+import { isLoggedInAtom } from "@/store/store";
 
 export default function Onboarding() {
     const [reg, setReg] = useState(false);
@@ -22,6 +24,7 @@ export default function Onboarding() {
         gender: "Male", // Default to "Male" or set as needed
     });
     const router = useRouter();
+    const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
 
     useEffect(() => {
         let toastId: any;
@@ -111,6 +114,7 @@ export default function Onboarding() {
 
                 localStorage.setItem("token", JSON.stringify(token));
                 toast.success("Patient registered successfully");
+                setIsLoggedIn(true);
                 router.push("/patient");
             })
             .on("error", function (error: any) {

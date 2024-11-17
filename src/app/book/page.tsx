@@ -8,19 +8,19 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaSortAmountDownAlt } from "react-icons/fa";
 import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
-import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
-import Loading from "@/components/Loading";
+import DOCTOR_ABI from "@/src/../contracts/doctor.abi.json";
+import Loading from "@/src/components/Loading";
 import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "@/src/components/ui/hover-card";
 
 import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
-import APPOINT_ABI from "@/../contracts/appointment.abi.json";
+import APPOINT_ABI from "@/src/../contracts/appointment.abi.json";
 
 import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
-import PATIENT_ABI from "@/../contracts/patient.abi.json";
+import PATIENT_ABI from "@/src/../contracts/patient.abi.json";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 

@@ -3,17 +3,17 @@
 import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import Loading from "@/components/Loading";
+import Loading from "@/src/components/Loading";
 import Web3 from "web3";
 import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import APPOINT_ABI from "@/../contracts/appointment.abi.json";
+import APPOINT_ABI from "@/src/../contracts/appointment.abi.json";
 
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
+import DOCTOR_ABI from "@/src/../contracts/doctor.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     const hash = md5(email.trim().toLowerCase());
@@ -47,7 +47,7 @@ const page = () => {
     const router = useRouter();
     const [appointments, setAppointments] = useState({});
 
-    const [data, setData] = useState({
+    const [data, setData] = useState<any>({
         name: "Samkit Samsukha",
         email: "samkitsamsukha.is23@rvce.edu.in",
         phone: "9239089089",
@@ -62,6 +62,7 @@ const page = () => {
             const new_web3 = new Web3(provider);
             await new_web3.eth.requestAccounts();
             const res = await new_web3.eth.getAccounts();
+            
             const contract = new new_web3.eth.Contract(
                 APPOINT_ABI,
                 APPOINTMENT_CONTRACT_ADDRESS
@@ -123,6 +124,7 @@ const page = () => {
                         email={data.contact.emailId}
                         width={200}
                         height={300}
+                        // @ts-ignore
                         className="rounded-md shadow-lg"
                     />
                 </div>
@@ -168,6 +170,7 @@ const page = () => {
                                     email={appointment.patientEmail}
                                     width={60}
                                     height={60}
+                                    // @ts-ignore
                                     className="rounded-full shadow-sm"
                                 />
                                 <div className="flex flex-col">

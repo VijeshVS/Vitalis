@@ -3,21 +3,21 @@
 import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import Image from "next/image";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { FaPhone } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { IoIosMail } from "react-icons/io";
 import { toast } from "sonner";
 import { IoMdSchool } from "react-icons/io";
-import Loading from "@/components/Loading";
+import Loading from "@/src/components/Loading";
 import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DOCTOR_ABI from "@/../contracts/doctor.abi.json";
-import Calendar from "@/components/ui/calender";
+import DOCTOR_ABI from "@/src/../contracts/doctor.abi.json";
+import Calendar from "@/src/components/ui/calender";
 import { FaFilePdf } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { DIAGNOSIS_CONTACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DIA_ABI from '@/../contracts/diagnosis.abi.json'
+import DIA_ABI from '@/src/../contracts/diagnosis.abi.json'
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {

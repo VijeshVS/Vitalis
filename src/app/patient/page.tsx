@@ -9,15 +9,15 @@ import { MdOutlineSecurity } from "react-icons/md";
 import { FaStethoscope } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useState } from "react";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import Loading from "@/components/Loading";
+import Loading from "@/src/components/Loading";
 import Web3 from "web3";
 import { PATIENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
-import PATIENTABI from "@/../contracts/patient.abi.json";
+import PATIENTABI from "@/src/../contracts/patient.abi.json";
 import { APPOINTMENT_CONTRACT_ADDRESS } from "../../../contracts/contactAddress";
-import APPOINT_ABI from "@/../contracts/appointment.abi.json";
+import APPOINT_ABI from "@/src/../contracts/appointment.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {
@@ -62,7 +62,7 @@ const page = () => {
         weight: "77",
         height: "181",
     });
-    const [appointments, setAppointments] = useState([
+    const [appointments, setAppointments] = useState<any>([
         {
             doctorName: "Dr. Smith",
             dateTime: "2023-11-15T10:00:00",
@@ -155,7 +155,7 @@ const page = () => {
         "General Physician, Geriatrics, Cardiology, Neurology, Orthopedics, Dermatology, Pediatrics, Psychiatry, Oncology, Gastroenterology, Endocrinology, Ophthalmology, Urology, Gynecology, Pulmonology, Rheumatology, Anesthesiology"
     );
     const [isLoading, setIsLoading] = useState(false);
-    const [results, setResults] = useState(null);
+    const [results, setResults] = useState<any>(null);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -200,6 +200,7 @@ const page = () => {
                         email={data.email}
                         width={200}
                         height={200}
+                        // @ts-ignore
                         className="rounded-full shadow-md"
                     />
                 </motion.div>
@@ -322,7 +323,9 @@ const page = () => {
                         <FaSuitcaseMedical />
                         <div
                             className="pt-3"
-                            onClick={() => router.push("/patient/medicalrecords")}
+                            onClick={() =>
+                                router.push("/patient/medicalrecords")
+                            }
                         >
                             Access Medical Records
                         </div>
@@ -428,30 +431,32 @@ const page = () => {
                             Future Appointments
                         </h2>
                         <ul>
-                            {appointments.map((appointment, index) => (
-                                <li
-                                    key={index}
-                                    className="flex items-center justify-between p-2"
-                                >
-                                    <div className=" flex flex-row items-center bg-white space-x-4 p-2 w-3/4 rounded-md">
-                                        <UserProfile
-                                            email={appointment.email}
-                                            width={50}
-                                            height={50}
-                                        />
-                                        <div className="flex flex-col">
-                                            <span className="font-medium">
-                                                {/* @ts-ignore */}
-                                                {appointment.name} |{" "}
-                                                {appointment.specialization}
-                                            </span>
-                                            <span className="text-gray-600">
-                                                {appointment.dateTime}
-                                            </span>
+                            {appointments.map(
+                                (appointment: any, index: any) => (
+                                    <li
+                                        key={index}
+                                        className="flex items-center justify-between p-2"
+                                    >
+                                        <div className=" flex flex-row items-center bg-white space-x-4 p-2 w-3/4 rounded-md">
+                                            <UserProfile
+                                                email={appointment.email}
+                                                width={50}
+                                                height={50}
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="font-medium">
+                                                    {/* @ts-ignore */}
+                                                    {appointment.name} |{" "}
+                                                    {appointment.specialization}
+                                                </span>
+                                                <span className="text-gray-600">
+                                                    {appointment.dateTime}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
+                                    </li>
+                                )
+                            )}
                         </ul>
                     </div>
                 </motion.div>

@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Web3 from "web3";
 import { DOCTOR_CONTRACT_ADDRESS } from "../../../../contracts/contactAddress";
-import DOCTORABI from "@/../contracts/doctor.abi.json";
+import DOCTORABI from "@/src/../contracts/doctor.abi.json";
 import { toast } from "sonner";
-import { generateToken } from "@/lib/actions/jwtLogics";
+import { generateToken } from "@/src/lib/actions/jwtLogics";
+import { useSetRecoilState } from "recoil";
+import { isLoggedInAtom } from "@/store/store";
 
 export default function Onboarding() {
     const [reg, setReg] = useState(false);
     const [step, setStep] = useState(1);
+    const setIsLoggedIn = useSetRecoilState(isLoggedInAtom);
+
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
@@ -77,6 +81,7 @@ export default function Onboarding() {
                 const token = await generateToken(payload);
                 localStorage.setItem("token", token);
                 toast.success("Doctor registered successfully");
+                setIsLoggedIn(true);
                 router.push("/doctor");
             })
             .on("error", function (error) {

@@ -1,5 +1,5 @@
 "use client"
-import { checkToken, getDecoded } from '@/lib/actions/jwtLogics';
+import { checkToken, getDecoded } from '@/src/lib/actions/jwtLogics';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { toast } from 'sonner';

@@ -4,7 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Web3 from 'web3'
 import { DIAGNOSIS_CONTACT_ADDRESS } from '../../../../contracts/contactAddress';
-import DIAG_ABI from '@/../contracts/diagnosis.abi.json'
+import DIAG_ABI from '@/src/../contracts/diagnosis.abi.json'
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 

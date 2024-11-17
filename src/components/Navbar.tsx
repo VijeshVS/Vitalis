@@ -2,12 +2,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { toast } from "sonner";
+import { useRecoilState } from "recoil";
+import { isLoggedInAtom } from "@/store/store";
+
 const Navbar = () => {
     const router = useRouter();
-    const [isLogged, setIsLogged] = useState(false);
+    const [isLogged, setIsLogged] = useRecoilState(isLoggedInAtom);
 
     async function loggedCheck() {
         const verify = await checkToken(localStorage.getItem("token") || "");

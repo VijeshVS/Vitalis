@@ -5,18 +5,18 @@ import md5 from "md5";
 import Image from "next/image";
 import { MdFileDownload } from "react-icons/md";
 import { useState } from "react";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import { FaFilePdf } from "react-icons/fa6";
 import { toast } from "sonner";
-import Loading from "@/components/Loading";
+import Loading from "@/src/components/Loading";
 import Web3 from "web3";
 import {
     DIAGNOSIS_CONTACT_ADDRESS,
     PATIENT_CONTRACT_ADDRESS,
 } from "../../../../contracts/contactAddress";
-import DIA_ABI from "@/../contracts/diagnosis.abi.json";
-import PAT_ABI from "@/../contracts/patient.abi.json";
+import DIA_ABI from "@/src/../contracts/diagnosis.abi.json";
+import PAT_ABI from "@/src/../contracts/patient.abi.json";
 
 const getGravatarUrl = (email: any, size = 200) => {
     if (!email) {

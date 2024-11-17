@@ -1,6 +1,6 @@
 // pages/index.js
 "use client"
-import Calendar from "@/components/ui/calender";
+import Calendar from "@/src/components/ui/calender";
 
 export default function Home() {
   return (

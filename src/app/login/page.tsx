@@ -1,6 +1,6 @@
 "use client";
-import Loading from "@/components/Loading";
-import { checkToken, getDecoded } from "@/lib/actions/jwtLogics";
+import Loading from "@/src/components/Loading";
+import { checkToken, getDecoded } from "@/src/lib/actions/jwtLogics";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
